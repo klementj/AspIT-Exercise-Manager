@@ -9,26 +9,31 @@
     <section class="wrapper">
         <section class="editor-wrapper">
             <div class="toolbar">
-                <section class="toolbar-section headers">
+                <section class="toolbar-section transforms">
                     <!--
                     header1
                     header2
                     header3
-                    -->
-                </section>
-                <section class="toolbar-section simple-formatting">
-                    <!--
-                    cursive
-                    bold
-                    bold cursive
-                    -->
-                </section>
-                <section class="toolbar-section transforms">
-                    <!--
                     list item
                     codeblock
                     footnote
                     -->
+                    <button class="editor-button"></button>
+                    <button class="editor-button"></button>
+                    <button class="editor-button"></button>
+                    <button class="editor-button"></button>
+                    <button class="editor-button"></button>
+                    <button class="editor-button"></button>
+                </section>
+                <section class="toolbar-section formatting">
+                    <!--
+                    cursive
+                    bold
+                    code
+                    -->
+                    <button class="editor-button"></button>
+                    <button class="editor-button"></button>
+                    <button class="editor-button"></button>
                 </section>
                 <section class="toolbar-section embeds">
                     <!--
@@ -36,8 +41,10 @@
                     image
                     iframe
                     -->
+                    <button class="editor-button"></button>
+                    <button class="editor-button"></button>
+                    <button class="editor-button"></button>
                 </section>
-                
             </div>
             
             <textarea class="editor"></textarea>
