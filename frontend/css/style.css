@@ -1,0 +1,43 @@
+@import url("https://fonts.googleapis.com/css?family=Oxygen:300,400,700");
+/* line 3, C:/AspIT Lab/AspIT Exercise Manager/frontend/style.scss */
+* {
+  padding: 0px;
+  margin: 0px; }
+
+/* line 8, C:/AspIT Lab/AspIT Exercise Manager/frontend/style.scss */
+html {
+  font-size: 10px; }
+
+/* line 12, C:/AspIT Lab/AspIT Exercise Manager/frontend/style.scss */
+body {
+  display: flex;
+  flex-direction: column;
+  background-color: #FFFFFA;
+  font-family: 'Oxygen', sans-serif; }
+  /* line 18, C:/AspIT Lab/AspIT Exercise Manager/frontend/style.scss */
+  body input {
+    border: none; }
+  /* line 22, C:/AspIT Lab/AspIT Exercise Manager/frontend/style.scss */
+  body header {
+    width: 80%;
+    height: 150px;
+    margin: 0 auto; }
+  /* line 28, C:/AspIT Lab/AspIT Exercise Manager/frontend/style.scss */
+  body main {
+    width: 70%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row; }
+    /* line 34, C:/AspIT Lab/AspIT Exercise Manager/frontend/style.scss */
+    body main #left {
+      flex-basis: 65%;
+      display: flex;
+      flex-direction: column; }
+    /* line 40, C:/AspIT Lab/AspIT Exercise Manager/frontend/style.scss */
+    body main #right {
+      flex-basis: 35%; }
+  /* line 45, C:/AspIT Lab/AspIT Exercise Manager/frontend/style.scss */
+  body footer {
+    height: 100px; }
+
+/*# sourceMappingURL=style.css.map */
