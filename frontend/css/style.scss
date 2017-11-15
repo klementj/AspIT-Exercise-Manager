@@ -3,6 +3,7 @@
 * {
     padding: 0px;
     margin: 0px;
+    font-family: 'Oxygen', sans-serif;
 }
 
 html {
@@ -13,16 +14,45 @@ body {
     display: flex;
     flex-direction: column;
     background-color: #FFFFFA;
-    font-family: 'Oxygen', sans-serif;
+    
+    counter-reset: sidenote-counter;
+    
     
     input {
-            border: none;
+        border: none;
     }
     
     header {
-        width: 80%;
+        width: 100%;
         height: 150px;
         margin: 0 auto;
+        display: flex;
+        flex-direction: row;
+        
+        aside {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            
+            button {
+                width: 120px;
+                height: 25px;
+                margin-top: 15px;
+                margin-left: 15px;
+                border-radius: 40px;
+                border: none;
+                font-weight: bold;
+            }
+            
+            button:nth-child(1) {
+                background-color: #f0c330;
+                border-bottom: 2px solid #d5a724;
+            }
+            
+            button:nth-child(2) {
+                
+            }
+        }
     }
     
     main {
@@ -30,6 +60,35 @@ body {
         margin: 0 auto;
         display: flex;
         flex-direction: row;
+        
+        h5 {
+            font-style: italic;
+            margin-bottom: 2.5rem;
+            font-size: 2rem;
+            font-weight: 400;
+        }
+        
+        .footnote {
+            float: right;
+            width: 50%;
+            margin-right: -60%;
+            margin-top: 0.5rem;
+        }
+        
+        .footnote::before {
+            content: counter(sidenote-counter) " ";
+            font-size: 1.2rem;
+            position: relative;
+            top: -0.5rem;
+        }
+        
+        sup::before {
+            content: counter(sidenote-counter) " ";
+            font-size: 1.2rem;
+            position: relative;
+            right: 0.4%;
+            counter-increment: sidenote-counter;
+        }
         
         #left {
             flex-basis: 65%;
