@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>CSS grid med fuld bredde</title>
+  <link rel="stylesheet" href="css/tufte.css">
+  
+  <link rel="stylesheet"href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+
+  <style>
+    /* .task{
+      background-color: goldenrod;
+      box-shadow: -200px goldenrod;
+    } */
+  </style>
+  
+</head>
+<body>
+  <article>
+    <h1>CSS Grid med fuld <h1>
+    <!-- <p class="subtitle">Redigeret 22. oktober 2017</p> -->
+    <section>
+      <h2>Introduktion</h2>
+      <p>I denne opgave bliver du introduceret til hvordan du kan bruge CSS grid til at lave et responsivt layout hvor dele af indholdet får fuld bredde. Layoutet kan fx bruges hvis du fremhæve et stort flot billede inde i en tekst.</p>
+      <!-- <p>Du kommer til at lave det på 2 forskellige måder, først bruges kolonnernes linjenumre og bagefter tildeles der navne til griddet.</p> -->
+      <figure>
+          <label class="margin-toggle" for="mn-exports-imports">⊕</label><input class="margin-toggle" id="mn-exports-imports" type="checkbox"><span class="marginnote">En skitse af det layout som der skal laves. Designmæssigt er layoutet godt til at fremhæve elementer som fx et flot billede eller en detaljeret graf.</span>
+          <img alt="En sketch af det layout som du skal lave" src="img/grid-sketch.jpg">
+        </figure>
+    </section>
+    <section>
+    <h2>Opsætning af grid</h2>
+    <p>Som du kan se på ovenstående skitse så består layoutet af tre kolonner.</p>
+  <p><pre class="code"><code>body{
+    display: grid;
+    grid-template-columns: 1fr 40em 1fr;
+  }</code></pre></p>
+  <p>I koden ovenfor er <code>body</code> lavet til en CSS grid container. Som består af tre kolonner hvor bredderne er hhv.
+    <ul>
+      <li>1fr - en del af den overskydende plads, har derfor en fleksibel bredde</li>
+      <li>40em - størrelsesenheden em følger <code>font-size</code> som standard er 16px. Det vil sige at denne kolonne altid er 640px. Medmindre font-size ændres.</li>
+      <li>1fr - en del af den overskydende plads, har derfor en fleksibel bredde</li>
+    </ul>
+  </p>
+    
+    <p>Selvom layoutet nu ser fint ud, så kan det let gøres bedre til mobile enheder. Problemet er, at den midderste kolonne har en fast bredde på 640px ligegyldigt hvor den vises. I stedet kan du let gøre den dynamisk ved i stedet at tilføje en minimums- og en maksimumsbredde, som kolonnen så dynamisk følger.</p>
+    <p>For at slippe for at lave en <code>@media</code> query kan du anvende CSS funktionen <code>minmax(<em>minimum</em>,<em>maksimum</em>)</code><label class="margin-toggle sidenote-number" for="sn-proprietary-monotype-bembo"></label><input class="margin-toggle" id="sn-proprietary-monotype-bembo" type="checkbox"><span class="sidenote">Læs mere om funktionen på <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/minmax">Mozilla Developer Network</a></span>. Funktionen gør at der kan sættes en minimum og en maksimum værdi, hvor det første tal i funktionen er den mindste størrelse og den sidste værdi efter kommaet er maksimum.</p>
+    <p><pre class="code"><code>body{
+  display: grid;
+  grid-template-columns: minmax(1em, 1fr) 
+                         minmax(0, 40em) 
+                         minmax(1em, 1fr);
+}</code></pre>
+    </p>
+    <p>I koden er den midderste kolonne nu sat til dynamisk at kunne skifte bredde mellem 0 og de 40em fra tidligere. De to yderste kolonner må minimum være 1em op til 1fr</p>
+
+    <p>Hvis du har prøvet at bruge grid før, så kender du måske til at placere elementer ved at bruge linjernes numre. Da du har lavet et layout med 3 kolonner, kan du placere elementer ved at bruge <code>grid-column: <em>linje-start</em> / <em>linje-slut</em>;</code>.
+    </p>
+    <figure class="">
+      <img alt="grid med numre" src="img/grid-numbered-lines.png">
+    </figure>
+  </section>
+  <section class="task">
+    <h2>Øvelse</h2>
+    <p>Opret tre <code>div</code> blokke hvor den første og sidste <code>div</code> består ef en paragraf <code>p</code> med noget tekst. Den midderste <code>div</code> skal have et tilfældigt billede i form af et<code>img</code> tag.</p>
+    <p>Opsæt nu dit grid som forklaret ovenfor og placer de tre <code>div</code> elementer som vist på billedet.</p>
+    <h3>Eksempel</h3>
+    <p>Du kan finde et <a href="https://codepen.io/klementj/pen/RLOqZG">eksempel på codepen.io</a></p>
+  </section>
+
+  <!-- <p>Fordi et grid med 3 kolonner har 4 linjer skal elementer som skal have fuld bredde derfor placeres fra linje 1 til linje 4. Mens indholder som ikke har fuld bredde skal placeres fra linje 2 til 3.</p> -->
+  </article>
+  
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>
