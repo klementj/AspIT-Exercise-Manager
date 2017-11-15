@@ -1,0 +1,25 @@
+{
+  "name": "aspit-exercise-manager",
+  "version": "0.0.1",
+  "description": "webapp til håndtering af opgaver på aspit",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NoahBroJ/AspIT-Exercise-Manager.git"
+  },
+  "keywords": [
+    "DMS",
+    "Excercises",
+    "Collaboration",
+    "School"
+  ],
+  "author": "Noah og Lasse",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NoahBroJ/AspIT-Exercise-Manager/issues"
+  },
+  "homepage": "https://github.com/NoahBroJ/AspIT-Exercise-Manager#readme"
+}
