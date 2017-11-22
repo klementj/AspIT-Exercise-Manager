@@ -6,8 +6,10 @@
     <link rel="icon" href="../../img/aspitlogo.png">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/nola.css">
+    <link rel="stylesheet" href="../fa/font-awesome-4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="../js/script.js"></script>
+    <script src="../js/nolabuttons.js"></script>
 </head>
 <body>
     <header>
@@ -21,10 +23,59 @@
             <h1 data-editable>AspIT Exercise Manager</h1>
             <h5 data-editable>Lasse Hels</h5>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos sint cumque aperiam perspiciatis delectus. Facere possimus aperiam laboriosam sed, ut natus aut corporis quis ad dolorem. Exercitationem perspiciatis ab ullam! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui, nisi unde amet alias animi suscipit ad magni <sup><span class="footnote">Footnote one test test</span></sup> temporibus quis, rem obcaecati aut impedit deserunt natus quia molestiae adipisci fuga expedita.</p>
-            <br>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, quaerat laudantium earum id a commodi, quam veniam reprehenderit. Excepturi  quasi <sup><span class="footnote">Footnote two</span></sup> blanditiis adipisci minus, ab eos neque harum ut libero nobis?</p>
-            <br>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor dolores, consequatur quibusdam cupiditate quidem nisi reprehenderit necessitatibus dignissimos maxime repellat excepturi obcaecati. Ratione, quaerat accusantium, labore veritatis quam quo eum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam deserunt, nihil, dolorum consequatur quaerat doloribus ut similique modi nisi ea nostrum voluptate, temporibus autem odio, molestias optio libero repellat repudiandae.</p>
+            <section class="editor-wrapper">
+                <div class="toolbar">
+                    <button id="headerBig" class="editor-button">
+                        <i class="fa fa-header" aria-hidden="true"></i>1
+                        <span class="tooltiptext">Big header</span>
+                    </button>
+                    <button id="headerMedium" class="editor-button">
+                        <i class="fa fa-header" aria-hidden="true"></i>2
+                        <span class="tooltiptext">Medium header</span>
+                </button>
+                    <button id="headerSmall" class="editor-button">
+                        <i class="fa fa-header" aria-hidden="true"></i>3
+                        <span class="tooltiptext">Small header</span>
+                </button>
+                    <button id="list" class="editor-button">
+                        <i class="fa fa-list" aria-hidden="true"></i>
+                        <span class="tooltiptext">List</span>
+                </button>
+                    <button id="codeblock" class="editor-button">
+                        <i class="fa fa-code" aria-hidden="true"></i>
+                        <span class="tooltiptext">Codeblock</span>
+                </button>
+                    <button id="footnote" class="editor-button">
+                        <i class="fa fa-sticky-note" aria-hidden="true"></i>
+                        <span class="tooltiptext">Footnote</span>
+                </button>
+                    <button id="italic" class="editor-button">
+                        <i class="fa fa-italic" aria-hidden="true"></i>
+                        <span class="tooltiptext">Italic</span>
+                </button>
+                    <button id="bold" class="editor-button">
+                        <i class="fa fa-bold" aria-hidden="true"></i>
+                        <span class="tooltiptext">Bold</span>
+                </button>
+                    <button id="inlineCode" class="editor-button">
+                        <span id="code">C</span>
+                        <span class="tooltiptext">Inline code</span>
+                </button>
+                    <button id="link" class="editor-button">
+                        <i class="fa fa-external-link" aria-hidden="true"></i>
+                        <span class="tooltiptext">Link</span>
+                </button>
+                    <button id="image" class="editor-button">
+                        <i class="fa fa-file-image-o" aria-hidden="true"></i>
+                        <span class="tooltiptext">Image</span>
+                </button>
+                    <button id="iframe" class="editor-button">
+                        <i class="fa fa-file-video-o" aria-hidden="true"></i>
+                        <span class="tooltiptext">Iframe</span>
+                </button>
+</div>
+                <textarea class="editor" placeholder="Description..."></textarea>
+            </section>
         </div>
         <div id="right"></div>
     </main>
