@@ -37,15 +37,16 @@ h4 {
 p {
   font-size: 1.8rem;
   line-height: 2.8rem;
+  margin-bottom: 20px;
   display: inline-block; }
 
-/* line 54, C:/AspIT Lab/AspIT-Exercise-Manager/frontend/css/nola.scss */
+/* line 55, C:/AspIT Lab/AspIT-Exercise-Manager/frontend/css/nola.scss */
 .wrapper {
   margin-left: 100px;
   margin-top: 100px;
   width: 700px; }
 
-/* line 60, C:/AspIT Lab/AspIT-Exercise-Manager/frontend/css/nola.scss */
+/* line 61, C:/AspIT Lab/AspIT-Exercise-Manager/frontend/css/nola.scss */
 .toolbar {
   border: 1px solid darkgray;
   border-bottom: none;
@@ -53,7 +54,7 @@ p {
   width: 100%;
   background-color: #eef; }
 
-/* line 68, C:/AspIT Lab/AspIT-Exercise-Manager/frontend/css/nola.scss */
+/* line 69, C:/AspIT Lab/AspIT-Exercise-Manager/frontend/css/nola.scss */
 .editor {
   width: 100%;
   min-height: 400px;
@@ -61,15 +62,14 @@ p {
   font-size: 16px;
   padding: 5px; }
 
-/* line 76, C:/AspIT Lab/AspIT-Exercise-Manager/frontend/css/nola.scss */
+/* line 77, C:/AspIT Lab/AspIT-Exercise-Manager/frontend/css/nola.scss */
 .editor-button {
   height: 30px;
   width: 40px;
   position: relative; }
 
-/* line 82, C:/AspIT Lab/AspIT-Exercise-Manager/frontend/css/nola.scss */
+/* line 83, C:/AspIT Lab/AspIT-Exercise-Manager/frontend/css/nola.scss */
 #code {
-  font-size: 14px;
   font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
   font-weight: bold; }
 
