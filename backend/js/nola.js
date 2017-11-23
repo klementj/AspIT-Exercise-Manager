@@ -16,6 +16,7 @@ function LMLTranslate() {
     output = "";
     inputLines = input.split(/\n/g);
     outputLines = Array(inputLines.length);
+    footNotes = [];
     
     for (i = 0; i < inputLines.length; i++) {
         switch(inputLines[i].split(' ')[0]) {
@@ -70,8 +71,10 @@ function LMLTranslate() {
         return '<a href="' + c + '">' + b + '</a>';
     });
     
+    n = 1;
     output = output.replace(/\$\$(.*)\$\$/g, function(a, b) {
-        return '<sup><span class="footnote">' + b + '</span></sup>';
+        footNotes.push(b);
+        return '<sup id="footnote-' + n + '">' + n++ + '</sup>';
     });
     
     output = output.replace(/\#\{(.+)\{(.*)\}\}/g, function(a, b, c) {
@@ -79,7 +82,9 @@ function LMLTranslate() {
     });
     
     console.log(output);
+    console.log(footNotes);
 }
+
 
 function Header1(i) {
     outputLines[i] = '<h2>' + inputLines[i].slice(header1Syntax.length + 1) + '</h2>';
