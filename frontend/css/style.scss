@@ -13,10 +13,9 @@ html {
 body {
     display: flex;
     flex-direction: column;
-    background-color: #FFFFFA;
+    background-color: #f1f1f1;
     
     counter-reset: sidenote-counter;
-    
     
     input {
         border: none;
@@ -28,6 +27,8 @@ body {
         margin: 0 auto;
         display: flex;
         flex-direction: row;
+        border-bottom: 1px solid lightgray;
+        box-shadow: 0 1px 1px rgba(0,0,0,0.1);
         
         aside {
             height: 100%;
@@ -48,11 +49,36 @@ body {
                 background-color: #f0c330;
                 border-bottom: 2px solid #d5a724;
             }
-            
-            button:nth-child(2) {
-                
-            }
         }
+        
+        nav {
+            width: 25%;
+            min-width: 200px;
+            height: 50px;
+            border-radius: 50px;
+            margin: 0 auto;
+            margin-top: 50px;
+            background-color: #45B572;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            display: flex;
+            
+            img {
+                min-width: 96px;
+                max-width: 96px;
+                min-height: 96px;
+                max-height: 96px;
+                margin: 0 auto;
+                margin-top: -27px;
+            }
+            
+            :nth-child(1) {
+                flex-basis: 40%;
+            }
+            
+            :nth-child(3) {
+                flex-basis: 40%;
+            }
+        } 
     }
     
     main {
