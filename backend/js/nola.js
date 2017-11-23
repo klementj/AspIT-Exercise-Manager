@@ -19,31 +19,31 @@ function LMLTranslate() {
     
     for (i = 0; i < inputLines.length; i++) {
         switch(inputLines[i].split(' ')[0]) {
-            case '#':
+            case header1Syntax:
                 Header1(i);
                 break;
                 
-            case '##':
+            case header2Syntax:
                 Header2(i);
                 break;
                 
-            case '###':
+            case header3Syntax:
                 Header3(i);
                 break;
                 
-            case ';;':
+            case codeblockSyntax:
                 Codeblock(i);
                 break;
                 
-            case '!!':
+            case imageSyntax:
                 Image(i);
                 break;
                 
-            case '??':
+            case iframeSyntax:
                 Iframe(i);
                 break;
                 
-            case '*':
+            case listSyntax:
                 List(i);
                 break;
                 
@@ -174,10 +174,10 @@ function Iframe(i) {
 function List(i) {
     if (i == 0){
         if (i == inputLines.length - 1) {
-            outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(2) + '</li>\n</ul>';
+            outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>';
         }
         else {
-            outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(2) + '</li>';
+            outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>';
             if (inputLines[i + 1].split(' ')[0] != '*') {
                 outputLines[i] += '\n</ul>';
             }
@@ -185,26 +185,26 @@ function List(i) {
     }
     else if (i == inputLines.length - 1) {
         if (inputLines[i - 1].split(' ')[0] != '*') {
-            outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(3) + '</li>\n</ul>';
+            outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>';
         }
         else {
-            outputLines[i] = '<li>' + inputLines[i].slice(3) + '</li>\n</ul>';
+            outputLines[i] = '<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>';
         }
     }
     else if (i > 0 && i < inputLines.length - 1){
         if (inputLines[i - 1].split(' ')[0] != '*') {
             if (inputLines[i + 1].split(' ')[0] != '*'){
-                outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(2) + '</li>\n</ul>'
+                outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>'
             }
             else {
-                outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(2) + '</li>';
+                outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>';
             }
         }
         else if (inputLines[i + 1].split(' ')[0] != '*') {
-            outputLines[i] = '<li>' + inputLines[i].slice(2) + '</li>\n</ul>';
+            outputLines[i] = '<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>';
         }
         else {
-            outputLines[i] = '<li>' + inputLines[i].slice(2) + '</li>';
+            outputLines[i] = '<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>';
         }
     }
 }
