@@ -1,6 +1,8 @@
 var inputLines;
-var outputLines;
-var output;
+var leftOutputLines;
+var leftOutput;
+var rightOutputLines;
+var rightOutput;
 
 const header1Syntax = '#';
 const header2Syntax = '##';
@@ -13,10 +15,11 @@ const listSyntax = '*';
 function LMLTranslate() {
     textarea = document.getElementById("LMLeditor");
     input = textarea.value;
-    output = "";
+    leftOutput = "";
+    rightOutput = "";
     inputLines = input.split(/\n/g);
-    outputLines = Array(inputLines.length);
-    footNotes = [];
+    leftOutputLines = Array(inputLines.length);
+    rightOutputLines = [];
     
     for (i = 0; i < inputLines.length; i++) {
         switch(inputLines[i].split(' ')[0]) {
@@ -52,86 +55,68 @@ function LMLTranslate() {
                 Paragraph(i);
                 break;
         }
-        output += outputLines[i] + '\n';
+        leftOutput += leftOutputLines[i] + '\n';
     }
     
-    output = output.replace(/\*\*([^\*]*)\*\*/g, function(a, b) {
-        return '<strong>' + b + '</strong>';
-    });
+    LeftOutputFormatting();
     
-    output = output.replace(/\*([^\*]*)\*/g, function(a, b) {
-        return '<en>' + b + '</en>';
-    });
+    for (i = 0; i < rightOutputLines.length; i++) {
+        rightOutput += rightOutputLines[i] + '\n';
+    }
     
-    output = output.replace(/\[\[(.*)\]\]/g, function(a, b) {
-        return '<code>' + b + '</code>';
-    });
+    RightOutputFormatting();
     
-    output = output.replace(/\{\{(.*)\}(.*)\}/g, function(a, b, c) {
-        return '<a href="' + c + '">' + b + '</a>';
-    });
-    
-    n = 1;
-    output = output.replace(/\$\$(.*)\$\$/g, function(a, b) {
-        footNotes.push(b);
-        return '<sup id="footnote-' + n + '">' + n++ + '</sup>';
-    });
-    
-    output = output.replace(/\#\{(.+)\{(.*)\}\}/g, function(a, b, c) {
-        return '<i style="color:' + b + '">' + c + '</i>';
-    });
-    
-    console.log(output);
-    console.log(footNotes);
+    console.log(leftOutput);
+    console.log(rightOutput);
 }
 
 
 function Header1(i) {
-    outputLines[i] = '<h2>' + inputLines[i].slice(header1Syntax.length + 1) + '</h2>';
+    leftOutputLines[i] = '<h2>' + inputLines[i].slice(header1Syntax.length + 1) + '</h2>';
 }
 
 function Header2(i) {
-    outputLines[i] = '<h3>' + inputLines[i].slice(header2Syntax.length + 1) + '</h3>';
+    leftOutputLines[i] = '<h3>' + inputLines[i].slice(header2Syntax.length + 1) + '</h3>';
 }
 
 function Header3(i) {
-    outputLines[i] = '<h4>' + inputLines[i].slice(header3Syntax.length + 1) + '</h4>';
+    leftOutputLines[i] = '<h4>' + inputLines[i].slice(header3Syntax.length + 1) + '</h4>';
 }
 
 function Codeblock(i) {
     if (i == 0){
         if (i == inputLines.length - 1) {
-            outputLines[i] = '<p class="codeblock">' + inputLines[i].slice(codeblockSyntax.length + 1) + '</p>';
+            leftOutputLines[i] = '<p class="codeblock">' + inputLines[i].slice(codeblockSyntax.length + 1) + '</p>';
         }
         else {
-            outputLines[i] = '<p class="codeblock">' + inputLines[i].slice(codeblockSyntax.length + 1);
+            leftOutputLines[i] = '<p class="codeblock">' + inputLines[i].slice(codeblockSyntax.length + 1);
             if (inputLines[i + 1].split(' ')[0] != ';;') {
-                outputLines[i] += '</p>';
+                leftOutputLines[i] += '</p>';
             }
         }
     }
     else if (i == inputLines.length - 1) {
         if (inputLines[i - 1].split(' ')[0] != ';;') {
-            outputLines[i] = '<p class="codeblock">' + inputLines[i].slice(codeblockSyntax.length + 1) + '</p>';
+            leftOutputLines[i] = '<p class="codeblock">' + inputLines[i].slice(codeblockSyntax.length + 1) + '</p>';
         }
         else {
-            outputLines[i] = '<br>' + inputLines[i].slice(codeblockSyntax.length + 1) + '</p>';
+            leftOutputLines[i] = '<br>' + inputLines[i].slice(codeblockSyntax.length + 1) + '</p>';
         }
     }
     else if (i > 0 && i < inputLines.length - 1){
         if (inputLines[i - 1].split(' ')[0] != ';;') {
             if (inputLines[i + 1].split(' ')[0] != ';;'){
-                outputLines[i] = '<p class="codeblock">' + inputLines[i].slice(codeblockSyntax.length + 1) + '</p>'
+                leftOutputLines[i] = '<p class="codeblock">' + inputLines[i].slice(codeblockSyntax.length + 1) + '</p>'
             }
             else {
-                outputLines[i] = '<p class="codeblock">' + inputLines[i].slice(codeblockSyntax.length + 1);
+                leftOutputLines[i] = '<p class="codeblock">' + inputLines[i].slice(codeblockSyntax.length + 1);
             }
         }
         else if (inputLines[i + 1].split(' ')[0] != ';;') {
-            outputLines[i] = '<br>' + inputLines[i].slice(codeblockSyntax.length + 1) + '</p>';
+            leftOutputLines[i] = '<br>' + inputLines[i].slice(codeblockSyntax.length + 1) + '</p>';
         }
         else {
-            outputLines[i] = '<br>' + inputLines[i].slice(codeblockSyntax.length + 1);
+            leftOutputLines[i] = '<br>' + inputLines[i].slice(codeblockSyntax.length + 1);
         }
     }
 }
@@ -161,7 +146,13 @@ function Image(i) {
             }
         }
     }
-    outputLines[i] = '<img class="' + size + '-img" url="' + link + '" alt="' + text + '">';
+    if (size == 'right') {
+        leftOutputLines[i] = '<figure class="right-img-anchor" id="img-anchor-' + i + '">';
+        rightOutputLines.push('<img class="' + size + '-img" url="' + link + '" alt="' + text + '">');
+    }
+    else {
+        leftOutputLines[i] = '<img class="' + size + '-img" url="' + link + '" alt="' + text + '">';
+    }
 }
 
 function Iframe(i) {
@@ -170,7 +161,7 @@ function Iframe(i) {
     if (tags.length > 1) {
         link = tags[1];
     }
-    outputLines[i] =
+    leftOutputLines[i] =
     '<figure class="iframe-wrapper">\n' +
         '<iframe src="' + link + '" frameborder="0" allowfullscreen></iframe>\n' +
     '</figure>';
@@ -179,41 +170,92 @@ function Iframe(i) {
 function List(i) {
     if (i == 0){
         if (i == inputLines.length - 1) {
-            outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>';
+            leftOutputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>';
         }
         else {
-            outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>';
+            leftOutputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>';
             if (inputLines[i + 1].split(' ')[0] != '*') {
-                outputLines[i] += '\n</ul>';
+                leftOutputLines[i] += '\n</ul>';
             }
         }
     }
     else if (i == inputLines.length - 1) {
         if (inputLines[i - 1].split(' ')[0] != '*') {
-            outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>';
+            leftOutputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>';
         }
         else {
-            outputLines[i] = '<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>';
+            leftOutputLines[i] = '<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>';
         }
     }
     else if (i > 0 && i < inputLines.length - 1){
         if (inputLines[i - 1].split(' ')[0] != '*') {
             if (inputLines[i + 1].split(' ')[0] != '*'){
-                outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>'
+                leftOutputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>'
             }
             else {
-                outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>';
+                leftOutputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>';
             }
         }
         else if (inputLines[i + 1].split(' ')[0] != '*') {
-            outputLines[i] = '<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>';
+            leftOutputLines[i] = '<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>';
         }
         else {
-            outputLines[i] = '<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>';
+            leftOutputLines[i] = '<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>';
         }
     }
 }
 
 function Paragraph(i) {
-    outputLines[i] = '<p>' + inputLines[i] + '</p>';
+    leftOutputLines[i] = '<p>' + inputLines[i] + '</p>';
+}
+
+
+function LeftOutputFormatting() {
+    n = 1;
+    leftOutput = leftOutput.replace(/\$\$(.*)\$\$/g, function(a, b) {
+        rightOutputLines.push('<p class="footnote" id="footnote-' + n + '"><sup>' + n + '</sup>' + b + '</p>');
+        return '<sup id="footnoteRef-' + n + '">' + n++ + '</sup>';
+    });
+    
+    leftOutput = leftOutput.replace(/\*\*([^\*]*)\*\*/g, function(a, b) {
+        return '<strong>' + b + '</strong>';
+    });
+    
+    leftOutput = leftOutput.replace(/\*([^\*]*)\*/g, function(a, b) {
+        return '<en>' + b + '</en>';
+    });
+    
+    leftOutput = leftOutput.replace(/\[\[(.*)\]\]/g, function(a, b) {
+        return '<code>' + b + '</code>';
+    });
+    
+    leftOutput = leftOutput.replace(/\{\{(.*)\}(.*)\}/g, function(a, b, c) {
+        return '<a href="' + c + '">' + b + '</a>';
+    });
+    
+    leftOutput = leftOutput.replace(/\#\{(.+)\{(.*)\}\}/g, function(a, b, c) {
+        return '<i style="color:' + b + '">' + c + '</i>';
+    });
+}
+
+function RightOutputFormatting() {
+    rightOutput = rightOutput.replace(/\*\*([^\*]*)\*\*/g, function(a, b) {
+        return '<strong>' + b + '</strong>';
+    });
+    
+    rightOutput = rightOutput.replace(/\*([^\*]*)\*/g, function(a, b) {
+        return '<en>' + b + '</en>';
+    });
+    
+    rightOutput = rightOutput.replace(/\[\[(.*)\]\]/g, function(a, b) {
+        return '<code>' + b + '</code>';
+    });
+    
+    rightOutput = rightOutput.replace(/\{\{(.*)\}(.*)\}/g, function(a, b, c) {
+        return '<a href="' + c + '">' + b + '</a>';
+    });
+    
+    rightOutput = rightOutput.replace(/\#\{(.+)\{(.*)\}\}/g, function(a, b, c) {
+        return '<i style="color:' + b + '">' + c + '</i>';
+    });
 }
