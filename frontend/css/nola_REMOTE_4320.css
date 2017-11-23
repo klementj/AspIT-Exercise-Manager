@@ -35,15 +35,10 @@ h4 {
 
 /* line 36, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/nola.scss */
 p {
-  width: 95%;
   font-size: 1.8rem;
   line-height: 2.8rem;
-  margin-bottom: 20px;
   display: inline-block; }
 
-<<<<<<< HEAD
-/* line 56, C:/AspIT Lab/AspIT-Exercise-Manager/frontend/css/nola.scss */
-=======
 /* line 54, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/nola.scss */
 .wrapper {
   margin-left: 100px;
@@ -51,56 +46,34 @@ p {
   width: 700px; }
 
 /* line 60, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/nola.scss */
->>>>>>> 252979720985081a30df58b5744973909449a105
 .toolbar {
   border: 1px solid darkgray;
   border-bottom: none;
   padding: 5px;
   width: 100%;
-  background-color: #eef;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); }
+  background-color: #eef; }
 
-<<<<<<< HEAD
-/* line 65, C:/AspIT Lab/AspIT-Exercise-Manager/frontend/css/nola.scss */
-=======
 /* line 68, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/nola.scss */
->>>>>>> 252979720985081a30df58b5744973909449a105
 .editor {
   width: 100%;
   min-height: 400px;
   resize: vertical;
   font-size: 16px;
-  padding: 5px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); }
+  padding: 5px; }
 
-<<<<<<< HEAD
-/* line 74, C:/AspIT Lab/AspIT-Exercise-Manager/frontend/css/nola.scss */
-=======
 /* line 76, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/nola.scss */
->>>>>>> 252979720985081a30df58b5744973909449a105
 .editor-button {
   height: 30px;
   width: 40px;
   position: relative; }
 
-<<<<<<< HEAD
-/* line 80, C:/AspIT Lab/AspIT-Exercise-Manager/frontend/css/nola.scss */
-.editor-wrapper {
-  width: 95%; }
-
-/* line 84, C:/AspIT Lab/AspIT-Exercise-Manager/frontend/css/nola.scss */
-=======
 /* line 82, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/nola.scss */
->>>>>>> 252979720985081a30df58b5744973909449a105
 #code {
+  font-size: 14px;
   font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
   font-weight: bold; }
 
-<<<<<<< HEAD
-/* line 89, C:/AspIT Lab/AspIT-Exercise-Manager/frontend/css/nola.scss */
-=======
 /* line 88, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/nola.scss */
->>>>>>> 252979720985081a30df58b5744973909449a105
 .tooltiptext {
   width: 100px;
   visibility: hidden;
@@ -116,11 +89,7 @@ p {
   opacity: 0;
   transition: opacity 0.2s; }
 
-<<<<<<< HEAD
-/* line 105, C:/AspIT Lab/AspIT-Exercise-Manager/frontend/css/nola.scss */
-=======
 /* line 104, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/nola.scss */
->>>>>>> 252979720985081a30df58b5744973909449a105
 .editor-button:hover .tooltiptext {
   visibility: visible;
   opacity: 1; }
