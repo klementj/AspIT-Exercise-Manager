@@ -55,7 +55,7 @@ function LMLTranslate() {
     });
     
     output = output.replace(/\[\[(.*)\]\]/g, function(a, b) {
-        return '<code>' + b + '</code>';
+        return '<code class="code">' + b + '</code>';
     });
     
     output = output.replace(/\{\{(.*)\}(.*)\}/g, function(a, b, c) {
@@ -158,9 +158,7 @@ function Iframe(i) {
         link = tags[1];
     }
     outputLines[i] =
-    '<figure class="iframe-wrapper">\n' +
-        '<iframe src="' + link + '" frameborder="0" allowfullscreen></iframe>\n' +
-    '</figure>';
+        '<iframe src="' + link + '" frameborder="0" allowfullscreen></iframe>\n'
 }
 
 function List(i) {
