@@ -1,108 +1,82 @@
-* {
-    font-family: 'Oxygen', sans-serif;
+@mixin textStyling($fontSize, $marginBot, $display: block, $fontStyle: normal) {
+    font-size: $fontSize;
+    margin-bottom: $marginBot;
+    display: $display;
+    font-style: $fontStyle;
 }
 
 h1 {
     font-weight: bold;
-    margin-bottom: 2rem;
-    font-size: 4.5rem;
-    display: inline-block;
+    @include textStyling(4.5rem, 20px, inline-block);
 }
 
 h2 {
-    font-style: italic;
-    margin-bottom: 3rem;
-    font-size: 3rem;
     font-weight: 400;
-    display: inline-block;
+    @include textStyling(3rem, 30px, inline-block, italic);
 }
 
 h3 {
-    font-style: italic;
-    margin-bottom: 3rem;
-    font-size: 2.7rem;
     font-weight: 400;
-    display: inline-block;
+    @include textStyling(2.7rem, 30px, inline-block, italic);
 }
 
 h4 {
-    font-style: italic;
-    margin-bottom: 3rem;
-    font-size: 2.5rem;
     font-weight: 400;
-    display: inline-block;
+    @include textStyling(2.5rem, 30px, inline-block, italic);
 }
 
-p {
-    width: 95%;
-    font-size: 1.8rem;
+.content {
     line-height: 2.8rem;
-    margin-bottom: 20px;
-    display: inline-block;
+    @include textStyling(1.8rem, 20px, inline-block);
 }
 
 a {
-    
+    color: black;
+    transition: 0.3s;
+}
+
+a:hover {
+    color: #aaa;
+    transition: 0.3s;
 }
 
 ul {
-    
+    @include textStyling(1.8rem, 20px);
+    margin-left: 2.3%;
 }
 
-li {
-    
+.code {
+    font-family: monospace;
+    font-size: 1.6rem;
 }
 
-.toolbar {
-    border: 1px solid rgb(169, 169, 169);
-    border-bottom: none;
-    padding: 5px;
+.codeblock {
+    font-family: monospace;
+    background-color: #f5f5dc;
+    border-radius: 7px;
+    padding: 8px;
+    margin-left: 40px;
+    border: 1px solid #eee;
+    @include textStyling(1.6rem, 30px, inline-table);
+}
+
+.img-left {
+    max-width: 100%;
+    margin-bottom: 30px;
+}
+
+.img-right {
     width: 100%;
-    background-color: #eef;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    max-width: 100%;
 }
 
-.editor {
-    width: 100%;
-    min-height: 400px;
-    resize: vertical;
-    font-size: 16px;
-    padding: 5px;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+.img-big {
+    width: 153.8%;
+    max-width: 153.8%;
+    margin-bottom: 30px;
 }
 
-.editor-button {
-    height: 30px;
-    width: 40px;
-    position: relative;
-}
-
-.editor-wrapper {
-    width: 95%;
-}
-
-#code {
-    font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
-    font-weight: bold;
-}
-
-.tooltiptext {
-    width: 100px;
-    visibility: hidden;
-    background-color: #555;
-    color: #fff;
-    text-align: center;
-    padding: 5px;
-    border-radius: 6px;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: -39px;
-    opacity: 0;
-    transition: opacity 0.2s;
-}
-
-.editor-button:hover .tooltiptext {
-    visibility: visible;
-    opacity: 1;
+iframe {
+    max-width: 100%;
+    margin-bottom: 30px;
 }
