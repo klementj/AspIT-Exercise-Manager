@@ -58,7 +58,17 @@ function LMLTranslate() {
         leftOutput += leftOutputLines[i] + '\n';
     }
     
-    LeftOutputFormatting();
+    output = output.replace(/\*\*([^\*]*)\*\*/g, function(a, b) {
+        return '<strong>' + b + '</strong>';
+    });
+    
+    output = output.replace(/\*([^\*]*)\*/g, function(a, b) {
+        return '<en>' + b + '</en>';
+    });
+    
+    output = output.replace(/\[\[(.*)\]\]/g, function(a, b) {
+        return '<code class="code">' + b + '</code>';
+    });
     
     for (i = 0; i < rightOutputLines.length; i++) {
         rightOutput += rightOutputLines[i] + '\n';
@@ -161,10 +171,8 @@ function Iframe(i) {
     if (tags.length > 1) {
         link = tags[1];
     }
-    leftOutputLines[i] =
-    '<figure class="iframe-wrapper">\n' +
-        '<iframe src="' + link + '" frameborder="0" allowfullscreen></iframe>\n' +
-    '</figure>';
+    outputLines[i] =
+        '<iframe src="' + link + '" frameborder="0" allowfullscreen></iframe>\n'
 }
 
 function List(i) {
