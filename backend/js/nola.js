@@ -213,8 +213,8 @@ function Paragraph(i) {
 function LeftOutputFormatting() {
     n = 1;
     leftOutput = leftOutput.replace(/\$\$(.*)\$\$/g, function(a, b) {
-        rightOutputLines.push('<p class="footnote" id="footnote-' + n + '"><sup>' + n + '</sup>' + b + '</p>');
-        return '<sup id="footnoteRef-' + n + '">' + n++ + '</sup>';
+        rightOutputLines.push('<p class="footnote" data-footnote="' + n + '"><sup>' + n + '</sup>' + b + '</p>');
+        return '<sup data-footnoteRef="' + n + '">' + n++ + '</sup>';
     });
     
     leftOutput = leftOutput.replace(/\*\*([^\*]*)\*\*/g, function(a, b) {
