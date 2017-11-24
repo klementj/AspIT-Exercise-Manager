@@ -2,40 +2,49 @@ var inputLines;
 var outputLines;
 var output;
 
+const header1Syntax = '#';
+const header2Syntax = '##';
+const header3Syntax = '###';
+const codeblockSyntax = ';;';
+const imageSyntax = '!!';
+const iframeSyntax = '??';
+const listSyntax = '*';
+
 function LMLTranslate() {
     textarea = document.getElementById("LMLeditor");
     input = textarea.value;
     output = "";
     inputLines = input.split(/\n/g);
     outputLines = Array(inputLines.length);
+    footNotes = [];
     
     for (i = 0; i < inputLines.length; i++) {
         switch(inputLines[i].split(' ')[0]) {
-            case '#':
+            case header1Syntax:
                 Header1(i);
                 break;
                 
-            case '##':
+            case header2Syntax:
                 Header2(i);
                 break;
                 
-            case '###':
+            case header3Syntax:
                 Header3(i);
                 break;
                 
-            case ';;':
+            case codeblockSyntax:
                 Codeblock(i);
                 break;
                 
-            case '!!':
+            case imageSyntax:
                 Image(i);
                 break;
                 
-            case '??':
+            case iframeSyntax:
                 Iframe(i);
                 break;
                 
-            case '*':
+            case listSyntax:
                 List(i);
                 break;
                 
@@ -62,8 +71,10 @@ function LMLTranslate() {
         return '<a href="' + c + '">' + b + '</a>';
     });
     
+    n = 1;
     output = output.replace(/\$\$(.*)\$\$/g, function(a, b) {
-        return '<sup><span class="footnote">' + b + '</span></sup>';
+        footNotes.push(b);
+        return '<sup id="footnote-' + n + '">' + n++ + '</sup>';
     });
     
     output = output.replace(/\#\{(.+)\{(.*)\}\}/g, function(a, b, c) {
@@ -71,27 +82,29 @@ function LMLTranslate() {
     });
     
     console.log(output);
+    console.log(footNotes);
 }
 
+
 function Header1(i) {
-    outputLines[i] = '<h2>' + inputLines[i].slice(2) + '</h2>';
+    outputLines[i] = '<h2>' + inputLines[i].slice(header1Syntax.length + 1) + '</h2>';
 }
 
 function Header2(i) {
-    outputLines[i] = '<h3>' + inputLines[i].slice(3) + '</h3>';
+    outputLines[i] = '<h3>' + inputLines[i].slice(header2Syntax.length + 1) + '</h3>';
 }
 
 function Header3(i) {
-    outputLines[i] = '<h4>' + inputLines[i].slice(4) + '</h4>';
+    outputLines[i] = '<h4>' + inputLines[i].slice(header3Syntax.length + 1) + '</h4>';
 }
 
 function Codeblock(i) {
     if (i == 0){
         if (i == inputLines.length - 1) {
-            outputLines[i] = '<p class="codeblock">' + inputLines[i].slice(3) + '</p>';
+            outputLines[i] = '<p class="codeblock">' + inputLines[i].slice(codeblockSyntax.length + 1) + '</p>';
         }
         else {
-            outputLines[i] = '<p class="codeblock">' + inputLines[i].slice(3);
+            outputLines[i] = '<p class="codeblock">' + inputLines[i].slice(codeblockSyntax.length + 1);
             if (inputLines[i + 1].split(' ')[0] != ';;') {
                 outputLines[i] += '</p>';
             }
@@ -99,26 +112,26 @@ function Codeblock(i) {
     }
     else if (i == inputLines.length - 1) {
         if (inputLines[i - 1].split(' ')[0] != ';;') {
-            outputLines[i] = '<p class="codeblock">' + inputLines[i].slice(3) + '</p>';
+            outputLines[i] = '<p class="codeblock">' + inputLines[i].slice(codeblockSyntax.length + 1) + '</p>';
         }
         else {
-            outputLines[i] = '<br>' + inputLines[i].slice(3) + '</p>';
+            outputLines[i] = '<br>' + inputLines[i].slice(codeblockSyntax.length + 1) + '</p>';
         }
     }
     else if (i > 0 && i < inputLines.length - 1){
         if (inputLines[i - 1].split(' ')[0] != ';;') {
             if (inputLines[i + 1].split(' ')[0] != ';;'){
-                outputLines[i] = '<p class="codeblock">' + inputLines[i].slice(3) + '</p>'
+                outputLines[i] = '<p class="codeblock">' + inputLines[i].slice(codeblockSyntax.length + 1) + '</p>'
             }
             else {
-                outputLines[i] = '<p class="codeblock">' + inputLines[i].slice(3);
+                outputLines[i] = '<p class="codeblock">' + inputLines[i].slice(codeblockSyntax.length + 1);
             }
         }
         else if (inputLines[i + 1].split(' ')[0] != ';;') {
-            outputLines[i] = '<br>' + inputLines[i].slice(3) + '</p>';
+            outputLines[i] = '<br>' + inputLines[i].slice(codeblockSyntax.length + 1) + '</p>';
         }
         else {
-            outputLines[i] = '<br>' + inputLines[i].slice(3);
+            outputLines[i] = '<br>' + inputLines[i].slice(codeblockSyntax.length + 1);
         }
     }
 }
@@ -164,10 +177,10 @@ function Iframe(i) {
 function List(i) {
     if (i == 0){
         if (i == inputLines.length - 1) {
-            outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(2) + '</li>\n</ul>';
+            outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>';
         }
         else {
-            outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(2) + '</li>';
+            outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>';
             if (inputLines[i + 1].split(' ')[0] != '*') {
                 outputLines[i] += '\n</ul>';
             }
@@ -175,26 +188,26 @@ function List(i) {
     }
     else if (i == inputLines.length - 1) {
         if (inputLines[i - 1].split(' ')[0] != '*') {
-            outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(3) + '</li>\n</ul>';
+            outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>';
         }
         else {
-            outputLines[i] = '<li>' + inputLines[i].slice(3) + '</li>\n</ul>';
+            outputLines[i] = '<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>';
         }
     }
     else if (i > 0 && i < inputLines.length - 1){
         if (inputLines[i - 1].split(' ')[0] != '*') {
             if (inputLines[i + 1].split(' ')[0] != '*'){
-                outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(2) + '</li>\n</ul>'
+                outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>'
             }
             else {
-                outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(2) + '</li>';
+                outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>';
             }
         }
         else if (inputLines[i + 1].split(' ')[0] != '*') {
-            outputLines[i] = '<li>' + inputLines[i].slice(2) + '</li>\n</ul>';
+            outputLines[i] = '<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>';
         }
         else {
-            outputLines[i] = '<li>' + inputLines[i].slice(2) + '</li>';
+            outputLines[i] = '<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>';
         }
     }
 }
