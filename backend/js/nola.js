@@ -58,17 +58,7 @@ function LMLTranslate() {
         leftOutput += leftOutputLines[i] + '\n';
     }
     
-    output = output.replace(/\*\*([^\*]*)\*\*/g, function(a, b) {
-        return '<strong>' + b + '</strong>';
-    });
-    
-    output = output.replace(/\*([^\*]*)\*/g, function(a, b) {
-        return '<en>' + b + '</en>';
-    });
-    
-    output = output.replace(/\[\[(.*)\]\]/g, function(a, b) {
-        return '<code class="code">' + b + '</code>';
-    });
+    LeftOutputFormatting();
     
     for (i = 0; i < rightOutputLines.length; i++) {
         rightOutput += rightOutputLines[i] + '\n';
@@ -221,8 +211,8 @@ function Paragraph(i) {
 function LeftOutputFormatting() {
     n = 1;
     leftOutput = leftOutput.replace(/\$\$(.*)\$\$/g, function(a, b) {
-        rightOutputLines.push('<p class="footnote" data-footnote="' + n + '"><sup>' + n + '</sup>' + b + '</p>');
-        return '<sup data-footnoteRef="' + n + '">' + n++ + '</sup>';
+        rightOutputLines.push('<p class="footnote" id="footnote-' + n + '" data-footnote="' + n + '"><a href="#footref-' + n + '"><sup>' + n + '</sup></a>' + b + '</p>');
+        return '<a href="#footnote-' + n + '"><sup class="footref" id="footref-' + n + '" data-footref="' + n + '">' + n++ + '</sup></a>';
     });
     
     leftOutput = leftOutput.replace(/\*\*([^\*]*)\*\*/g, function(a, b) {
