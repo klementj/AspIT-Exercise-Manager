@@ -7,27 +7,27 @@
 
 h1 {
     font-weight: bold;
-    @include textStyling(4.5rem, 20px, inline-block);
+    @include textStyling(4rem, 20px, inline-block);
 }
 
 h2 {
     font-weight: 400;
-    @include textStyling(3rem, 30px, inline-block, italic);
+    @include textStyling(2.8rem, 30px, inline-block, italic);
 }
 
 h3 {
     font-weight: 400;
-    @include textStyling(2.7rem, 30px, inline-block, italic);
+    @include textStyling(2rem, 30px, inline-block, italic);
 }
 
 h4 {
     font-weight: 400;
-    @include textStyling(2.5rem, 30px, inline-block, italic);
+    @include textStyling(1.6rem, 30px, inline-block, italic);
 }
 
 .content {
-    line-height: 2.8rem;
-    @include textStyling(1.8rem, 20px, inline-block);
+    line-height: 2rem;
+    @include textStyling(1.2rem, 20px, inline-block);
 }
 
 a {
@@ -41,13 +41,13 @@ a:hover {
 }
 
 ul {
-    @include textStyling(1.8rem, 20px);
+    @include textStyling(1.2rem, 20px);
     margin-left: 2.3%;
 }
 
 .code {
     font-family: monospace;
-    font-size: 1.6rem;
+    font-size: 1.1rem;
 }
 
 .codeblock {
@@ -57,7 +57,7 @@ ul {
     padding: 8px;
     margin-left: 40px;
     border: 1px solid #eee;
-    @include textStyling(1.6rem, 30px, inline-table);
+    @include textStyling(1rem, 30px, inline-table);
 }
 
 .img-left {
