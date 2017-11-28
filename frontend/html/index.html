@@ -12,17 +12,10 @@
     <script src="../prism/prism.js"></script>
     <script src="../js/script.js"></script>
     <script src="../js/nolabuttons.js"></script>
+    <script src="../../backend/js/nola.js"></script>
 </head>
 <body>
     <header>
-        <div id="previewContainer">
-            <i class="fa fa-pencil-square-o fa-2x" id="edit" aria-hidden="true">
-                <span class="faTooltip">Back to editor</span>
-            </i>
-            <i class="fa fa-share fa-2x" aria-hidden="true">
-                <span class="faTooltip">Preview mode</span>
-            </i>
-        </div>
         <nav>
             <div></div>
             <img src="../../img/aspitlogo.png" alt="AspIT logo">
@@ -31,26 +24,16 @@
     </header>
     <main>
         <article id="left">
-            <h1 data-editable>AspIT Exercise Manager</h1>
-            <h5 data-editable>Lasse Hels</h5>
-            <p class="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos sint cumque aperiam perspiciatis delectus. Facere possimus aperiam <a href="#">Linktest</a> laboriosam sed, ut natus aut corporis quis ad dolorem. Exercitationem perspiciatis ab ullam! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui, nisi unde amet alias animi suscipit ad magni <sup><span class="footnote">Footnote one test test</span></sup> temporibus quis, rem obcaecati aut impedit <code class="code">Code test</code> deserunt natus quia molestiae adipisci fuga expedita.</p>
-            
-            <pre class="language-csharp"><code><xmp>
-var names = new List<string>() { "John", "Tom", "Peter" };
-
-foreach (string name in names)
-{
-    Console.WriteLine(name);
-}
-            </xmp></code></pre>
-
-            
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/sd9dngYwu8I" frameborder="0" gesture="media" allowfullscreen></iframe>
-            <ul>
-                <li>Test</li>
-                <li>Test</li>
-                <li>Test</li>
-            </ul>
+            <nav>
+                <i class="fa fa-pencil-square-o fa-2x" id="edit" aria-hidden="true">
+                    <span class="faTooltip">Back to editor</span>
+                </i>
+                <i class="fa fa-file-text fa-2x" id="preview" aria-hidden="true">
+                    <span class="faTooltip">Preview mode</span>
+                </i>
+            </nav>
+            <h1 id="title" data-editable>AspIT Exercise Manager</h1>
+            <h5 id="author" data-editable>Lasse Hels</h5>
             <section class="editor-wrapper">
                 <div class="toolbar">
                     <button id="headerBig" class="editor-button">
@@ -102,13 +85,17 @@ foreach (string name in names)
                         <span class="tooltiptext">Iframe</span>
                 </button>
                 </div>
-                <textarea class="editor" placeholder="Description..."></textarea>
+                <textarea class="editor" id="LMLeditor" placeholder="Description..."></textarea>
             </section>
+            <article id="mainContent"></article>
         </article>
         <aside id="right">
             <div>
                 <button id="saveBtn">Save</button>
                 <button id="publishBtn">Publish</button>
+            </div>
+            <div>
+                <button id="deleteBtn">Delete</button>
             </div>
         </aside>
     </main>

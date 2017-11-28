@@ -1,259 +1,299 @@
-var inputLines;
-var leftOutputLines;
-var leftOutput;
-var rightOutputLines;
-var rightOutput;
-
-const header1Syntax = '#';
-const header2Syntax = '##';
-const header3Syntax = '###';
-const codeblockSyntax = ';;';
-const imageSyntax = '!!';
-const iframeSyntax = '??';
-const listSyntax = '*';
-
-function LMLTranslate() {
-    textarea = document.getElementById("LMLeditor");
-    input = textarea.value;
-    leftOutput = "";
-    rightOutput = "";
-    inputLines = input.split(/\n/g);
-    leftOutputLines = Array(inputLines.length);
-    rightOutputLines = [];
+$(document).ready(function() {
     
-    for (i = 0; i < inputLines.length; i++) {
-        switch(inputLines[i].split(' ')[0]) {
-            case header1Syntax:
-                Header1(i);
-                break;
-                
-            case header2Syntax:
-                Header2(i);
-                break;
-                
-            case header3Syntax:
-                Header3(i);
-                break;
-                
-            case codeblockSyntax:
-                Codeblock(i);
-                break;
-                
-            case imageSyntax:
-                Image(i);
-                break;
-                
-            case iframeSyntax:
-                Iframe(i);
-                break;
-                
-            case listSyntax:
-                List(i);
-                break;
-                
-            default:
-                Paragraph(i);
-                break;
-        }
-        leftOutput += leftOutputLines[i] + '\n';
-    }
+    var $editBtn = $('#edit');
+    var $previewBtn = $('#preview');
+    var $prevContent;
+    var $prevLeftHTML;
+    var $prevRightHTML;
     
-    LeftOutputFormatting();
+    $previewBtn.click(function() {
+        
+        $prevContent = $('#LMLeditor').val();
+        $prevLeftHTML = $('#mainContent').html();
+        $prevRightHTML = $('#right').html();
+        
+        LMLTranslate();
+        
+        $('#title').removeAttr('data-editable');
+        $('#author').removeAttr('data-editable');
+        $('.editor-wrapper').css('display', 'none');
+        
+        $('#preview').css('display', 'none');
+        $('#edit').css('display', 'inline-block');
+        
+    });
     
-    for (i = 0; i < rightOutputLines.length; i++) {
-        rightOutput += rightOutputLines[i] + '\n';
-    }
+    $editBtn.click(function() {
+        
+        $('#title').attr('data-editable', '');
+        $('#author').attr('data-editable', '');
+        $('#mainContent').html($prevLeftHTML);
+        $('#right').html($prevRightHTML);
+        $('.editor-wrapper').css('display', 'block');
+        $('#LMLeditor').val($prevContent);
+        
+        $('#preview').css('display', 'inline-block');
+        $('#edit').css('display', 'none');
+        
+    });
     
-    RightOutputFormatting();
-    
-    console.log(leftOutput);
-    console.log(rightOutput);
-}
+    var inputLines;
+    var leftOutputLines;
+    var leftOutput;
+    var rightOutputLines;
+    var rightOutput;
 
+    const header1Syntax = '#';
+    const header2Syntax = '##';
+    const header3Syntax = '###';
+    const codeblockSyntax = ';;';
+    const imageSyntax = '!!';
+    const iframeSyntax = '??';
+    const listSyntax = '*';
 
-function Header1(i) {
-    leftOutputLines[i] = '<h2>' + inputLines[i].slice(header1Syntax.length + 1) + '</h2>';
-}
+    function LMLTranslate() {
+        textarea = document.getElementById("LMLeditor");
+        input = textarea.value;
+        leftOutput = "";
+        rightOutput = "";
+        inputLines = input.split(/\n/g);
+        leftOutputLines = Array(inputLines.length);
+        rightOutputLines = [];
 
-function Header2(i) {
-    leftOutputLines[i] = '<h3>' + inputLines[i].slice(header2Syntax.length + 1) + '</h3>';
-}
+        for (i = 0; i < inputLines.length; i++) {
+            switch(inputLines[i].split(' ')[0]) {
+                case header1Syntax:
+                    Header1(i);
+                    break;
 
-function Header3(i) {
-    leftOutputLines[i] = '<h4>' + inputLines[i].slice(header3Syntax.length + 1) + '</h4>';
-}
+                case header2Syntax:
+                    Header2(i);
+                    break;
 
-function Codeblock(i) {
-    if (i == 0){
-        if (i == inputLines.length - 1) {
-            leftOutputLines[i] = '<p class="codeblock">' + inputLines[i].slice(codeblockSyntax.length + 1) + '</p>';
-        }
-        else {
-            leftOutputLines[i] = '<p class="codeblock">' + inputLines[i].slice(codeblockSyntax.length + 1);
-            if (inputLines[i + 1].split(' ')[0] != ';;') {
-                leftOutputLines[i] += '</p>';
+                case header3Syntax:
+                    Header3(i);
+                    break;
+
+                case codeblockSyntax:
+                    Codeblock(i);
+                    break;
+
+                case imageSyntax:
+                    Image(i);
+                    break;
+
+                case iframeSyntax:
+                    Iframe(i);
+                    break;
+
+                case listSyntax:
+                    List(i);
+                    break;
+
+                default:
+                    Paragraph(i);
+                    break;
             }
+            leftOutput += leftOutputLines[i] + '\n';
         }
+
+        LeftOutputFormatting();
+
+        for (i = 0; i < rightOutputLines.length; i++) {
+            rightOutput += rightOutputLines[i] + '\n';
+        }
+
+        RightOutputFormatting();
+
+        $('#mainContent').html( $('#mainContent').html() + leftOutput );
+        $('#right').html( $('#right').html() + rightOutput);
     }
-    else if (i == inputLines.length - 1) {
-        if (inputLines[i - 1].split(' ')[0] != ';;') {
-            leftOutputLines[i] = '<p class="codeblock">' + inputLines[i].slice(codeblockSyntax.length + 1) + '</p>';
-        }
-        else {
-            leftOutputLines[i] = '<br>' + inputLines[i].slice(codeblockSyntax.length + 1) + '</p>';
-        }
+
+
+    function Header1(i) {
+        leftOutputLines[i] = '<h2>' + inputLines[i].slice(header1Syntax.length + 1) + '</h2>';
     }
-    else if (i > 0 && i < inputLines.length - 1){
-        if (inputLines[i - 1].split(' ')[0] != ';;') {
-            if (inputLines[i + 1].split(' ')[0] != ';;'){
-                leftOutputLines[i] = '<p class="codeblock">' + inputLines[i].slice(codeblockSyntax.length + 1) + '</p>'
+
+    function Header2(i) {
+        leftOutputLines[i] = '<h3>' + inputLines[i].slice(header2Syntax.length + 1) + '</h3>';
+    }
+
+    function Header3(i) {
+        leftOutputLines[i] = '<h4>' + inputLines[i].slice(header3Syntax.length + 1) + '</h4>';
+    }
+
+    function Codeblock(i) {
+        if (i == 0){
+            if (i == inputLines.length - 1) {
+                leftOutputLines[i] = '<p class="codeblock">' + inputLines[i].slice(codeblockSyntax.length + 1) + '</p>';
             }
             else {
                 leftOutputLines[i] = '<p class="codeblock">' + inputLines[i].slice(codeblockSyntax.length + 1);
+                if (inputLines[i + 1].split(' ')[0] != ';;') {
+                    leftOutputLines[i] += '</p>';
+                }
             }
         }
-        else if (inputLines[i + 1].split(' ')[0] != ';;') {
-            leftOutputLines[i] = '<br>' + inputLines[i].slice(codeblockSyntax.length + 1) + '</p>';
+        else if (i == inputLines.length - 1) {
+            if (inputLines[i - 1].split(' ')[0] != ';;') {
+                leftOutputLines[i] = '<p class="codeblock">' + inputLines[i].slice(codeblockSyntax.length + 1) + '</p>';
+            }
+            else {
+                leftOutputLines[i] = '<br>' + inputLines[i].slice(codeblockSyntax.length + 1) + '</p>';
+            }
         }
-        else {
-            leftOutputLines[i] = '<br>' + inputLines[i].slice(codeblockSyntax.length + 1);
+        else if (i > 0 && i < inputLines.length - 1){
+            if (inputLines[i - 1].split(' ')[0] != ';;') {
+                if (inputLines[i + 1].split(' ')[0] != ';;'){
+                    leftOutputLines[i] = '<p class="codeblock">' + inputLines[i].slice(codeblockSyntax.length + 1) + '</p>'
+                }
+                else {
+                    leftOutputLines[i] = '<p class="codeblock">' + inputLines[i].slice(codeblockSyntax.length + 1);
+                }
+            }
+            else if (inputLines[i + 1].split(' ')[0] != ';;') {
+                leftOutputLines[i] = '<br>' + inputLines[i].slice(codeblockSyntax.length + 1) + '</p>';
+            }
+            else {
+                leftOutputLines[i] = '<br>' + inputLines[i].slice(codeblockSyntax.length + 1);
+            }
         }
     }
-}
 
-function Image(i) {
-    tags = inputLines[i].split(' ');
-    link = "";
-    size = "left";
-    text = "";
-    if (tags.length > 1) {
-        link = tags[1];
-        if (tags.length > 2) {
-            if (tags[2] == 'left' || tags[2] == 'right' || tags[2] == 'big') {
-                size = tags[2];
-                if (tags.length > 3) {
-                    for (j = 3; j < tags.length; j++) {
-                        if (j == 3) { text += tags[j]; }
+    function Image(i) {
+        tags = inputLines[i].split(' ');
+        link = "";
+        size = "left";
+        text = "";
+        if (tags.length > 1) {
+            link = tags[1];
+            if (tags.length > 2) {
+                if (tags[2] == 'left' || tags[2] == 'right' || tags[2] == 'big') {
+                    size = tags[2];
+                    if (tags.length > 3) {
+                        for (j = 3; j < tags.length; j++) {
+                            if (j == 3) { text += tags[j]; }
+                            else { text += ' ' + tags[j]; }
+                        }
+                    }
+                }
+                else {
+                    for (j = 2; j < tags.length; j++) {
+                        if (j == 2) { text += tags[j]; }
                         else { text += ' ' + tags[j]; }
                     }
                 }
             }
-            else {
-                for (j = 2; j < tags.length; j++) {
-                    if (j == 2) { text += tags[j]; }
-                    else { text += ' ' + tags[j]; }
-                }
-            }
         }
-    }
-    if (size == 'right') {
-        leftOutputLines[i] = '<figure class="right-img-anchor" id="img-anchor-' + i + '">';
-        rightOutputLines.push('<img class="' + size + '-img" url="' + link + '" alt="' + text + '">');
-    }
-    else {
-        leftOutputLines[i] = '<img class="' + size + '-img" url="' + link + '" alt="' + text + '">';
-    }
-}
-
-function Iframe(i) {
-    tags = inputLines[i].split(' ');
-    link = "";
-    if (tags.length > 1) {
-        link = tags[1];
-    }
-    outputLines[i] =
-        '<iframe src="' + link + '" frameborder="0" allowfullscreen></iframe>\n'
-}
-
-function List(i) {
-    if (i == 0){
-        if (i == inputLines.length - 1) {
-            leftOutputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>';
+        if (size == 'right') {
+            leftOutputLines[i] = '<figure class="right-img-anchor" id="img-anchor-' + i + '">';
+            rightOutputLines.push('<img class="' + size + '-img" url="' + link + '" alt="' + text + '">');
         }
         else {
-            leftOutputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>';
-            if (inputLines[i + 1].split(' ')[0] != '*') {
-                leftOutputLines[i] += '\n</ul>';
-            }
+            leftOutputLines[i] = '<img class="' + size + '-img" url="' + link + '" alt="' + text + '">';
         }
     }
-    else if (i == inputLines.length - 1) {
-        if (inputLines[i - 1].split(' ')[0] != '*') {
-            leftOutputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>';
+
+    function Iframe(i) {
+        tags = inputLines[i].split(' ');
+        link = "";
+        if (tags.length > 1) {
+            link = tags[1];
         }
-        else {
-            leftOutputLines[i] = '<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>';
-        }
+        outputLines[i] =
+            '<iframe src="' + link + '" frameborder="0" allowfullscreen></iframe>\n'
     }
-    else if (i > 0 && i < inputLines.length - 1){
-        if (inputLines[i - 1].split(' ')[0] != '*') {
-            if (inputLines[i + 1].split(' ')[0] != '*'){
-                leftOutputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>'
+
+    function List(i) {
+        if (i == 0){
+            if (i == inputLines.length - 1) {
+                leftOutputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>';
             }
             else {
                 leftOutputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>';
+                if (inputLines[i + 1].split(' ')[0] != '*') {
+                    leftOutputLines[i] += '\n</ul>';
+                }
             }
         }
-        else if (inputLines[i + 1].split(' ')[0] != '*') {
-            leftOutputLines[i] = '<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>';
+        else if (i == inputLines.length - 1) {
+            if (inputLines[i - 1].split(' ')[0] != '*') {
+                leftOutputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>';
+            }
+            else {
+                leftOutputLines[i] = '<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>';
+            }
         }
-        else {
-            leftOutputLines[i] = '<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>';
+        else if (i > 0 && i < inputLines.length - 1){
+            if (inputLines[i - 1].split(' ')[0] != '*') {
+                if (inputLines[i + 1].split(' ')[0] != '*'){
+                    leftOutputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>'
+                }
+                else {
+                    leftOutputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>';
+                }
+            }
+            else if (inputLines[i + 1].split(' ')[0] != '*') {
+                leftOutputLines[i] = '<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>';
+            }
+            else {
+                leftOutputLines[i] = '<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>';
+            }
         }
     }
-}
 
-function Paragraph(i) {
-    leftOutputLines[i] = '<p>' + inputLines[i] + '</p>';
-}
+    function Paragraph(i) {
+        leftOutputLines[i] = '<p>' + inputLines[i] + '</p>';
+    }
 
 
-function LeftOutputFormatting() {
-    n = 1;
-    leftOutput = leftOutput.replace(/\$\$(.*)\$\$/g, function(a, b) {
-        rightOutputLines.push('<p class="footnote" id="footnote-' + n + '" data-footnote="' + n + '"><a href="#footref-' + n + '"><sup>' + n + '</sup></a>' + b + '</p>');
-        return '<a href="#footnote-' + n + '"><sup class="footref" id="footref-' + n + '" data-footref="' + n + '">' + n++ + '</sup></a>';
-    });
-    
-    leftOutput = leftOutput.replace(/\*\*([^\*]*)\*\*/g, function(a, b) {
-        return '<strong>' + b + '</strong>';
-    });
-    
-    leftOutput = leftOutput.replace(/\*([^\*]*)\*/g, function(a, b) {
-        return '<en>' + b + '</en>';
-    });
-    
-    leftOutput = leftOutput.replace(/\[\[(.*)\]\]/g, function(a, b) {
-        return '<code>' + b + '</code>';
-    });
-    
-    leftOutput = leftOutput.replace(/\{\{(.*)\}(.*)\}/g, function(a, b, c) {
-        return '<a href="' + c + '">' + b + '</a>';
-    });
-    
-    leftOutput = leftOutput.replace(/\#\{(.+)\{(.*)\}\}/g, function(a, b, c) {
-        return '<i style="color:' + b + '">' + c + '</i>';
-    });
-}
+    function LeftOutputFormatting() {
+        n = 1;
+        leftOutput = leftOutput.replace(/\$\$(.*)\$\$/g, function(a, b) {
+            rightOutputLines.push('<p class="footnote" id="footnote-' + n + '" data-footnote="' + n + '"><a href="#footref-' + n + '"><sup>' + n + '</sup></a>' + b + '</p>');
+            return '<a href="#footnote-' + n + '"><sup class="footref" id="footref-' + n + '" data-footref="' + n + '">' + n++ + '</sup></a>';
+        });
 
-function RightOutputFormatting() {
-    rightOutput = rightOutput.replace(/\*\*([^\*]*)\*\*/g, function(a, b) {
-        return '<strong>' + b + '</strong>';
-    });
-    
-    rightOutput = rightOutput.replace(/\*([^\*]*)\*/g, function(a, b) {
-        return '<en>' + b + '</en>';
-    });
-    
-    rightOutput = rightOutput.replace(/\[\[(.*)\]\]/g, function(a, b) {
-        return '<code>' + b + '</code>';
-    });
-    
-    rightOutput = rightOutput.replace(/\{\{(.*)\}(.*)\}/g, function(a, b, c) {
-        return '<a href="' + c + '">' + b + '</a>';
-    });
-    
-    rightOutput = rightOutput.replace(/\#\{(.+)\{(.*)\}\}/g, function(a, b, c) {
-        return '<i style="color:' + b + '">' + c + '</i>';
-    });
-}
+        leftOutput = leftOutput.replace(/\*\*([^\*]*)\*\*/g, function(a, b) {
+            return '<strong>' + b + '</strong>';
+        });
+
+        leftOutput = leftOutput.replace(/\*([^\*]*)\*/g, function(a, b) {
+            return '<en>' + b + '</en>';
+        });
+
+        leftOutput = leftOutput.replace(/\[\[(.*)\]\]/g, function(a, b) {
+            return '<code>' + b + '</code>';
+        });
+
+        leftOutput = leftOutput.replace(/\{\{(.*)\}(.*)\}/g, function(a, b, c) {
+            return '<a href="' + c + '">' + b + '</a>';
+        });
+
+        leftOutput = leftOutput.replace(/\#\{(.+)\{(.*)\}\}/g, function(a, b, c) {
+            return '<i style="color:' + b + '">' + c + '</i>';
+        });
+    }
+
+    function RightOutputFormatting() {
+        rightOutput = rightOutput.replace(/\*\*([^\*]*)\*\*/g, function(a, b) {
+            return '<strong>' + b + '</strong>';
+        });
+
+        rightOutput = rightOutput.replace(/\*([^\*]*)\*/g, function(a, b) {
+            return '<en>' + b + '</en>';
+        });
+
+        rightOutput = rightOutput.replace(/\[\[(.*)\]\]/g, function(a, b) {
+            return '<code>' + b + '</code>';
+        });
+
+        rightOutput = rightOutput.replace(/\{\{(.*)\}(.*)\}/g, function(a, b, c) {
+            return '<a href="' + c + '">' + b + '</a>';
+        });
+
+        rightOutput = rightOutput.replace(/\#\{(.+)\{(.*)\}\}/g, function(a, b, c) {
+            return '<i style="color:' + b + '">' + c + '</i>';
+        });
+    }
+});
