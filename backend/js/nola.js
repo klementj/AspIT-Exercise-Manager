@@ -13,6 +13,8 @@ $(document).ready(function() {
     const imageSyntax = '!!';
 //    const iframeSyntax = '??';
     const listSyntax = '*';
+    
+    var codeblocking = false;
 
     function LMLTranslate() {
         textarea = document.getElementById("LMLeditor");
@@ -24,38 +26,50 @@ $(document).ready(function() {
         rightOutputLines = [];
 
         for (i = 0; i < inputLines.length; i++) {
-            switch(inputLines[i].split(' ')[0]) {
-                case header1Syntax:
-                    Header1(i);
-                    break;
+            if (!codeblocking) {
+                switch(inputLines[i].split(' ')[0]) {
+                    case header1Syntax:
+                        Header1(i);
+                        break;
 
-                case header2Syntax:
-                    Header2(i);
-                    break;
+                    case header2Syntax:
+                        Header2(i);
+                        break;
 
-                case header3Syntax:
-                    Header3(i);
-                    break;
+                    case header3Syntax:
+                        Header3(i);
+                        break;
 
-                case codeblockSyntax:
-                    Codeblock(i);
-                    break;
+                    case codeblockSyntax:
+                        Codeblock(i);
+                        break;
 
-                case imageSyntax:
-                    Image(i);
-                    break;
+                    case imageSyntax:
+                        Image(i);
+                        break;
 
-//                case iframeSyntax:
-//                    Iframe(i);
-//                    break;
+    //                case iframeSyntax:
+    //                    Iframe(i);
+    //                    break;
 
-                case listSyntax:
-                    List(i);
-                    break;
+                    case listSyntax:
+                        List(i);
+                        break;
 
-                default:
-                    Paragraph(i);
-                    break;
+                    default:
+                        Paragraph(i);
+                        break;
+                }
+            }
+            else {
+                switch(inputLines[i].split(' ')[0]) {
+                    case codeblockSyntax:
+                        Codeblock(i);
+                        break;
+                    default:
+                        leftOutputLines[i] = inputLines[i];
+                        break;
+                }
             }
             leftOutput += leftOutputLines[i] + '\n';
         }
@@ -85,50 +99,16 @@ $(document).ready(function() {
     }
 
     function Codeblock(i) {
-        if (i == 0){
-            if (i == inputLines.length - 1) {
-                leftOutputLines[i] = '<p class="codeblock">' + inputLines[i].slice(codeblockSyntax.length + 1) + '</p>';
-            }
-            else {
-                leftOutputLines[i] = '<p class="codeblock">' + inputLines[i].slice(codeblockSyntax.length + 1);
-                if (inputLines[i + 1].split(' ')[0] != ';;') {
-                    leftOutputLines[i] += '</p>';
-                }
-            }
+        if (codeblocking) {
+            leftOutputLines[i] = '</xmp></code></pre>';
         }
-        else if (i == inputLines.length - 1) {
-            if (inputLines[i - 1].split(' ')[0] != ';;') {
-                leftOutputLines[i] = '<p class="codeblock">' + inputLines[i].slice(codeblockSyntax.length + 1) + '</p>';
-            }
-            else {
-                leftOutputLines[i] = '<br>' + inputLines[i].slice(codeblockSyntax.length + 1) + '</p>';
-            }
-        }
-        else if (i > 0 && i < inputLines.length - 1){
-            if (inputLines[i - 1].split(' ')[0] != ';;') {
-                if (inputLines[i + 1].split(' ')[0] != ';;'){
-                    leftOutputLines[i] = '<p class="codeblock">' + inputLines[i].slice(codeblockSyntax.length + 1) + '</p>'
-                }
-                else {
-                    leftOutputLines[i] = '<p class="codeblock">' + inputLines[i].slice(codeblockSyntax.length + 1);
-                }
-            }
-            else if (inputLines[i + 1].split(' ')[0] != ';;') {
-                leftOutputLines[i] = '<br>' + inputLines[i].slice(codeblockSyntax.length + 1) + '</p>';
-            }
-            else {
-                leftOutputLines[i] = '<br>' + inputLines[i].slice(codeblockSyntax.length + 1);
-            }
+        
+        else {
+            language = inputLines[i].split(' ')[1].toLowerCase();
+            leftOutputLines[i] = '<pre><code class="language-' + language + '"><xmp>';
+            codeblocking = true;
         }
     }
-    if (size == 'right') {
-        leftOutputLines[i] = '<figure class="right-img-anchor" id="img-anchor-' + i + '"></figure>';
-        rightOutputLines.push('<img class="' + size + '-img" url="' + link + '" alt="' + text + '">');
-    }
-    else {
-        leftOutputLines[i] = '<img class="' + size + '-img" url="' + link + '" alt="' + text + '">';
-    }
-}
 
     function Image(i) {
         tags = inputLines[i].split(' ');
@@ -223,33 +203,9 @@ $(document).ready(function() {
             return '<a href="#footnote-' + n + '"><sup class="footref" id="footref-' + n + '" data-footref="' + n + '">' + n++ + '</sup></a>';
         });
 
-function LeftOutputFormatting() {
-    n = 0;
-    leftOutput = leftOutput.replace(/\$\$(.*)\$\$/g, function(a, b) {
-        rightOutputLines.push('<p class="footnote" id="footnote-' + n + '" data-footnote="' + n + '"><a href="#footref-' + n + '"><sup>' + n + '</sup></a>' + b + '</p>');
-        return '<a href="#footnote-' + n + '"><sup class="footref" id="footref-' + n + '" data-footref="' + n + '">' + n++ + '</sup></a>';
-    });
-    
-    leftOutput = leftOutput.replace(/\*\*([^\*]*)\*\*/g, function(a, b) {
-        return '<strong>' + b + '</strong>';
-    });
-    
-    leftOutput = leftOutput.replace(/\*([^\*]*)\*/g, function(a, b) {
-        return '<en>' + b + '</en>';
-    });
-    
-    leftOutput = leftOutput.replace(/\[\[(.*)\]\]/g, function(a, b) {
-        return '<code>' + b + '</code>';
-    });
-    
-    leftOutput = leftOutput.replace(/\{\{(.*)\}(.*)\}/g, function(a, b, c) {
-        return '<a href="' + c + '">' + b + '</a>';
-    });
-    
-    leftOutput = leftOutput.replace(/\#\{(.+)\{(.*)\}\}/g, function(a, b, c) {
-        return '<i style="color:' + b + '">' + c + '</i>';
-    });
-}
+        leftOutput = leftOutput.replace(/\*\*([^\*]*)\*\*/g, function(a, b) {
+            return '<strong>' + b + '</strong>';
+        });
 
         leftOutput = leftOutput.replace(/\*([^\*]*)\*/g, function(a, b) {
             return '<em>' + b + '</em>';
