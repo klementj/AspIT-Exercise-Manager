@@ -1,42 +1,5 @@
 $(document).ready(function() {
     
-    var $editBtn = $('#edit');
-    var $previewBtn = $('#preview');
-    var $prevContent;
-    var $prevLeftHTML;
-    var $prevRightHTML;
-    
-    $previewBtn.click(function() {
-        
-        $prevContent = $('#LMLeditor').val();
-        $prevLeftHTML = $('#mainContent').html();
-        $prevRightHTML = $('#right').html();
-        
-        LMLTranslate();
-        
-        $('#title').removeAttr('data-editable');
-        $('#author').removeAttr('data-editable');
-        $('.editor-wrapper').css('display', 'none');
-        
-        $('#preview').css('display', 'none');
-        $('#edit').css('display', 'inline-block');
-        
-    });
-    
-    $editBtn.click(function() {
-        
-        $('#title').attr('data-editable', '');
-        $('#author').attr('data-editable', '');
-        $('#mainContent').html($prevLeftHTML);
-        $('#right').html($prevRightHTML);
-        $('.editor-wrapper').css('display', 'block');
-        $('#LMLeditor').val($prevContent);
-        
-        $('#preview').css('display', 'inline-block');
-        $('#edit').css('display', 'none');
-        
-    });
-    
     var inputLines;
     var leftOutputLines;
     var leftOutput;
@@ -48,7 +11,7 @@ $(document).ready(function() {
     const header3Syntax = '###';
     const codeblockSyntax = ';;';
     const imageSyntax = '!!';
-    const iframeSyntax = '??';
+//    const iframeSyntax = '??';
     const listSyntax = '*';
 
     function LMLTranslate() {
@@ -82,9 +45,9 @@ $(document).ready(function() {
                     Image(i);
                     break;
 
-                case iframeSyntax:
-                    Iframe(i);
-                    break;
+//                case iframeSyntax:
+//                    Iframe(i);
+//                    break;
 
                 case listSyntax:
                     List(i);
@@ -108,8 +71,7 @@ $(document).ready(function() {
         $('#mainContent').html( $('#mainContent').html() + leftOutput );
         $('#right').html( $('#right').html() + rightOutput);
     }
-
-
+    
     function Header1(i) {
         leftOutputLines[i] = '<h2>' + inputLines[i].slice(header1Syntax.length + 1) + '</h2>';
     }
@@ -168,8 +130,8 @@ $(document).ready(function() {
         if (tags.length > 1) {
             link = tags[1];
             if (tags.length > 2) {
-                if (tags[2] == 'left' || tags[2] == 'right' || tags[2] == 'big') {
-                    size = tags[2];
+                if (tags[2].toLowerCase() == 'left' || tags[2].toLowerCase() == 'right' || tags[2].toLowerCase() == 'big') {
+                    size = tags[2].toLowerCase();
                     if (tags.length > 3) {
                         for (j = 3; j < tags.length; j++) {
                             if (j == 3) { text += tags[j]; }
@@ -187,22 +149,22 @@ $(document).ready(function() {
         }
         if (size == 'right') {
             leftOutputLines[i] = '<figure class="right-img-anchor" id="img-anchor-' + i + '">';
-            rightOutputLines.push('<img class="' + size + '-img" url="' + link + '" alt="' + text + '">');
+            rightOutputLines.push('<img class="' + size + '-img" src="' + link + '" alt="' + text + '">');
         }
         else {
-            leftOutputLines[i] = '<img class="' + size + '-img" url="' + link + '" alt="' + text + '">';
+            leftOutputLines[i] = '<img class="' + size + '-img" src="' + link + '" alt="' + text + '">';
         }
     }
 
-    function Iframe(i) {
-        tags = inputLines[i].split(' ');
-        link = "";
-        if (tags.length > 1) {
-            link = tags[1];
-        }
-        outputLines[i] =
-            '<iframe src="' + link + '" frameborder="0" allowfullscreen></iframe>\n'
-    }
+//    function Iframe(i) {
+//        tags = inputLines[i].split(' ');
+//        link = "";
+//        if (tags.length > 1) {
+//            link = tags[1];
+//        }
+//        leftOutputLines[i] =
+//            '<iframe src="' + link + '" frameborder="0" allowfullscreen></iframe>\n'
+//    }
 
     function List(i) {
         if (i == 0){
@@ -246,7 +208,6 @@ $(document).ready(function() {
         leftOutputLines[i] = '<p>' + inputLines[i] + '</p>';
     }
 
-
     function LeftOutputFormatting() {
         n = 1;
         leftOutput = leftOutput.replace(/\$\$(.*)\$\$/g, function(a, b) {
@@ -259,7 +220,7 @@ $(document).ready(function() {
         });
 
         leftOutput = leftOutput.replace(/\*([^\*]*)\*/g, function(a, b) {
-            return '<en>' + b + '</en>';
+            return '<em>' + b + '</em>';
         });
 
         leftOutput = leftOutput.replace(/\[\[(.*)\]\]/g, function(a, b) {
@@ -296,4 +257,55 @@ $(document).ready(function() {
             return '<i style="color:' + b + '">' + c + '</i>';
         });
     }
+    
+    var $editBtn = $('#edit');
+    var $previewBtn = $('#preview');
+    var $prevContent;
+    var $prevLeftHTML;
+    var $prevRightHTML;
+    
+    $previewBtn.click(function() {
+        
+        // Gets current HTML and textarea value so we can restore them later
+        $prevContent = $('#LMLeditor').val();
+        $prevLeftHTML = $('#mainContent').html();
+        $prevRightHTML = $('#right').html();
+        
+        // Removes the data-editable attribute from title and author
+        $('#title').removeAttr('data-editable');
+        $('#author').removeAttr('data-editable');
+        
+        // Hides text editor
+        $('.editor-wrapper').css('display', 'none');
+        
+        // Translates text in textarea from syntax to HTML elements
+        LMLTranslate();
+        
+        // Swaps which button is shown
+        $previewBtn.css('display', 'none');
+        $editBtn.css('display', 'inline-block');
+        
+    });
+    
+    $editBtn.click(function() {
+        
+        // Restores data-editable attribute on title and author
+        $('#title').attr('data-editable', '');
+        $('#author').attr('data-editable', '');
+        
+        // Restores HTML to what it was previous to preview
+        $('#mainContent').html($prevLeftHTML);
+        $('#right').html($prevRightHTML);
+        
+        // Unhides textarea
+        $('.editor-wrapper').css('display', 'block');
+        
+        // Sets textarea content to what it was previous to preview
+        $('#LMLeditor').val($prevContent);
+        
+        // Swaps which button is shown
+        $previewBtn.css('display', 'inline-block');
+        $editBtn.css('display', 'none');
+        
+    });
 });

@@ -20,6 +20,13 @@ $font: 'Oxygen', sans-serif;
     margin: 0px;
 }
 
+.disable-select {
+  -webkit-user-select: none;  
+  -moz-user-select: none;    
+  -ms-user-select: none;      
+  user-select: none;
+}
+
 html {
     font-size: 16px;
 }
@@ -89,18 +96,17 @@ body {
             font-weight: bold;
         }
         
-        .footnote {
+        .asd {
             float: right;
-            width: 50%;
-            margin-right: -60%;
-            margin-top: 5px;
+            margin-right: -50%;
+        }
+        
+        .footnote {
         }
         
         .footnote::before {
             content: counter(sidenote-counter) " ";
-            font-size: 0.8rem;
             position: relative;
-            top: -0.5px;
         }
         
         sup::before {
@@ -128,7 +134,8 @@ body {
                     .faTooltip {
                         width: 120px;
                         visibility: hidden;
-                        background-color: black;
+                        opacity: 0;
+                        background-color: #555;
                         font-family: $font;
                         font-size: 1rem;
                         color: #fff;
@@ -139,11 +146,13 @@ body {
                         z-index: 1;
                         bottom: 125%;
                         margin-left: -54px;
+                        transition: 0.2s;
                     }
                 }
 
                 i:hover .faTooltip {
                     visibility: visible;
+                    opacity: 1;
                 }
 
                 i .faTooltip::after {
@@ -154,7 +163,7 @@ body {
                     margin-left: -5px;
                     border-width: 5px;
                     border-style: solid;
-                    border-color: black transparent transparent transparent;
+                    border-color: #555 transparent transparent transparent;
                 }
 
                 #edit {
@@ -163,6 +172,7 @@ body {
             }
             
             .editor-wrapper {
+                display: none;
                 
                 .toolbar {
                     border: 1px solid rgb(169, 169, 169);
@@ -175,9 +185,10 @@ body {
                     .editor-button {
                         height: 30px;
                         width: 40px;
+                        position: relative;
                         
                         .tooltiptext {
-                            width: 100px;
+                            width: 120px;
                             visibility: hidden;
                             background-color: #555;
                             color: #fff;
@@ -186,16 +197,29 @@ body {
                             border-radius: 6px;
                             position: absolute;
                             z-index: 1;
-                            bottom: 125%;
-                            left: -39px;
+                            bottom: 130%;
+                            left: 50%;
+                            margin-left: -64px;
                             opacity: 0;
-                            transition: opacity 0.2s;
+                            transition: 0.2s;
                         }
                         
                         #code {
                             font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
                             font-weight: bold;
                         }
+                    }
+                    
+                    .editor-button .tooltiptext::after {
+                        content: " ";
+                        position: absolute;
+                        top: 100%;
+                        left: 50%;
+                        margin-left: -5px;
+                        color: #555;
+                        border-width: 5px;
+                        border-style: solid;
+                        border-color: #555 transparent transparent transparent;
                     }
                     
                     .editor-button:hover .tooltiptext {
@@ -222,6 +246,7 @@ body {
             div:nth-child(1) {
                 display: inline-flex;
                 flex-direction: column;
+                margin-bottom: 10px;
                 
                 button {
                     @include btnStyle(linear-gradient(#45B572, #3c9860));
