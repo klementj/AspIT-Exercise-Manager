@@ -21,7 +21,7 @@ $(document).ready(function() {
     });
     
     $('#footnote').click(function(){
-        InsertText('', '$', '$', false);
+        InsertText('', '$$', '$$', false);
     });
     
     $('#italic').click(function(){
@@ -32,20 +32,20 @@ $(document).ready(function() {
         InsertText('', '**', '**', false);
     });
     
+    $('#textColor').click(function() {
+        InsertText('#{Black', '{', '}}', false); 
+    });
+    
     $('#inlineCode').click(function(){
-        InsertText('', ';;', ';;', false);
+        InsertText('', '[[', ']]', false);
     });
     
     $('#link').click(function(){
-        InsertText('@', '{', '}', false);
+        InsertText('', '{{', '}Link}', false);
     });
     
     $('#image').click(function(){
-        InsertText('!! ', 'LEFT ', '', true);
-    });
-    
-    $('#iframe').click(function(){
-        InsertText('?? ', '400 300 ', '', true);
+        InsertText('!! ', 'https://source.unsplash.com/random/400x400 ', 'left', true);
     });
     
     // Textarea we will be editing in

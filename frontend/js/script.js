@@ -4,7 +4,7 @@ $(document).ready(function() {
         
         const $element = $(this);
         
-        // Reading relevant css properties from element, so button can be visually similar to element
+        // Reading relevant css properties from element, so input can be visually similar to element
         const $width = $element.width();
         const $height = $element.height();
         const $fontFamily = $element.css('font-family');
