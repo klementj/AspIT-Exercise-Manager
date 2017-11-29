@@ -12,17 +12,17 @@ h1 {
 
 h2 {
     font-weight: 400;
-    @include textStyling(2.8rem, 30px, inline-block, italic);
+    @include textStyling(2.8rem, 20px, block, italic);
 }
 
 h3 {
     font-weight: 400;
-    @include textStyling(2rem, 30px, inline-block, italic);
+    @include textStyling(2rem, 20px, block, italic);
 }
 
 h4 {
     font-weight: 400;
-    @include textStyling(1.6rem, 30px, inline-block, italic);
+    @include textStyling(1.6rem, 20px, block, italic);
 }
 
 .content {
@@ -60,23 +60,22 @@ ul {
     @include textStyling(1rem, 30px, inline-table);
 }
 
-.img-left {
+.left-img {
     max-width: 100%;
     margin-bottom: 30px;
 }
 
-.img-right {
+.right-img {
     width: 100%;
     max-width: 100%;
 }
 
-.img-big {
-    width: 153.8%;
-    max-width: 153.8%;
+.big-img {
+    width: 166%;
+    max-width: 166%;
     margin-bottom: 30px;
 }
 
 iframe {
-    max-width: 100%;
     margin-bottom: 30px;
 }
