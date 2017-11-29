@@ -147,7 +147,7 @@ function Image(i) {
         }
     }
     if (size == 'right') {
-        leftOutputLines[i] = '<figure class="right-img-anchor" id="img-anchor-' + i + '">';
+        leftOutputLines[i] = '<figure class="right-img-anchor" id="img-anchor-' + i + '"></figure>';
         rightOutputLines.push('<img class="' + size + '-img" url="' + link + '" alt="' + text + '">');
     }
     else {
@@ -209,7 +209,7 @@ function Paragraph(i) {
 
 
 function LeftOutputFormatting() {
-    n = 1;
+    n = 0;
     leftOutput = leftOutput.replace(/\$\$(.*)\$\$/g, function(a, b) {
         rightOutputLines.push('<p class="footnote" id="footnote-' + n + '" data-footnote="' + n + '"><a href="#footref-' + n + '"><sup>' + n + '</sup></a>' + b + '</p>');
         return '<a href="#footnote-' + n + '"><sup class="footref" id="footref-' + n + '" data-footref="' + n + '">' + n++ + '</sup></a>';
