@@ -1,58 +1,58 @@
 $(document).ready(function() {
     
     $('#headerBig').click(function(){
-        InsertText('# ', '', '', true);
+        InsertSyntax('# ', '', '', true);
     });
     
     $('#headerMedium').click(function(){
-        InsertText('## ', '', '', true);
+        InsertSyntax('## ', '', '', true);
     });
     
     $('#headerSmall').click(function(){
-        InsertText('### ', '', '', true);
+        InsertSyntax('### ', '', '', true);
     });
     
     $('#list').click(function(){
-        InsertText('* ', '', '', true);
+        InsertSyntax('* ', '', '', true);
     });
     
     $('#codeblock').click(function(){
-        InsertText(';; ', '', '', true);
+        InsertSyntax('', ';; csharp\n\n;;', '', true);
     });
     
     $('#footnote').click(function(){
-        InsertText('', '$$', '$$', false);
+        InsertSyntax('', '$$', '$$', false, 2);
     });
     
     $('#italic').click(function(){
-        InsertText('', '*', '*', false);
+        InsertSyntax('', '*', '*', false, 1);
     });
     
     $('#bold').click(function(){
-        InsertText('', '**', '**', false);
+        InsertSyntax('', '**', '**', false, 2);
     });
     
     $('#textColor').click(function() {
-        InsertText('#{Black', '{', '}}', false); 
+        InsertSyntax('#{Black', '{', '}}', false, 8); 
     });
     
     $('#inlineCode').click(function(){
-        InsertText('', '[[', ']]', false);
+        InsertSyntax('', '[[', ']]', false, 2);
     });
     
     $('#link').click(function(){
-        InsertText('', '{{', '}Link}', false);
+        InsertSyntax('@', '<http://www.aspit.dk/<', '>>', false, 23);
     });
     
     $('#image').click(function(){
-        InsertText('!! ', 'https://source.unsplash.com/random/400x400 ', 'left', true);
+        InsertSyntax('!! ', 'https://source.unsplash.com/random/400x400 ', 'left', true);
     });
     
     // Textarea we will be editing in
     var $element = $('.editor')[0];
     
     // Inserts given LML syntax into textarea
-    function InsertText(prefix, wrapStart, wrapEnd, isLineStarter) {
+    function InsertSyntax(prefix, wrapStart, wrapEnd, isLineStarter, selectionLength) {
         
         $selStart = $element.selectionStart;
         $selEnd = $element.selectionEnd;
@@ -62,6 +62,7 @@ $(document).ready(function() {
         
         // Check if a text selection is present, and if syntax needs to be inserted at the start of a line
         if (($selStart || $selStart == '0') && isLineStarter == false) {
+            
             // New string based on current text selected
             let $newText = GetTextSelection();
             
@@ -72,8 +73,10 @@ $(document).ready(function() {
             AppendTextArea($newText);
             
             $element.focus();
-            $element.selectionStart = $newSelection;
-            $element.selectionEnd = $newSelection;
+            
+            // Preserving our original selection by setting the new selection to the same as the original selection + length of the text we added on
+            $element.selectionStart = $selStart + selectionLength;
+            $element.selectionEnd = $selEnd + selectionLength;
             
         }
         else if (($selStart || $selStart == '0') && isLineStarter == true) {
@@ -94,7 +97,7 @@ $(document).ready(function() {
             $splitContent.forEach(function(item, index) {
                 
                 // Check if item contains our identifier
-                if (item.includes('፨ᕫᪿ˩Ͽ֎')) {
+                if (item.includes(identifier)) {
                     
                     // Removes identifier
                     item = item.replace('፨ᕫᪿ˩Ͽ֎', '');
@@ -118,6 +121,7 @@ $(document).ready(function() {
             $element.value = newValue;
             
             $element.focus();
+            
             $element.selectionStart = $newSelection;
             $element.selectionEnd = $newSelection;
             

@@ -1,8 +1,8 @@
 $(document).ready(function() {
     
     var inputLines;
-    var leftOutputLines;
-    var leftOutput;
+    var outputLines;
+    var output;
     var rightOutputLines;
     var rightOutput;
 
@@ -11,7 +11,6 @@ $(document).ready(function() {
     const header3Syntax = '###';
     const codeblockSyntax = ';;';
     const imageSyntax = '!!';
-//    const iframeSyntax = '??';
     const listSyntax = '*';
     
     var codeblocking = false;
@@ -20,11 +19,9 @@ $(document).ready(function() {
     function LMLTranslate() {
         textarea = document.getElementById("LMLeditor");
         input = textarea.value;
-        leftOutput = "";
-        rightOutput = "";
+        output = "";
         inputLines = input.split(/\n/g);
-        leftOutputLines = Array(inputLines.length);
-        rightOutputLines = [];
+        outputLines = Array(inputLines.length);
 
         for (i = 0; i < inputLines.length; i++) {
             if (!codeblocking) {
@@ -49,12 +46,12 @@ $(document).ready(function() {
                         Image(i);
                         break;
 
-    //                case iframeSyntax:
-    //                    Iframe(i);
-    //                    break;
-
                     case listSyntax:
                         List(i);
+                        break;
+                        
+                    case '':
+                        outputLines[i] = inputLines[i];
                         break;
 
                     default:
@@ -69,49 +66,48 @@ $(document).ready(function() {
                         break;
                     default:
                         if (htmlCodeBlocking) {
-                            leftOutputLines[i] = inputLines[i].replace('<', '&lt');
+                            outputLines[i] = inputLines[i].replace(/\</g, '&lt') + '\n';
                         }
                         else {
-                            leftOutputLines[i] = inputLines[i];
+                            outputLines[i] = inputLines[i] + '\n';
                         }
                         break;
                 }
             }
-            leftOutput += leftOutputLines[i] + '\n';
+            
+            output += outputLines[i];
         }
 
-        LeftOutputFormatting();
+        outputFormatting();
 
-        for (i = 0; i < rightOutputLines.length; i++) {
-            rightOutput += rightOutputLines[i] + '\n';
-        }
-
-        RightOutputFormatting();
-
-        $('#mainContent').html( $('#mainContent').html() + leftOutput );
-        $('#right').html( $('#right').html() + rightOutput);
+        $('#mainContent').html( $('#mainContent').html() + output );
     }
     
     function Header1(i) {
-        leftOutputLines[i] = '<h2>' + inputLines[i].slice(header1Syntax.length + 1) + '</h2>';
+        outputLines[i] = '<h2>' + inputLines[i].slice(header1Syntax.length + 1) + '</h2>\n';
     }
 
     function Header2(i) {
-        leftOutputLines[i] = '<h3>' + inputLines[i].slice(header2Syntax.length + 1) + '</h3>';
+        outputLines[i] = '<h3>' + inputLines[i].slice(header2Syntax.length + 1) + '</h3>\n';
     }
 
     function Header3(i) {
-        leftOutputLines[i] = '<h4>' + inputLines[i].slice(header3Syntax.length + 1) + '</h4>';
+        outputLines[i] = '<h4>' + inputLines[i].slice(header3Syntax.length + 1) + '</h4>\n';
     }
 
     function Codeblock(i) {
         if (codeblocking) {
-            leftOutputLines[i] = '</code></pre>';
+            outputLines[i] = '</code></pre>\n';
+            codeblocking = false;
+            
+            if (htmlCodeBlocking) {
+                htmlCodeBlocking = false;
+            }
         }
         
         else {
             language = inputLines[i].split(' ')[1].toLowerCase();
-            leftOutputLines[i] = '<pre class="language-' + language + '"><code class="language-' + language + '"><xmp>';
+            outputLines[i] = '<pre class="language-' + language + '"><code class="language-' + language + '">';
             codeblocking = true;
             if (language == 'html') { htmlCodeBlocking = true; }
         }
@@ -142,116 +138,78 @@ $(document).ready(function() {
                 }
             }
         }
-        if (size == 'right') {
-            leftOutputLines[i] = '<figure class="right-img-anchor" id="img-anchor-' + i + '">';
-            rightOutputLines.push('<img class="' + size + '-img" src="' + link + '" alt="' + text + '">');
-        }
-        else {
-            leftOutputLines[i] = '<img class="' + size + '-img" src="' + link + '" alt="' + text + '">';
-        }
+        outputLines[i] = '<img class="' + size + '-img" src="' + link + '" alt="' + text + '">\n';
     }
-
-//    function Iframe(i) {
-//        tags = inputLines[i].split(' ');
-//        link = "";
-//        if (tags.length > 1) {
-//            link = tags[1];
-//        }
-//        leftOutputLines[i] =
-//            '<iframe src="' + link + '" frameborder="0" allowfullscreen></iframe>\n'
-//    }
 
     function List(i) {
         if (i == 0){
             if (i == inputLines.length - 1) {
-                leftOutputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>';
+                outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>\n';
             }
             else {
-                leftOutputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>';
+                outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n';
                 if (inputLines[i + 1].split(' ')[0] != '*') {
-                    leftOutputLines[i] += '\n</ul>';
+                    outputLines[i] += '\n</ul>\n';
                 }
             }
         }
         else if (i == inputLines.length - 1) {
             if (inputLines[i - 1].split(' ')[0] != '*') {
-                leftOutputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>';
+                outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>\n';
             }
             else {
-                leftOutputLines[i] = '<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>';
+                outputLines[i] = '<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>\n';
             }
         }
         else if (i > 0 && i < inputLines.length - 1){
             if (inputLines[i - 1].split(' ')[0] != '*') {
                 if (inputLines[i + 1].split(' ')[0] != '*'){
-                    leftOutputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>'
+                    outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>\n'
                 }
                 else {
-                    leftOutputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>';
+                    outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n';
                 }
             }
             else if (inputLines[i + 1].split(' ')[0] != '*') {
-                leftOutputLines[i] = '<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>';
+                outputLines[i] = '<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>\n';
             }
             else {
-                leftOutputLines[i] = '<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>';
+                outputLines[i] = '<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n';
             }
         }
     }
 
     function Paragraph(i) {
-        leftOutputLines[i] = '<p>' + inputLines[i] + '</p>';
+        outputLines[i] = '<p class="content">' + inputLines[i] + '</p>\n';
     }
 
-    function LeftOutputFormatting() {
-        n = 1;
-        leftOutput = leftOutput.replace(/\$\$(.*)\$\$/g, function(a, b) {
-            rightOutputLines.push('<p class="footnote" id="footnote-' + n + '" data-footnote="' + n + '"><a href="#footref-' + n + '"><sup>' + n + '</sup></a>' + b + '</p>');
-            return '<a href="#footnote-' + n + '"><sup class="footref" id="footref-' + n + '" data-footref="' + n + '">' + n++ + '</sup></a>';
+    function outputFormatting() {
+        output = output.replace(/\$\$(.*)\$\$/g, function(a, b) {
+            return '<label for="sidenote" class="sidenoteCounter"></label>\n'
+                + '<span class="sidenote">' + b + '</span>';
         });
 
-        leftOutput = leftOutput.replace(/\*\*([^\*]*)\*\*/g, function(a, b) {
+        output = output.replace(/\*\*([^\*]*)\*\*/g, function(a, b) {
             return '<strong>' + b + '</strong>';
         });
 
-        leftOutput = leftOutput.replace(/\*([^\*]*)\*/g, function(a, b) {
+        output = output.replace(/\*([^\*]*)\*/g, function(a, b) {
             return '<em>' + b + '</em>';
         });
 
-        leftOutput = leftOutput.replace(/\[\[(.*)\]\]/g, function(a, b) {
+        output = output.replace(/\[\[(.*)\]\]/g, function(a, b) {
             return '<code>' + b + '</code>';
         });
 
-        leftOutput = leftOutput.replace(/\{\{(.*)\}(.*)\}/g, function(a, b, c) {
-            return '<a href="' + c + '">' + b + '</a>';
+        output = output.replace(/\@\<(.*)\<(.*)\>\>/g, function(a, b, c) {
+            return '<a href="' + b + '">' + c + '</a>';
         });
 
-        leftOutput = leftOutput.replace(/\#\{(.+)\{(.*)\}\}/g, function(a, b, c) {
+        output = output.replace(/\#\{(.+)\{(.*)\}\}/g, function(a, b, c) {
             return '<i style="color:' + b + '">' + c + '</i>';
         });
     }
-
-    function RightOutputFormatting() {
-        rightOutput = rightOutput.replace(/\*\*([^\*]*)\*\*/g, function(a, b) {
-            return '<strong>' + b + '</strong>';
-        });
-
-        rightOutput = rightOutput.replace(/\*([^\*]*)\*/g, function(a, b) {
-            return '<en>' + b + '</en>';
-        });
-
-        rightOutput = rightOutput.replace(/\[\[(.*)\]\]/g, function(a, b) {
-            return '<code>' + b + '</code>';
-        });
-
-        rightOutput = rightOutput.replace(/\{\{(.*)\}(.*)\}/g, function(a, b, c) {
-            return '<a href="' + c + '">' + b + '</a>';
-        });
-
-        rightOutput = rightOutput.replace(/\#\{(.+)\{(.*)\}\}/g, function(a, b, c) {
-            return '<i style="color:' + b + '">' + c + '</i>';
-        });
-    }
+    
     
     var $editBtn = $('#edit');
     var $previewBtn = $('#preview');
@@ -279,6 +237,8 @@ $(document).ready(function() {
         // Swaps which button is shown
         $previewBtn.css('display', 'none');
         $editBtn.css('display', 'inline-block');
+        
+        Prism.highlightAll();
         
     });
     

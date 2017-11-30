@@ -1,3 +1,5 @@
+$marginBottom: 20px;
+
 @mixin textStyling($fontSize, $marginBot, $display: block, $fontStyle: normal) {
     font-size: $fontSize;
     margin-bottom: $marginBot;
@@ -7,26 +9,26 @@
 
 h1 {
     font-weight: bold;
-    @include textStyling(4rem, 20px, inline-block);
+    @include textStyling(4rem, $marginBottom, inline-block);
 }
 
 h2 {
     font-weight: 400;
-    @include textStyling(2.8rem, 20px, block, italic);
+    @include textStyling(2.8rem, $marginBottom, block, italic);
 }
 
 h3 {
     font-weight: 400;
-    @include textStyling(2rem, 20px, block, italic);
+    @include textStyling(2rem, $marginBottom, block, italic);
 }
 
 h4 {
     font-weight: 400;
-    @include textStyling(1.6rem, 20px, block, italic);
+    @include textStyling(1.6rem, $marginBottom, block, italic);
 }
 
 .content {
-    @include textStyling(1rem, 20px);
+    margin-bottom: $marginBottom;
 }
 
 a {
@@ -40,8 +42,12 @@ a:hover {
 }
 
 ul {
-    @include textStyling(1.2rem, 20px);
+    @include textStyling(1.2rem, $marginBottom);
     margin-left: 2.3%;
+}
+
+i {
+    font-style: normal;
 }
 
 .code {
@@ -49,21 +55,12 @@ ul {
     font-size: 1.1rem;
 }
 
-.codeblock {
-    font-family: monospace;
-    background-color: #f5f5dc;
-    border-radius: 7px;
-    padding: 8px;
-    margin-left: 40px;
-    border: 1px solid #eee;
-    @include textStyling(1rem, 30px, inline-table);
-}
-
 .sidenote {
     float: right;
-    margin-right: -50%;
+    margin-right: -66%;
     clear: right;
     max-width: 30%;
+    text-align: end;
 }
 
 .sidenote::before {
@@ -84,27 +81,27 @@ ul {
     font-size: 0.8rem;
     position: relative;
     bottom: 3px;
-    right: 0.4%;
     counter-increment: sidenote-counter;
 }
 
 .left-img {
     max-width: 100%;
-    margin-bottom: 30px;
+    margin-bottom: $marginBottom;
 }
 
 .right-img {
     float: right;
     margin-right: -66%;
     max-width: 66%;
+    margin-bottom: $marginBottom;
 }
 
 .big-img {
     width: 166%;
     max-width: 166%;
-    margin-bottom: 30px;
+    margin-bottom: $marginBottom;
 }
 
 iframe {
-    margin-bottom: 30px;
+    margin-bottom: $marginBottom;
 }
