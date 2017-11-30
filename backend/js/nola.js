@@ -193,7 +193,7 @@ $(document).ready(function() {
             return '<strong>' + b + '</strong>';
         });
 
-        output = output.replace(/\*([^\*]*)\*/g, function(a, b) {
+        output = output.replace(/\|\|(.*)\|\|/g, function(a, b) {
             return '<em>' + b + '</em>';
         });
 
