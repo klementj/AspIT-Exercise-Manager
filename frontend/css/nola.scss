@@ -26,8 +26,7 @@ h4 {
 }
 
 .content {
-    line-height: 2rem;
-    @include textStyling(1.2rem, 20px, inline-block);
+    @include textStyling(1rem, 20px);
 }
 
 a {
@@ -60,14 +59,44 @@ ul {
     @include textStyling(1rem, 30px, inline-table);
 }
 
+.sidenote {
+    float: right;
+    margin-right: -50%;
+    clear: right;
+    max-width: 30%;
+}
+
+.sidenote::before {
+    content: counter(sidenote-counter) " ";
+    font-size: 0.8rem;
+    position: relative;
+    bottom: 5px;
+    left: 1px;
+}
+
+.sidenoteCounter {
+    content: counter(sidenote-counter) " ";
+    position: relative;
+}
+
+.sidenoteCounter::before {
+    content: counter(sidenote-counter) " ";
+    font-size: 0.8rem;
+    position: relative;
+    bottom: 3px;
+    right: 0.4%;
+    counter-increment: sidenote-counter;
+}
+
 .left-img {
     max-width: 100%;
     margin-bottom: 30px;
 }
 
 .right-img {
-    width: 100%;
-    max-width: 100%;
+    float: right;
+    margin-right: -66%;
+    max-width: 66%;
 }
 
 .big-img {

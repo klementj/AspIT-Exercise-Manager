@@ -96,27 +96,6 @@ body {
             font-weight: bold;
         }
         
-        .asd {
-            float: right;
-            margin-right: -50%;
-        }
-        
-        .footnote {
-        }
-        
-        .footnote::before {
-            content: counter(sidenote-counter) " ";
-            position: relative;
-        }
-        
-        sup::before {
-            content: counter(sidenote-counter) " ";
-            font-size: 0.8rem;
-            position: relative;
-            right: 0.4%;
-            counter-increment: sidenote-counter;
-        }
-        
         #left {
             flex-basis: 60%;
             padding-right: 5%;
@@ -172,7 +151,6 @@ body {
             }
             
             .editor-wrapper {
-                display: none;
                 
                 .toolbar {
                     border: 1px solid rgb(169, 169, 169);
