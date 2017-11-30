@@ -15,6 +15,7 @@ $(document).ready(function() {
     const listSyntax = '*';
     
     var codeblocking = false;
+    var htmlCodeBlocking = false;
 
     function LMLTranslate() {
         textarea = document.getElementById("LMLeditor");
@@ -67,7 +68,12 @@ $(document).ready(function() {
                         Codeblock(i);
                         break;
                     default:
-                        leftOutputLines[i] = inputLines[i];
+                        if (htmlCodeBlocking) {
+                            leftOutputLines[i] = inputLines[i].replace('<', '&lt');
+                        }
+                        else {
+                            leftOutputLines[i] = inputLines[i];
+                        }
                         break;
                 }
             }
@@ -100,13 +106,14 @@ $(document).ready(function() {
 
     function Codeblock(i) {
         if (codeblocking) {
-            leftOutputLines[i] = '</xmp></code></pre>';
+            leftOutputLines[i] = '</code></pre>';
         }
         
         else {
             language = inputLines[i].split(' ')[1].toLowerCase();
             leftOutputLines[i] = '<pre class="language-' + language + '"><code class="language-' + language + '"><xmp>';
             codeblocking = true;
+            if (language == 'html') { htmlCodeBlocking = true; }
         }
     }
 
