@@ -25,7 +25,7 @@ $(document).ready(function() {
     });
     
     $('#italic').click(function(){
-        InsertSyntax('', '*', '*', false, 1);
+        InsertSyntax('', '||', '||', false, 2);
     });
     
     $('#bold').click(function(){
