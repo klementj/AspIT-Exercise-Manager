@@ -91,7 +91,7 @@ $(document).ready(function() {
             let newValue = "";
             
             // Loop through each line in textarea
-            $splitContent.forEach(function(item) {
+            $splitContent.forEach(function(item, index) {
                 
                 // Check if item contains our identifier
                 if (item.includes('፨ᕫᪿ˩Ͽ֎')) {
@@ -104,8 +104,13 @@ $(document).ready(function() {
                     
                 }
                 
-                // Insert linebreak into item, and add it to the new value
-                newValue += item + '\n';
+                // Ensuring we avoid inserting linebreak on the last line
+                if (index == $splitContent.length - 1) {
+                    newValue += item;
+                } else {
+                    // Insert linebreak into item, and add it to the new value
+                    newValue += item + '\n';
+                }
                 
             });
             

@@ -105,7 +105,7 @@ $(document).ready(function() {
         
         else {
             language = inputLines[i].split(' ')[1].toLowerCase();
-            leftOutputLines[i] = '<pre><code class="language-' + language + '"><xmp>';
+            leftOutputLines[i] = '<pre class="language-' + language + '"><code class="language-' + language + '"><xmp>';
             codeblocking = true;
         }
     }
