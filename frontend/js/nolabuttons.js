@@ -17,7 +17,7 @@ $(document).ready(function() {
     });
     
     $('#codeblock').click(function(){
-        InsertSyntax('', ';; csharp\n\n;;', '', true);
+        InsertSyntax(';; csharp\n\n;;', '', '', true);
     });
     
     $('#footnote').click(function(){
@@ -33,7 +33,7 @@ $(document).ready(function() {
     });
     
     $('#textColor').click(function() {
-        InsertSyntax('#{Black', '{', '}}', false, 8); 
+        InsertSyntax('#{Black', '{', '}}', false, 8);
     });
     
     $('#inlineCode').click(function(){
@@ -45,7 +45,7 @@ $(document).ready(function() {
     });
     
     $('#image').click(function(){
-        InsertSyntax('!! ', 'https://source.unsplash.com/random/400x400 ', 'left', true);
+        InsertSyntax('!! https://source.unsplash.com/random/400x400 left', '', '', true);
     });
     
     // Textarea we will be editing in
@@ -73,57 +73,43 @@ $(document).ready(function() {
             AppendTextArea($newText);
             
             $element.focus();
-            
-            // Preserving our original selection by setting the new selection to the same as the original selection + length of the text we added on
             $element.selectionStart = $selStart + selectionLength;
             $element.selectionEnd = $selEnd + selectionLength;
             
         }
         else if (($selStart || $selStart == '0') && isLineStarter == true) {
             
-            // Identifier used for checking which line we are on - We need to add the current text selection to avoid losing the selected text
-            let identifier = GetTextSelection() + '፨ᕫᪿ˩Ͽ֎';
+            // Textarea value split into an array on each newline character
+            const $lines = $element.value.split('\n');
             
-            // Insert identifier into textarea
-            AppendTextArea(identifier);
+            // Line number of the line that caret is currently on
+            const $selectedLine = GetLine();
             
-            // Fills new array with each line from the textarea
-            const $splitContent = $('.editor').val().split('\n');
+            // New value to be inserted into textarea later
+            let newValue = '';
             
-            // String used for storing the new textarea value
-            let newValue = "";
-            
-            // Loop through each line in textarea
-            $splitContent.forEach(function(item, index) {
+            $lines.forEach(function(line, index) {
                 
-                // Check if item contains our identifier
-                if (item.includes(identifier)) {
-                    
-                    // Removes identifier
-                    item = item.replace('፨ᕫᪿ˩Ͽ֎', '');
-                    
-                    // Adds prefix and wrap to the start/end of the line
-                    item = prefix + wrapStart + item + wrapEnd;
-                    
+                // Add syntax prefix to the line if we are at the selected index
+                if (index == $selectedLine - 1) {
+                    line = prefix + line;
                 }
                 
-                // Ensuring we avoid inserting linebreak on the last line
-                if (index == $splitContent.length - 1) {
-                    newValue += item;
+                // Ensuring we avoid inserting newline into the last line in the textarea
+                if ($lines.length - 1 == index) {
+                    newValue += line;
                 } else {
-                    // Insert linebreak into item, and add it to the new value
-                    newValue += item + '\n';
+                    newValue += line + '\n';
                 }
                 
             });
             
-            // Inserts our new value into textarea
+            // Setting textarea value to our new value with the prefix inserted
             $element.value = newValue;
             
             $element.focus();
-            
-            $element.selectionStart = $newSelection;
-            $element.selectionEnd = $newSelection;
+            $element.selectionStart = $selStart + prefix.length;
+            $element.selectionEnd = $selEnd + prefix.length;
             
         }
         // If no text selection is present
@@ -170,6 +156,14 @@ $(document).ready(function() {
         const $selection = $element.value.substr($start, $finish - $start);
         
         return $selection;
+    }
+    
+    // Gets line number for the line that caret is on currently
+    function GetLine()
+    {
+        var $element = $("textarea")[0];
+        
+        return $element.value.substr(0, $element.selectionStart).split("\n").length;
     }
     
 });
