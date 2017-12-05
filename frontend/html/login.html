@@ -5,10 +5,56 @@
     <title>Log in | AspIT Exercise Manager</title>
     <link rel="icon" href="../../img/aspitlogo.png">
     <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../fa/font-awesome-4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="../js/login.js"></script>
 </head>
 <body>
     <main>
-        
+        <div id="login">
+            <div class="inputContainer">
+                <input type="text" placeholder="AspIT email">
+                <i class="fa fa-user" aria-hidden="true"></i>
+            </div>
+            <div class="inputContainer">
+                <input type="password" placeholder="Password">
+                <i class="fa fa-lock" aria-hidden="true"></i>
+            </div>
+            <div id="loginBtn" class="proceedBtn">
+                <span>✔</span>
+            </div>
+            <div>
+                Don't have an account? <a id="registerFormShow" href="#">Click here!</a>
+            </div>
+        </div>
+        <div id="register">
+            <div class="inputContainer">
+                <input type="text" placeholder="First name">
+                <i class="fa fa-user" aria-hidden="true"></i>
+            </div>
+            <div class="inputContainer">
+                <input type="text" placeholder="Last name">
+                <i class="fa fa-user" aria-hidden="true"></i>
+            </div>
+            <div class="inputContainer">
+                <input type="email" placeholder="AspIT email">
+                <i class="fa fa-user" aria-hidden="true"></i>
+            </div>
+            <div class="inputContainer">
+                <input type="password" placeholder="Password">
+                <i class="fa fa-lock" aria-hidden="true"></i>
+            </div>
+            <div class="inputContainer">
+                <input type="password" placeholder="Re-type password">
+                <i class="fa fa-lock" aria-hidden="true"></i>
+            </div>
+            <div id="registerBtn" class="proceedBtn">
+                <span>✔</span>
+            </div>
+            <div>
+                Already have an account? <a id="loginFormShow" href="#">Click here!</a>
+            </div>
+        </div>
     </main>
 </body>
 </html>
