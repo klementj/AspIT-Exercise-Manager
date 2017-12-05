@@ -1,0 +1,16 @@
+/* line 3, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/login.scss */
+body {
+  background-color: #f1f1f129;
+  margin: 0px;
+  padding: 0px; }
+  /* line 8, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/login.scss */
+  body main {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%);
+    background-color: black;
+    width: 100px;
+    height: 100px; }
+
+/*# sourceMappingURL=login.css.map */
