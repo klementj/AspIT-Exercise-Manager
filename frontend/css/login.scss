@@ -20,6 +20,10 @@ body {
         border-radius: 7px;
         padding: 20px;
         
+        form {
+            margin: 0px;
+        }
+        
         input {
             border: none;
             outline: none;
@@ -30,7 +34,6 @@ body {
         }
         
         .inputContainer {
-            margin-bottom: 10px;
             padding: 7px 28px 7px 10px;
             background-color: white;
             position: relative;
@@ -62,9 +65,17 @@ body {
             cursor: pointer;
         }
         
-        .proceedBtn:hover {
+        .proceedBtn:hover:enabled {
             color: lightslategray;
             background: linear-gradient(white, white);
+        }
+        
+        .errorMsg {
+            margin: 10px 0px;
+            color: red;
+            font-family: $font;
+            font-size: 18px;
+            text-shadow: 0px 0px 0px black;
         }
         
         #login {
