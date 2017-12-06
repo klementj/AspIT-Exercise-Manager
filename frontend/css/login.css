@@ -37,37 +37,32 @@ body {
         position: absolute;
         top: 10px;
         left: 92%;
-        font-size: 25px; }
-    /* line 48, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/login.scss */
+        font-size: 25px;
+        color: #d3d3d3; }
+    /* line 49, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/login.scss */
     body main .proceedBtn {
-      font-size: 35px;
-      text-align: center;
-      margin-bottom: 10px; }
-      /* line 53, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/login.scss */
-      body main .proceedBtn span {
-        display: block;
-        margin: 0 auto;
-        width: 40px;
-        height: 40px;
-        border-radius: 100%;
-        border: 2px solid black;
-        line-height: 43px;
-        cursor: pointer;
-        transition: 0.3s; }
-      /* line 65, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/login.scss */
-      body main .proceedBtn span:hover {
-        transition: 0.3s;
-        color: #B39DDB;
-        background-color: black; }
-    /* line 72, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/login.scss */
+      height: 30px;
+      width: 50%;
+      border-radius: 7px;
+      border: 1px solid #778899;
+      background: linear-gradient(#778899, #5f6d7b);
+      color: white;
+      font-family: "Oxygen", sans-serif;
+      font-size: 20px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+      margin: 0 auto;
+      margin-bottom: 10px;
+      outline: none;
+      cursor: pointer; }
+    /* line 65, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/login.scss */
+    body main .proceedBtn:hover {
+      color: lightslategray;
+      background: linear-gradient(white, white); }
+    /* line 70, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/login.scss */
     body main #login {
-      display: flex;
-      flex-direction: column;
       overflow: hidden; }
-    /* line 79, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/login.scss */
+    /* line 75, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/login.scss */
     body main #register {
-      display: flex;
-      flex-direction: column;
       overflow: hidden;
       display: none; }
 
