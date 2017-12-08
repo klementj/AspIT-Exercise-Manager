@@ -1,4 +1,5 @@
 <?php
+session_start();
 $email = $_POST['email'];
 $password = $_POST['password'];
 
@@ -14,7 +15,6 @@ $stmt->execute();
 
 if ($row = $stmt->fetch()) {
     /*Login succeeded*/
-    session_start();
     $_SESSION['userId'] = $row['UserId'];
     $_SESSION['firstName'] = $row['FirstName'];
     $_SESSION['lastName'] = $row['LastName'];
@@ -22,8 +22,11 @@ if ($row = $stmt->fetch()) {
     $_SESSION['accessLevel'] = $row['AccessLevel'];
     
     /*Redirect to other page with success*/
+    header('location: ../../frontend/php/index.php');
 } else {
     /*Redirect to other page with error*/
+    $_SESSION['errMsg'] = 'Invalid username or password';
+    header('location: ../../frontend/php/login.php');
 }
 
 /*Close connection*/
