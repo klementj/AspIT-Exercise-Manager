@@ -42,6 +42,9 @@ body {
         font-size: 25px;
         color: #d3d3d3; }
     /* line 52, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/login.scss */
+    body main .inputContainer:not(:last-of-type) {
+      margin-bottom: 10px; }
+    /* line 56, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/login.scss */
     body main .proceedBtn {
       height: 30px;
       width: 50%;
@@ -56,21 +59,21 @@ body {
       margin-bottom: 10px;
       outline: none;
       cursor: pointer; }
-    /* line 68, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/login.scss */
+    /* line 72, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/login.scss */
     body main .proceedBtn:hover:enabled {
       color: lightslategray;
       background: linear-gradient(white, white); }
-    /* line 73, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/login.scss */
+    /* line 77, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/login.scss */
     body main .errorMsg {
       margin: 10px 0px;
       color: red;
       font-family: "Oxygen", sans-serif;
       font-size: 18px;
       text-shadow: 0px 0px 0px black; }
-    /* line 81, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/login.scss */
+    /* line 85, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/login.scss */
     body main #login {
       overflow: hidden; }
-    /* line 86, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/login.scss */
+    /* line 90, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/login.scss */
     body main #register {
       overflow: hidden;
       display: none; }

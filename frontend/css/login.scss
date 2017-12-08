@@ -49,6 +49,10 @@ body {
             }
         }
         
+        .inputContainer:not(:last-of-type) {
+            margin-bottom: 10px;
+        }
+        
         .proceedBtn {
             height: 30px;
             width: 50%;

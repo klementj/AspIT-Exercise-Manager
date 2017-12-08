@@ -33,12 +33,21 @@ if (!empty($_GET['email'])) {
                 <input type="text" name="email" placeholder="AspIT email">
                 <i class="fa fa-user" aria-hidden="true"></i>
             </div>
-            <p class="errorMsg"></p>
             <div class="inputContainer">
                 <input type="password" name="password" placeholder="Password">
                 <i class="fa fa-lock" aria-hidden="true"></i>
             </div>
-            <p class="errorMsg"></p>
+            <p class="errorMsg">
+                <?php
+                if (!empty($_SESSION['errMsg'])) {
+                    if ($_SESSION['errMsg'] == 'Invalid username or password') 
+                    {
+                        echo $_SESSION['errMsg'];
+                        unset($_SESSION['errMsg']);
+                    }
+                }
+                ?>
+            </p>
             <button type="submit" id="loginBtn" class="proceedBtn">Login</button>
             <div>
                 Don't have an account? <a id="registerFormShow" href="#">Register!</a>
@@ -49,25 +58,18 @@ if (!empty($_GET['email'])) {
                 <input type="text" name="firstName" placeholder="First name" value="<?php echo $firstName ?>">
                 <i class="fa fa-user" aria-hidden="true"></i>
             </div>
-            <p class="errorMsg">
-            </p>
             <div class="inputContainer">
                 <input type="text" name="lastName" placeholder="Last name" value="<?php echo $lastName ?>">
                 <i class="fa fa-user" aria-hidden="true"></i>
             </div>
-            <p class="errorMsg"></p>
             <div class="inputContainer">
                 <input type="email" name="email" placeholder="AspIT email" value="<?php echo $email ?>">
                 <i class="fa fa-user" aria-hidden="true"></i>
             </div>
-            <p class="errorMsg"></p>
             <div class="inputContainer">
                 <input type="password" name="password" placeholder="Password">
                 <i class="fa fa-lock" aria-hidden="true"></i>
             </div>
-            <p class="errorMsg">
-
-            </p>
             <div class="inputContainer">
                 <input type="password" name="repassword" placeholder="Re-type password">
                 <i class="fa fa-lock" aria-hidden="true"></i>
@@ -75,7 +77,7 @@ if (!empty($_GET['email'])) {
             <p class="errorMsg">
                <?php
                 if (!empty($_SESSION['errMsg'])) {
-                    if ($_SESSION['errMsg'] == 'Fields cannot be empty' || $_SESSION['errMsg'] == 'Passwords do not match') 
+                    if ($_SESSION['errMsg'] == 'Fields cannot be empty' || $_SESSION['errMsg'] == 'Passwords do not match' || $_SESSION['errMsg'] == 'Email already in use') 
                     {
                         echo $_SESSION['errMsg'];
                         unset($_SESSION['errMsg']);
