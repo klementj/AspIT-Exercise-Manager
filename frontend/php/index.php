@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+foreach($_SESSION as $item) {
+    if (!isset($item)) {
+        header('location: login.php');
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +26,15 @@
 <body>
     <header>
         <nav>
-            <div></div>
+            <div>
+                <ul>
+                    <li class="dropdown"><b><?php echo $_SESSION['firstName'] ?></b><i class="fa fa-chevron-down" aria-hidden="true"></i>
+                    <div class="dropdownMenu">
+                        <a href="../../backend/php/logout.php">Logout</a>
+                    </div>
+                    </li>
+                </ul>
+            </div>
             <img src="../../img/aspitlogo.png" alt="AspIT logo">
             <div></div>
         </nav>
@@ -31,6 +48,9 @@
                 <i class="fa fa-file-text fa-2x" id="preview" aria-hidden="true">
                     <span class="faTooltip disable-select">Preview mode</span>
                 </i>
+                <button id="openNewExercise">
+                    <a href="#">Open</a>
+                </button>
             </nav>
             <h1 id="title" data-editable>AspIT Exercise Manager</h1>
             <h5 id="author" data-editable>Lasse Hels</h5>
