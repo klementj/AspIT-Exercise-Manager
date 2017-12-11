@@ -1,13 +1,11 @@
 <?php
-session_start();
-
 /*Validate user logged in*/
 if (isset($_SESSION['userId'])) {
     /*Insert new exercise into database*/
     require "connect.php";
     
     /*Select all authors of original exercise*/
-    $stmt = dbh->prepare(
+    $stmt = $dbh->prepare(
         "SELECT UserId, Timestamp FROM authors WHERE ExerciseId = ?;"
     );
     $stmt->bindParam(1, $exerciseId);
@@ -29,24 +27,24 @@ if (isset($_SESSION['userId'])) {
 
         SET @ExId = LAST_INSERT_ID();
         
-        INSERT INTO authors(UserId, ExerciseId, Timestamp)";
+        INSERT INTO authors(UserId, ExerciseId, Timestamp) VALUES";
     
     /*Insert previous version's author list as new exercise's author list*/
     if (sizeof($authors) > 0) {
         for ($i = 0; $i < sizeof($authors); $i++) {
-            $sql += "
-            VALUES(" + $authors[$i][0] + ", @ExId, " + $authors[$i][1] + "),";
+            $sql .= "
+            ('" . $authors[$i][0] . "', @ExId, '" . $authors[$i][1] . "'),";
         }
     }
     
     /*Insert current user in author list*/
-    /*DEBUGGING NOTE: OMITTED TIMESTAMP*/
-    $sql += "
-    VALUES(" + $_SESSION['userId'] + ", @ExId);
+    $sql .= "('" . $_SESSION['userId'] . "', @ExId, NOW());
     
     COMMIT;";
-
-    $statement->prepare($sql);
+    
+    echo $sql;
+    
+    $statement = $dbh->prepare($sql);
     $statement->bindParam(1, $subjectId);
     $statement->bindParam(2, $title);
     $statement->bindParam(3, $content);

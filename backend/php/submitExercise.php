@@ -12,10 +12,10 @@ if ($_SESSION['accessLevel'] > 1) {
     /*Redirect to other page with error*/
 } else {
     /*Get form values*/
-    $exerciseId = $_GET['exerciseId'];
-    $subjectId = $_GET['subjectId'];
-    $title = $_GET['title'];
-    $content = $_GET['content'];
+    $exerciseId = $_POST['exerciseId'];
+    $subjectId = $_POST['subjectId'];
+    $title = $_POST['title'];
+    $content = $_POST['content'];
     
     try {
         if (empty($exerciseId)) {
@@ -33,7 +33,7 @@ if ($_SESSION['accessLevel'] > 1) {
             }
         }
     } catch(Exception $e) {
-        echo 'shits fucked yo';
+        echo 'Error submitting post ';
         echo $e;
     }
 }

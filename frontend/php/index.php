@@ -53,7 +53,8 @@ foreach($_SESSION as $item) {
                     <a href="#">Open</a>
                 </button>
             </nav>
-            <h1 id="title">AspIT Exercise Manager</h1>
+            <h1 id="title"></h1>
+            <input type="text" id="titleInput" spellcheck="false" value="Title test 123">
             <select name="subject" id="subjectSelect">
                 <option value="1">T1</option>
                 <option value="2">V1</option>
@@ -117,8 +118,8 @@ foreach($_SESSION as $item) {
         </article>
         <aside id="right">
             <div>
-                <form action="../../backend/php/submitExercise.php" id="saveForm">
-                    <button id="saveBtn">Save</button>
+                <form id="saveForm">
+                    <button type="button" id="saveBtn">Save</button>
                 </form>
                 <button id="publishBtn">Publish</button>
             </div>

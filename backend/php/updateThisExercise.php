@@ -1,11 +1,8 @@
 <?php
-session_start();
-
 /*Validate user logged in*/
 if (isset($_SESSION['userId'])) {
     /*Update exercise in database*/
     require "connect.php";
-    
     $stmt = $dbh->prepare(
         "BEGIN;
         
@@ -22,7 +19,7 @@ if (isset($_SESSION['userId'])) {
     $stmt->bindParam(2, $title);
     $stmt->bindParam(3, $content);
     $stmt->bindParam(4, $exerciseId);
-    $stmt->bindParam(5, $userId);
+    $stmt->bindParam(5, $_SESSION['userId']);
     $stmt->bindParam(6, $exerciseId);
     $stmt->execute();
     

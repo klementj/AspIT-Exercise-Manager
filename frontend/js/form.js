@@ -1,28 +1,38 @@
 $(document).ready(function() {
     
+    $title = '';
     $content = '';
-    
-    $('#LMLeditor').change(function() {
-        $content = $('#LMLeditor').val();
-    });
     
     $('#saveBtn').click(function() {
         
+        // Get values from HTML
+        $title = $('#titleInput').val();
+        $content = $('#LMLeditor').val();
         $form = $('#saveForm');
         
-        let titleInput = $('<input>').attr('type', 'hidden').attr('name', 'title').val( $('#title').text() );
+        // Create our input fields to be inserted into our form
+        let exerciseId = $('<input>').attr('type', 'hidden').attr('name', 'exerciseId').val('8');
+        let subjectInput = $('<input>').attr('type', 'hidden').attr('name', 'subjectId').val('1');
+        let titleInput = $('<input>').attr('type', 'hidden').attr('name', 'title').val( $title );
         let contentInput = $('<input>').attr('type', 'hidden').attr('name', 'content').val( $content );
-        let subjectInput = $('<input>').attr('type', 'hidden').attr('name', 'subjectId').val( '1' );
         
+        // Insert input fields into form
+        $form.append($(exerciseId));
+        $form.append($(subjectInput));
         $form.append($(titleInput));
         $form.append($(contentInput));
-        $form.append($(subjectInput));
         
-    });
-    
-    $('#publishBtn').click(function() {
-        
-        console.log($('#subjectSelect').val());
+        $.ajax({
+            
+            type: 'POST',
+            url: '../../backend/php/submitExercise.php',
+            data: $form.serialize(),
+            processData: true,
+            success: function() {
+                alert('det virk');
+            }
+            
+        });
         
     });
     
