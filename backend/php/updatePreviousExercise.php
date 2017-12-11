@@ -6,28 +6,56 @@ if (isset($_SESSION['userId'])) {
     /*Find current user's version of the updated exercise*/
     require "connect.php";
     
-    $statement = $dbh->prepare(
-        "BEGIN;
+    $stmt = $dbh->prepare(
+        "BEGIN; 
         
-        UPDATE exercises
-        SET SubjectId = ?, Title = ?, Content = ?
-        WHERE ExerciseId = ?;
+        SELECT @Timestamp = FIRST_VALUE(Timestamp) FROM authors 
+        WHERE UserId = ? AND ExerciseId = ? 
+        ORDER BY Timestamp DESC 
+        LIMIT 1; 
         
-        INSERT INTO authors(UserId, ExerciseId) 
-        VALUES(?, ?);
+        SELECT ExerciseId FROM exercises
+        INNER JOIN authors ON exercises.LastUpdated=authors.Timestamp
+        LIMIT 1;
         
         COMMIT;"
     );
-    $statement->bindParam(1, $subjectId);
-    $statement->bindParam(2, $title);
-    $statement->bindParam(3, $content);
-    $statement->bindParam(4, $exerciseId);
-    $statement->bindParam(5, $userId);
-    $statement->bindParam(6, $exerciseId);
-    $statement->execute();
+    $stmt->bindParam(1, $_SESSION['userId']);
+    $stmt->bindParam(2, $exerciseId);
+    $stmt->execute();
     
-    /*Close connection*/
-    $dbh = null;
+    if ($oldExercise = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        /*Older version of exercise was found, update it in database*/
+        $oldExerciseId = $oldExercise['ExerciseId'];
+        
+        $statement = $dbh->prepare(
+            "BEGIN;
+
+            UPDATE exercises
+            SET SubjectId = ?, Title = ?, Content = ?, LastUpdated = NOW()
+            WHERE ExerciseId = ?;
+
+            INSERT INTO authors(UserId, ExerciseId) 
+            VALUES(?, ?);
+
+            COMMIT;"
+        );
+        $stmt->bindParam(1, $subjectId);
+        $stmt->bindParam(2, $title);
+        $stmt->bindParam(3, $content);
+        $stmt->bindParam(4, $oldExerciseId);
+        $stmt->bindParam(5, $userId);
+        $stmt->bindParam(6, $oldExerciseId);
+        $statement->execute();
+
+        /*Close connection*/
+        $dbh = null;
+        
+    } else {
+        /*error older version of exercise not found*/
+        $dbh = null;
+        throw new Exception('Exercise not found');
+    }
     
     /*Redirect to other page with success*/
 } else {

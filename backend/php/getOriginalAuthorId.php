@@ -10,7 +10,7 @@ function GetOriginalAuthorId($exerciseId) {
                 "SELECT UserId FROM authors 
                 WHERE ExerciseId = ? 
                 ORDER BY Timestamp ASC 
-                LIMIT 1"
+                LIMIT 1;"
             )
             $stmt->bindParam(1, $exerciseId);
             $stmt->execute();

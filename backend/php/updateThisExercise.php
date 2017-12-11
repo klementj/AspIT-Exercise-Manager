@@ -10,7 +10,7 @@ if (isset($_SESSION['userId'])) {
         "BEGIN;
         
         UPDATE exercises
-        SET SubjectId = ?, Title = ?, Content = ?
+        SET SubjectId = ?, Title = ?, Content = ?, LastUpdated = NOW()
         WHERE ExerciseId = ?;
         
         INSERT INTO authors(UserId, ExerciseId) 
