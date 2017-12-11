@@ -18,7 +18,7 @@ if (isset($_SESSION['userId'])) {
     
     /*Validate user's old password before updating*/
     $stmt = $dbh->prepare(
-        "SELECT CredentialId FROM loginCredentials 
+        "SELECT UserId FROM loginCredentials 
         WHERE UserId = ? AND Password = ?;"
     );
     $stmt->bindParam(1, $userId);
