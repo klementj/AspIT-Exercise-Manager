@@ -6,10 +6,10 @@ function IsAuthor($exerciseId, $userId) {
             /*Find user id in list of authors*/
             require "connect.php";
             
-            $stmt = dbh->prepare(
+            $stmt = $dbh->prepare(
                 "SELECT * FROM authors
-                WHERE ExerciseId = ? AND UserId = ?"
-            )
+                WHERE ExerciseId = ? AND UserId = ?;"
+            );
             $stmt->bindParam(1, $exerciseId);
             $stmt->bindParam(2, $userId);
             $stmt->execute();

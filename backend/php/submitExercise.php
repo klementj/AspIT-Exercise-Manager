@@ -32,8 +32,9 @@ if ($_SESSION['accessLevel'] > 1) {
                 }
             }
         }
-    } catch {
-        /*Return error to user*/
+    } catch(Exception $e) {
+        echo 'shits fucked yo';
+        echo $e;
     }
 }
 ?>
