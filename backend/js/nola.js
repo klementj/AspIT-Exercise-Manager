@@ -210,12 +210,13 @@ $(document).ready(function() {
         });
     }
     
-    
+    var $titleVal = '';
     var $editBtn = $('#edit');
     var $previewBtn = $('#preview');
     var $prevContent;
     var $prevLeftHTML;
     var $prevRightHTML;
+    
     
     $previewBtn.click(function() {
         
@@ -224,15 +225,14 @@ $(document).ready(function() {
         $prevLeftHTML = $('#mainContent').html();
         $prevRightHTML = $('#right').html();
         
-        // Removes the data-editable attribute from title and author
-        $('#title').removeAttr('data-editable');
-        $('#author').removeAttr('data-editable');
-        
         // Hides text editor
         $('.editor-wrapper').css('display', 'none');
         
         // Translates text in textarea from syntax to HTML elements
         LMLTranslate();
+        
+        // Converts title to an input
+        TitleToInput(false);
         
         // Swaps which button is shown
         $previewBtn.css('display', 'none');
@@ -244,13 +244,14 @@ $(document).ready(function() {
     
     $editBtn.click(function() {
         
-        // Restores data-editable attribute on title and author
-        $('#title').attr('data-editable', '');
-        $('#author').attr('data-editable', '');
+        // Gets value from the title input
+        $titleVal = $('#titleInput').val();
         
         // Restores HTML to what it was previous to preview
         $('#mainContent').html($prevLeftHTML);
         $('#right').html($prevRightHTML);
+        
+        TitleToInput(true);
         
         // Unhides textarea
         $('.editor-wrapper').css('display', 'block');
@@ -264,3 +265,41 @@ $(document).ready(function() {
         
     });
 });
+
+function TitleToInput(backwards) {
+    
+    const $element = $('#title');
+    
+    // Reading relevant css properties from element, so input can be visually similar to element
+    const $width = $element.width();
+    const $fontFamily = $element.css('font-family');
+    const $fontSize = $element.css('font-size');
+    const $fontWeight = $element.css('font-weight');
+    const $marginBottom = $element.css('margin-bottom');
+    
+    // Creating the input element that will be inserted
+    const $input = $('<input id="titleInput" spellcheck="false"/>').val($element.text());
+    
+    // Applying relevant css to the input element
+    $input.width($width);
+    $input.css('font-family', $fontFamily);
+    $input.css('font-size', $fontSize);
+    $input.css('font-weight', $fontWeight);
+    $input.css('margin-bottom', $marginBottom);
+    
+    if (!backwards) {
+        // Replaces the original element with the input
+        $element.replaceWith($input);
+    } else {
+        // Gets value of input field to set in the h1
+        const $inputValue = $('#titleInput').val();
+        
+        // Replaces title element with h1
+        $('#titleInput').replaceWith('<h1 id="title"></h1>');
+        
+        // Sets the h1 text to the value of the input field
+        $('#title').text( $inputValue );
+    }
+    
+    
+}

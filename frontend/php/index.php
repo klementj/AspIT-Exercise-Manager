@@ -22,6 +22,7 @@ foreach($_SESSION as $item) {
     <script src="../js/script.js"></script>
     <script src="../js/nolabuttons.js"></script>
     <script src="../../backend/js/nola.js"></script>
+    <script src="../js/form.js"></script>
 </head>
 <body>
     <header>
@@ -52,8 +53,13 @@ foreach($_SESSION as $item) {
                     <a href="#">Open</a>
                 </button>
             </nav>
-            <h1 id="title" data-editable>AspIT Exercise Manager</h1>
-            <h5 id="author" data-editable>Lasse Hels</h5>
+            <h1 id="title">AspIT Exercise Manager</h1>
+            <select name="subject" id="subjectSelect">
+                <option value="1">T1</option>
+                <option value="2">V1</option>
+                <option value="3">S1</option>
+            </select>
+            <h5 id="author">Lasse Hels</h5>
             <section class="editor-wrapper">
                 <div class="toolbar">
                     <button id="headerBig" class="editor-button">
@@ -111,7 +117,9 @@ foreach($_SESSION as $item) {
         </article>
         <aside id="right">
             <div>
-                <button id="saveBtn">Save</button>
+                <form action="../../backend/php/submitExercise.php" id="saveForm">
+                    <button id="saveBtn">Save</button>
+                </form>
                 <button id="publishBtn">Publish</button>
             </div>
             <div>
