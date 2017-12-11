@@ -6,12 +6,12 @@ function GetLatestAuthorId($exerciseId) {
             /*Find the latest author to the exercise*/
             require "connect.php";
 
-            $stmt = dbh->prepare(
+            $stmt = $dbh->prepare(
                 "SELECT UserId FROM authors 
                 WHERE ExerciseId = ? 
                 ORDER BY Timestamp DESC 
-                LIMIT 1"
-            )
+                LIMIT 1;"
+            );
             $stmt->bindParam(1, $exerciseId);
             $stmt->execute();
 
