@@ -166,6 +166,12 @@ body {
             }
             
             input {
+                display: inline-block;
+                font-family: $font;
+                font-weight: bold;
+                font-size: 4rem;
+                font-style: normal;
+                margin-bottom: 20px;
                 border: 1px solid #eee;
             }
             

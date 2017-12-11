@@ -210,7 +210,6 @@ $(document).ready(function() {
         });
     }
     
-    var $titleVal = '';
     var $editBtn = $('#edit');
     var $previewBtn = $('#preview');
     var $prevContent;
@@ -223,7 +222,6 @@ $(document).ready(function() {
         // Gets current HTML and textarea value so we can restore them later
         $prevContent = $('#LMLeditor').val();
         $prevLeftHTML = $('#mainContent').html();
-        $prevRightHTML = $('#right').html();
         
         // Hides text editor
         $('.editor-wrapper').css('display', 'none');
@@ -232,7 +230,9 @@ $(document).ready(function() {
         LMLTranslate();
         
         // Converts title to an input
-        TitleToInput(false);
+        $('#titleInput').css('display', 'none');
+        $('#title').css('display', 'inline-block');
+        $('#title').text( $('#titleInput').val() );
         
         // Swaps which button is shown
         $previewBtn.css('display', 'none');
@@ -244,14 +244,11 @@ $(document).ready(function() {
     
     $editBtn.click(function() {
         
-        // Gets value from the title input
-        $titleVal = $('#titleInput').val();
-        
         // Restores HTML to what it was previous to preview
         $('#mainContent').html($prevLeftHTML);
-        $('#right').html($prevRightHTML);
         
-        TitleToInput(true);
+        $('#title').css('display', 'none');
+        $('#titleInput').css('display', 'inline-block');
         
         // Unhides textarea
         $('.editor-wrapper').css('display', 'block');
@@ -265,41 +262,3 @@ $(document).ready(function() {
         
     });
 });
-
-function TitleToInput(backwards) {
-    
-    const $element = $('#title');
-    
-    // Reading relevant css properties from element, so input can be visually similar to element
-    const $width = $element.width();
-    const $fontFamily = $element.css('font-family');
-    const $fontSize = $element.css('font-size');
-    const $fontWeight = $element.css('font-weight');
-    const $marginBottom = $element.css('margin-bottom');
-    
-    // Creating the input element that will be inserted
-    const $input = $('<input id="titleInput" spellcheck="false"/>').val($element.text());
-    
-    // Applying relevant css to the input element
-    $input.width($width);
-    $input.css('font-family', $fontFamily);
-    $input.css('font-size', $fontSize);
-    $input.css('font-weight', $fontWeight);
-    $input.css('margin-bottom', $marginBottom);
-    
-    if (!backwards) {
-        // Replaces the original element with the input
-        $element.replaceWith($input);
-    } else {
-        // Gets value of input field to set in the h1
-        const $inputValue = $('#titleInput').val();
-        
-        // Replaces title element with h1
-        $('#titleInput').replaceWith('<h1 id="title"></h1>');
-        
-        // Sets the h1 text to the value of the input field
-        $('#title').text( $inputValue );
-    }
-    
-    
-}

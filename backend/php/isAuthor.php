@@ -1,7 +1,7 @@
 <?php
 function IsAuthor($exerciseId, $userId) {
     /*If exercise and user have ids that are numbers*/
-    if (isset($authorId) && isset($userId)) {
+    if (isset($exerciseId) && isset($userId)) {
         if (is_numeric($exerciseId) && is_numeric($userId)) {
             /*Find user id in list of authors*/
             require "connect.php";

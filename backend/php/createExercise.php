@@ -26,7 +26,7 @@ if (isset($_SESSION['userId'])) {
     $dbh = null;
     
     /*Redirect to other page with success*/
-    header('location: ../../frontend/php/index.php');
+//    header('location: ../../frontend/php/index.php');
 } else {
     /*error user not logged in*/
     $dbh = null;
