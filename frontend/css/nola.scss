@@ -12,6 +12,7 @@ main {
     
     h1 {
         font-weight: bold;
+        border: 1px solid rgba(0, 0, 0, 0);
         @include textStyling(4rem, $marginBottom, inline-block);
     }
     
