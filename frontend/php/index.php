@@ -25,57 +25,6 @@ foreach($_SESSION as $item) {
     <script src="../js/form.js"></script>
 </head>
 <body>
-    <div id="overlay"></div>
-    <div id="openModal">
-        <div class="inputContainer">
-            <input type="text" name="search" placeholder="Search">
-            <i class="fa fa-search" aria-hidden="true"></i>
-        </div>
-        <div id="tableContainer">
-            <table>
-                <thead>
-                    <tr>
-                        <th class="tTitle">Title <i class="fa fa-sort" aria-hidden="true"></i></th>
-                        <th class="tAuthor">Author <i class="fa fa-sort" aria-hidden="true"></i></th>
-                        <th class="tSubject">Subject <i class="fa fa-sort" aria-hidden="true"></i></th>
-                        <th class="tDate">Last updated <i class="fa fa-sort" aria-hidden="true"></i></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="tTitle"><a href="#">Aonders of the camel</a></td>
-                        <td class="tAuthor">Basse Hels</td>
-                        <td class="tSubject">AspIT Lab</td>
-                        <td class="tDate">2017-12-12 10:48</td>
-                    </tr>
-                    <tr>
-                        <td class="tTitle"><a href="#">B am gay</a></td>
-                        <td class="tAuthor">Aoah Bro</td>
-                        <td class="tSubject">T3</td>
-                        <td class="tDate">2016-10-9 10:36</td>
-                    </tr>
-                    <tr>
-                        <td class="tTitle"><a href="#">Che bacterian mongol is a fine specimen</a></td>
-                        <td class="tAuthor">Cmil P.</td>
-                        <td class="tSubject">S3</td>
-                        <td class="tDate">2016-10-9 10:35</td>
-                    </tr>
-                    <tr>
-                        <td class="tTitle"><a href="#">Does anyone else?</a></td>
-                        <td class="tAuthor">Dlement</td>
-                        <td class="tSubject">S2</td>
-                        <td class="tDate">1996-5-8 10:10</td>
-                    </tr>
-                    <tr>
-                        <td class="tTitle"><a href="#">Eaper lol</a></td>
-                        <td class="tAuthor">Eour mom</td>
-                        <td class="tSubject">BL</td>
-                        <td class="tDate">2110-2-7 9:50</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
     <header>
         <nav>
             <div>
@@ -180,5 +129,27 @@ foreach($_SESSION as $item) {
         </aside>
     </main>
     <footer></footer>
+<div id="overlay"></div>
+<div id="openModal">
+    <div class="inputContainer">
+        <input type="text" name="search" placeholder="Search">
+        <i class="fa fa-search" aria-hidden="true"></i>
+    </div>
+    <div id="tableContainer">
+        <table>
+            <thead>
+                <tr>
+                    <th class="tTitle">Title <i class="fa fa-sort" aria-hidden="true"></i></th>
+                    <th class="tAuthor">Author <i class="fa fa-sort" aria-hidden="true"></i></th>
+                    <th class="tSubject">Subject <i class="fa fa-sort" aria-hidden="true"></i></th>
+                    <th class="tDate">Last updated <i class="fa fa-sort" aria-hidden="true"></i></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php require '../../backend/php/readExercises.php' ?>
+            </tbody>
+        </table>
+    </div>
+</div>
 </body>
 </html>
