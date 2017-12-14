@@ -52,8 +52,8 @@ function SortTableDate(reverse) {
         let bDate = $(b).children('.tDate').text().match(/\d+/g);
         
         // Creates new date objects based on the numbers from the string
-        let A = new Date(aDate[0], aDate[1], aDate[2], aDate[3], aDate[4]);
-        let B = new Date(bDate[0], bDate[1], bDate[2], bDate[3], bDate[4]);
+        let A = new Date(aDate[2], aDate[1] - 1, aDate[0], aDate[3], aDate[4]);
+        let B = new Date(bDate[2], bDate[1] - 1, bDate[0], bDate[3], bDate[4]);
         
         return B - A;
         
@@ -86,15 +86,13 @@ function ResetFa() {
 }
 
 $(document).ready(function() {
-    
-    SortTableDate(false);
-    
+
     $('th').click(function() {
         
         let element = $(this);
         let fa = element.children('i');
         let className = element.attr('class');
-        let isDate = element.hasClass('.tDate');
+        let isDate = element.hasClass('tDate');
         
         if (isDate) {
             
