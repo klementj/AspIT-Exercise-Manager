@@ -10,7 +10,7 @@ if (isset($_SESSION['userId'])) {
         FROM authors 
         ORDER BY Timestamp DESC;
 
-        SELECT exercises.ExerciseId, exercises.Title, subjects.SubjectName, users.FirstName, users.LastName, DATE_FORMAT(exercises.LastUpdated, "%e-%c-%Y %H:%i") AS "Date"
+        SELECT exercises.ExerciseId, exercises.Title, subjects.SubjectName, users.FirstName, users.LastName, DATE_FORMAT(exercises.LastUpdated, '%e-%c-%Y %H:%i') AS 'Date'
         FROM exercises
         LEFT JOIN t1 ON exercises.ExerciseId = t1.ExerciseId
         LEFT JOIN subjects ON exercises.SubjectId = subjects.SubjectId
