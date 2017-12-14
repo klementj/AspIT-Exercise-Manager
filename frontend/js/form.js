@@ -11,7 +11,7 @@ $(document).ready(function() {
         $form = $('#saveForm');
         
         // Create our input fields to be inserted into our form
-        let exerciseId = $('<input>').attr('type', 'hidden').attr('name', 'exerciseId').val('8');
+        let exerciseId = $('<input>').attr('type', 'hidden').attr('name', 'exerciseId').val('');
         let subjectInput = $('<input>').attr('type', 'hidden').attr('name', 'subjectId').val('1');
         let titleInput = $('<input>').attr('type', 'hidden').attr('name', 'title').val( $title );
         let contentInput = $('<input>').attr('type', 'hidden').attr('name', 'content').val( $content );
@@ -34,6 +34,10 @@ $(document).ready(function() {
             
         });
         
+    });
+    
+    $('#publishBtn').click(function() {
+        console.log('jnsdg');
     });
     
 });
