@@ -6,12 +6,12 @@ function GetOriginalAuthorId($exerciseId) {
             /*Find the first author to the exercise, which is the original author*/
             require "connect.php";
 
-            $stmt = dbh->prepare(
+            $stmt = $dbh->prepare(
                 "SELECT UserId FROM authors 
                 WHERE ExerciseId = ? 
                 ORDER BY Timestamp ASC 
                 LIMIT 1;"
-            )
+            );
             $stmt->bindParam(1, $exerciseId);
             $stmt->execute();
 
