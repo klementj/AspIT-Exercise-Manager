@@ -13,6 +13,36 @@
     cursor: pointer;
 }
 
+@mixin hoverText($bottom, $margin-left, $width: 120px, $font-size: 1rem) {
+    width: $width;
+    visibility: hidden;
+    opacity: 0;
+    background-color: #555;
+    font-family: $font;
+    font-size: $font-size;
+    color: #fff;
+    text-align: center;
+    padding: 7px;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+    bottom: $bottom;
+    margin-left: $margin-left;
+    transition: 0.2s;
+}
+
+@mixin hoverTextArrow() {
+    content: " ";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    color: #555;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
 $font: 'Oxygen', sans-serif;
 $darken: 5%;
 $blueBtnColor: linear-gradient(#42A5F5, #1E88E5);
@@ -52,10 +82,12 @@ body {
         position: fixed;
         background-color: rgba(50, 50, 50, 0.8);
         z-index: 99;
+        display: none;
+        opacity: 0;
     }
     
     #openModal {
-        height: 90%;
+        height: 85vh;
         width: 700px;
         padding: 25px;
         position: absolute;
@@ -66,6 +98,8 @@ body {
         z-index: 100;
         display: flex;
         flex-direction: column;
+        display: none;
+        opacity: 0;
         
         input {
             border: none;
@@ -76,7 +110,7 @@ body {
             min-width: 280px;
         }
         
-        .inputContainer {
+        #inputContainer {
             width: 40%;
             padding: 7px 35px 7px 10px;
             margin-bottom: 30px;
@@ -188,6 +222,7 @@ body {
                     .dropdown {
                         position: relative;
                         cursor: pointer;
+                        color: black;
                         
                         .dropdownMenu {
                             width: 150%;
@@ -269,6 +304,7 @@ body {
                 font-style: normal;
                 margin-bottom: 20px;
                 border: 1px solid #eee;
+                color: #424242;
             }
             
             nav {
@@ -279,23 +315,10 @@ body {
                     cursor: pointer;
                     position: relative;
                     font-size: 40px;
+                    color: black;
                     
                     .faTooltip {
-                        width: 120px;
-                        visibility: hidden;
-                        opacity: 0;
-                        background-color: #555;
-                        font-family: $font;
-                        font-size: 1rem;
-                        color: #fff;
-                        text-align: center;
-                        padding: 7px;
-                        border-radius: 6px;
-                        position: absolute;
-                        z-index: 1;
-                        bottom: 125%;
-                        margin-left: -54px;
-                        transition: 0.2s;
+                        @include hoverText(125%, -54px, 120px);
                     }
                 }
                 
@@ -323,14 +346,7 @@ body {
                 }
 
                 i .faTooltip::after {
-                    content: " ";
-                    position: absolute;
-                    top: 100%; 
-                    left: 50%;
-                    margin-left: -5px;
-                    border-width: 5px;
-                    border-style: solid;
-                    border-color: #555 transparent transparent transparent;
+                    @include hoverTextArrow();
                 }
 
                 #edit {
@@ -354,20 +370,8 @@ body {
                         position: relative;
                         
                         .tooltiptext {
-                            width: 120px;
-                            visibility: hidden;
-                            background-color: #555;
-                            color: #fff;
-                            text-align: center;
-                            padding: 5px;
-                            border-radius: 6px;
-                            position: absolute;
-                            z-index: 1;
-                            bottom: 130%;
-                            left: 50%;
-                            margin-left: -64px;
-                            opacity: 0;
-                            transition: 0.2s;
+                            left: 44%;
+                            @include hoverText(130%, -64px, 120px);
                         }
                         
                         #code {
@@ -377,15 +381,7 @@ body {
                     }
                     
                     .editor-button .tooltiptext::after {
-                        content: " ";
-                        position: absolute;
-                        top: 100%;
-                        left: 50%;
-                        margin-left: -5px;
-                        color: #555;
-                        border-width: 5px;
-                        border-style: solid;
-                        border-color: #555 transparent transparent transparent;
+                        @include hoverTextArrow();
                     }
                     
                     .editor-button:hover .tooltiptext {
@@ -402,6 +398,7 @@ body {
                     padding: 5px;
                     box-shadow: 0 1px 2px rgba(0,0,0,0.2);
                     font-family: $font;
+                    letter-spacing: 0.5px;
                 }
             }
         }

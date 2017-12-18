@@ -1,5 +1,5 @@
 // Sorts exercise table alphabetically
-function SortTableAlphabetically(table, reverse){
+function SortTableAlphabetically(table, reverse) {
     
     table = '.' + table;
     
@@ -73,6 +73,50 @@ function SortTableDate(reverse) {
     
 }
 
+// Searches and sorts table by query
+function SearchTable(query) {
+    
+    // Changes query to full uppercase
+    query = query.toUpperCase();
+    
+    // Gets all table rows in table
+    const tableRow = $('#tableContainer table tbody tr');
+    
+    // Variable to check if row is shown
+    // Used for breaking loop
+    let isShown = false;
+    
+    // Loop through all rows
+    for (i = 0; i < tableRow.length; i++) {
+        
+        // Get all table data in row
+        let tableData = tableRow[i].getElementsByTagName('td');
+        isShown = false;
+        
+        // Loop through all table data
+        for (j = 0; j < tableData.length; j++) {
+            
+            if (isShown == false) {
+                
+                // Checks if any of the table data cells contain the query substring
+                if (tableData[j].innerHTML.toUpperCase().indexOf(query) > -1) {
+                    tableRow[i].style.display = "table-row";
+                    isShown = true;
+                } else {
+                    tableRow[i].style.display = "none";
+                }
+                
+            }
+            
+        }
+        
+    }
+    
+    const visTr = $('tr:visible');
+    visTr.filter(':odd').css('background-color', '#ddd');
+    visTr.filter(':even').css('background-color', '#f1f1f129');
+}
+
 function ResetFa() {
     
     let asc = $('.fa-sort-asc');
@@ -86,7 +130,44 @@ function ResetFa() {
 }
 
 $(document).ready(function() {
-
+    
+    $('#openNewExercise').click(function() {
+        
+        const overlay = $('#overlay');
+        const modal = $('#openModal');
+        
+        overlay.css('display', 'block');
+        modal.css('display', 'flex');
+        
+        overlay.animate({
+            opacity: 1
+        }, 100);
+        
+        modal.animate({
+            opacity: 1
+        }, 100);
+        
+    });
+    
+    $('#overlay').click(function() {
+        
+        const overlay = $('#overlay');
+        const modal = $('#openModal');
+        
+        overlay.animate({
+            opacity: 0
+        }, 100, function() {
+            overlay.css('display', 'none');
+        });
+        
+        modal.animate({
+            opacity: 0
+        }, 100, function() {
+            modal.css('display', 'none');
+        });
+        
+    });
+    
     $('th').click(function() {
         
         let element = $(this);
@@ -131,6 +212,34 @@ $(document).ready(function() {
             }
             
         }
+        
+    });
+    
+    $('#inputContainer input').keyup(function() {
+        
+        SearchTable( $('#inputContainer input').val() );
+        
+    });
+    
+    $('.tTitle a').click(function() {
+        
+        event.preventDefault();
+        
+        const exerciseId = $(this).attr('data-id');
+        
+        $.ajax({
+            
+            type: 'POST',
+            url: '../../backend/php/openExercise.php',
+            datatype: 'text',
+            data: {
+                'exerciseId' : exerciseId
+            },
+            success: function(response) {
+                console.log(response);
+            }
+            
+        });
         
     });
     

@@ -1,10 +1,11 @@
 <?php
+session_start();
 require "getOriginalAuthorId.php";
 require "getLatestAuthorId.php";
 
 /*Validate user logged in*/
 if (isset($_SESSION['userId'])) {
-    $exerciseId = $_POST['ExerciseId'];
+    $exerciseId = $_POST['exerciseId'];
     $userId = $_SESSION['userId'];
     $isAccessible = false;
     
@@ -17,8 +18,8 @@ if (isset($_SESSION['userId'])) {
     
     /*Evaluate access level*/
     if ($exercise = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $exerciseId = $exercise['AccessLevel'];
-        switch () {
+        $accessLevel = $exercise['AccessLevel'];
+        switch ($accessLevel) {
             case 0:
                 /*Exercise is private, and user must be latest author to view*/
                 if ($userId == GetLatestAuthorId($exerciseId)) {
@@ -28,7 +29,7 @@ if (isset($_SESSION['userId'])) {
             
             case 1:
                 /*Exercise is visible only to teacher-level access levels, and user access level must be of that level or higher, or they must be latest author*/
-                if ($userId == GetLatestAuthorId($exerciseId) || $userId > 2) {
+                if ($userId == GetLatestAuthorId($exerciseId) || $_SESSION['accessLevel'] < 2) {
                     $isAccessible = true;
                 }
                 break;
@@ -53,13 +54,21 @@ if (isset($_SESSION['userId'])) {
                 WHERE ExerciseId = ?;");
             $statement->bindParam(1, $exerciseId);
             $statement->execute();
+            
+            if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                echo 'røv';
+            }
+            
         } else {
             /*Error inaccessible exercise*/
+            echo 'Innaccessible exercise';
         }
     } else {
         /*Error exercise not found*/
+        echo 'Exercise not found';
     }
 } else {
     /*Error user not logged in*/
+    echo 'You must be logged in to open an exercise';
 }
 ?>
