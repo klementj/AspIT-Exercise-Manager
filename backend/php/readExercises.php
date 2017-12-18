@@ -8,7 +8,7 @@ if (isset($_SESSION['userId'])) {
         FROM authors 
         ORDER BY Timestamp DESC;
 
-        SELECT exercises.ExerciseId, exercises.Title, subjects.SubjectName, users.FirstName, users.LastName, DATE_FORMAT(exercises.LastUpdated, '%e-%c-%Y %H:%i') AS 'Date'
+        SELECT exercises.ExerciseId, exercises.Title, subjects.SubjectName, users.FirstName, users.LastName, exercises.AccessLevel, DATE_FORMAT(exercises.LastUpdated, '%e-%c-%Y %H:%i') AS 'Date'
         FROM exercises
         LEFT JOIN t1 ON exercises.ExerciseId = t1.ExerciseId
         LEFT JOIN subjects ON exercises.SubjectId = subjects.SubjectId
@@ -37,10 +37,13 @@ if (isset($_SESSION['userId'])) {
         /*Insert php loop here with row values (Date index is named Date)*/
         ?>
         <tr>
-            <td class="tTitle" data-id="<?php echo $row['ExerciseId'] ?>"><a href="#"> <?php echo $row['Title'] ?> </a></td>
-            <td class="tAuthor"> <?php echo $row['FirstName'] . ' ' . $row['LastName'] ?> </td>
-            <td class="tSubject"> <?php echo $row['SubjectName'] ?> </td>
-            <td class="tDate"> <?php echo $row['Date'] ?> </td>
+            <td class="tTitle">
+                <a href="#" data-id="<?php echo $row['ExerciseId'] ?>"><?php echo $row['Title'] ?></a>
+                <?php if ($row['AccessLevel'] == 0) { echo '<i class="fa fa-lock" aria-hidden="true" title="This exercise is private. Only you can see it."></i>'; } ?>
+            </td>
+            <td class="tAuthor"><?php echo $row['FirstName'] . ' ' . $row['LastName'] ?></td>
+            <td class="tSubject"><?php echo $row['SubjectName'] ?></td>
+            <td class="tDate"><?php echo $row['Date'] ?></td>
         </tr>
         <?php
     }

@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Oxygen:300,400,700');
 
-$bgColor: lightslategrey;
+$bgColor: #4CAF50;
 $font: 'Oxygen', sans-serif;
 $box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 
@@ -17,7 +17,7 @@ body {
         transform: translate(-50%);
         min-width: 300px;
         box-shadow: $box-shadow;
-        background-color: #B39DDB;
+        background-color: #d3d3d3;
         border-radius: 7px;
         padding: 20px;
         
@@ -58,8 +58,8 @@ body {
             height: 30px;
             width: 50%;
             border-radius: 7px;
-            border: 1px solid #778899;
-            background: linear-gradient(#778899, #5f6d7b);
+            border: none;
+            background: linear-gradient(#4CAF50, #388E3C);
             color: white;
             font-family: $font;
             font-size: 20px;
@@ -71,8 +71,7 @@ body {
         }
         
         .proceedBtn:hover:enabled {
-            color: lightslategray;
-            background: linear-gradient(white, white);
+            background: linear-gradient(darken(#4CAF50, 5%), darken(#388E3C, 5%));
         }
         
         .errorMsg {
