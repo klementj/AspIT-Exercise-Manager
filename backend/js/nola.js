@@ -216,49 +216,48 @@ $(document).ready(function() {
     var $prevLeftHTML;
     var $prevRightHTML;
     
-    
-    $previewBtn.click(function() {
-        
+    function Preview() {
         // Gets current HTML and textarea value so we can restore them later
         $prevContent = $('#LMLeditor').val();
         $prevLeftHTML = $('#mainContent').html();
-        
+
         // Hides text editor
         $('.editor-wrapper').css('display', 'none');
-        
+
         // Translates text in textarea from syntax to HTML elements
         LMLTranslate();
-        
+
         // Converts title to an input
         $('#titleInput').css('display', 'none');
         $('#title').css('display', 'inline-block');
         $('#title').text( $('#titleInput').val() );
-        
+
         // Swaps which button is shown
         $previewBtn.css('display', 'none');
         $editBtn.css('display', 'inline-block');
-        
+
         Prism.highlightAll();
-        
-    });
-    
-    $editBtn.click(function() {
-        
+    }
+
+    function Edit() {
         // Restores HTML to what it was previous to preview
         $('#mainContent').html($prevLeftHTML);
-        
+
         $('#title').css('display', 'none');
         $('#titleInput').css('display', 'inline-block');
-        
+
         // Unhides textarea
         $('.editor-wrapper').css('display', 'block');
-        
+
         // Sets textarea content to what it was previous to preview
         $('#LMLeditor').val($prevContent);
-        
+
         // Swaps which button is shown
         $previewBtn.css('display', 'inline-block');
         $editBtn.css('display', 'none');
-        
-    });
+    }
+    
+    $previewBtn.click(Preview);
+    
+    $editBtn.click(Edit);
 });

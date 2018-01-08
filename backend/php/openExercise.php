@@ -47,16 +47,17 @@ if (isset($_SESSION['userId'])) {
         }
         
         if ($isAccessible) {
+            
             /*Read entire exercise*/
             $statement = $dbh->prepare(
                 "SELECT ExerciseId, SubjectId, Title, Content, CreationDate, LastUpdated, Accesslevel 
-                FROM exercises 
+                FROM exercises
                 WHERE ExerciseId = ?;");
             $statement->bindParam(1, $exerciseId);
             $statement->execute();
             
-            if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                echo 'røv';
+            if ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+                echo json_encode($row);
             }
             
         } else {
@@ -66,9 +67,11 @@ if (isset($_SESSION['userId'])) {
     } else {
         /*Error exercise not found*/
         echo 'Exercise not found';
+        
     }
 } else {
     /*Error user not logged in*/
     echo 'You must be logged in to open an exercise';
+
 }
 ?>

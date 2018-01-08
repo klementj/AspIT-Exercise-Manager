@@ -1,14 +1,54 @@
+function FadeOut() {
+    
+    const overlay = $('#overlay');
+    const modal = $('#openModal');
+
+    overlay.animate({
+        opacity: 0
+    }, 100, function() {
+        overlay.css('display', 'none');
+    });
+
+    modal.animate({
+        opacity: 0
+    }, 100, function() {
+        modal.css('display', 'none');
+    });
+    
+}
+
 $(document).ready(function() {
     
-    $title = '';
-    $content = '';
+    var $title = '';
+    var $content = '';
+    var $exerciseId;
+    
+    $('#openNewExercise').click(function() {
+        
+        const overlay = $('#overlay');
+        const modal = $('#openModal');
+        
+        overlay.css('display', 'block');
+        modal.css('display', 'flex');
+        
+        overlay.animate({
+            opacity: 1
+        }, 100);
+        
+        modal.animate({
+            opacity: 1
+        }, 100);
+        
+    });
+    
+    $('#overlay').click(FadeOut);
     
     $('#saveBtn').click(function() {
         
         // Get values from HTML
         $title = $('#titleInput').val();
         $content = $('#LMLeditor').val();
-        $form = $('#saveForm');
+        var $form = $('#saveForm');
         
         // Create our input fields to be inserted into our form
         let exerciseId = $('<input>').attr('type', 'hidden').attr('name', 'exerciseId').val('');
@@ -36,8 +76,41 @@ $(document).ready(function() {
         
     });
     
-    $('#publishBtn').click(function() {
-        console.log('jnsdg');
+    $('.tTitle a').click(function() {
+        
+        event.preventDefault();
+        
+        $.ajax({
+            
+            type: 'POST',
+            url: '../../backend/php/openExercise.php',
+            datatype: 'text',
+            data: {
+                'exerciseId' : $(this).attr('data-id')
+            },
+            success: function(response) {
+                if (response === 'Innaccessible exercise' || response === 'Exercise not found' || response === 'You must be logged in to open an exercise') {
+                    
+                    alert(response);
+                    
+                } else {
+                    
+                    let responseArr = $.parseJSON(response); 
+                    
+                    $('#mainContent').text( '' );
+                    
+                    $('#titleInput').val( responseArr['Title'] );
+                    $('#subjectSelect').val( responseArr['SubjectId'] );
+                    $('#LMLeditor').val( responseArr['Content'] );
+                    $exerciseId = responseArr['ExerciseId'];
+                    FadeOut();
+                    $('#preview').click();
+                    
+                }
+            }
+            
+        });
+        
     });
     
 });
