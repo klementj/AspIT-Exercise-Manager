@@ -65,7 +65,13 @@ if (isset($_SESSION['userId'])) {
                 ORDER BY authors.Timestamp ASC
                 LIMIT 1;" .
                 
-                /*Select latest authors list*/
+                /*Select latest authors list: Filter away original author, create temporary table of sorted authors, and select*/
+                "SELECT authors.UserId INTO @OrigAuthId
+                FROM authors
+                WHERE authors.ExerciseId = ?
+                ORDER BY authors.Timestamp ASC
+                LIMIT 1;" .
+                
                 "CREATE TEMPORARY TABLE t1 AS 
                 SELECT * 
                 FROM authors
