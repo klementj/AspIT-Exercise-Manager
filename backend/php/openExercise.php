@@ -47,34 +47,35 @@ if (isset($_SESSION['userId'])) {
         }
         
         if ($isAccessible) {
+            $result = [];
+            $authors = [];
             
             /*Read entire exercise*/
             $statement = $dbh->prepare(
                 /*Select exercise data*/
                 "SELECT ExerciseId, SubjectId, Title, Content, CreationDate, LastUpdated, Accesslevel 
                 FROM exercises
-                WHERE ExerciseId = ?;" +
+                WHERE ExerciseId = ?;" .
                 
                 /*Select original author*/
-                "SELECT users.FirstName, users.LastName
+                "SELECT users.FirstName, users.LastName, authors.Timestamp
                 FROM authors
                 JOIN users ON authors.UserId = users.UserId
                 WHERE authors.ExerciseId = ?
                 ORDER BY authors.Timestamp ASC
-                LIMIT 1;" +
+                LIMIT 1;" .
                 
                 /*Select latest authors list*/
                 "CREATE TEMPORARY TABLE t1 AS 
                 SELECT * 
-                FROM authors 
+                FROM authors
                 ORDER BY Timestamp DESC;
 
                 SELECT users.FirstName, users.LastName, t1.Timestamp
                 FROM t1
                 JOIN users ON t1.UserId = users.UserId
                 WHERE t1.ExerciseId = ?
-                GROUP BY t1.UserId
-                ORDER BY t1.Timestamp DESC;");
+                GROUP BY t1.UserId;");
             $statement->bindParam(1, $exerciseId);
             $statement->bindParam(2, $exerciseId);
             $statement->bindParam(3, $exerciseId);
@@ -82,21 +83,25 @@ if (isset($_SESSION['userId'])) {
             
             /*Fetch exercise data*/
             if ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-                echo json_encode($row);
+                array_push($result, $row);
             }
             
             /*Fetch original author*/
             $statement->nextRowset();
             if ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-                echo json_encode($row);
+                array_push($result, $row);
             }
             
             /*Fetch author list*/
             $statement->nextRowset();
             $statement->nextRowset();
-            if ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-                echo json_encode($row);
+            while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+                array_push($authors, $row);
             }
+            
+            array_push($result, $authors);
+            
+            echo json_encode($result);
             
         } else {
             /*Error inaccessible exercise*/

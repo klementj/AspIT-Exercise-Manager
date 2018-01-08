@@ -51,7 +51,7 @@ $(document).ready(function() {
         var $form = $('#saveForm');
         
         // Create our input fields to be inserted into our form
-        let exerciseId = $('<input>').attr('type', 'hidden').attr('name', 'exerciseId').val('');
+        let exerciseId = $('<input>').attr('type', 'hidden').attr('name', 'exerciseId').val('36');
         let subjectInput = $('<input>').attr('type', 'hidden').attr('name', 'subjectId').val('1');
         let titleInput = $('<input>').attr('type', 'hidden').attr('name', 'title').val( $title );
         let contentInput = $('<input>').attr('type', 'hidden').attr('name', 'content').val( $content );
@@ -95,14 +95,15 @@ $(document).ready(function() {
                     
                 } else {
                     
-                    let responseArr = $.parseJSON(response); 
-                    
+                    let responseArr = $.parseJSON(response);
+                    console.log(responseArr);
                     $('#mainContent').text( '' );
                     
-                    $('#titleInput').val( responseArr['Title'] );
-                    $('#subjectSelect').val( responseArr['SubjectId'] );
-                    $('#LMLeditor').val( responseArr['Content'] );
-                    $exerciseId = responseArr['ExerciseId'];
+                    $('#titleInput').val( responseArr[0]['Title'] );
+                    $('#subjectSelect').val( responseArr[0]['SubjectId'] );
+                    $('#author').text( 'Created: ' + responseArr[0]['CreationDate'] + ' by ' + responseArr[1]['FirstName'] + ' ' + responseArr[1]['LastName'] );
+                    $('#LMLeditor').val( responseArr[0]['Content'] );
+                    $exerciseId = responseArr[0]['ExerciseId'];
                     FadeOut();
                     $('#preview').click();
                     
