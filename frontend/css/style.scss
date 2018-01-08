@@ -276,12 +276,7 @@ body {
         display: flex;
         flex-direction: row;
         
-        h5 {
-            font-style: italic;
-            margin-bottom: 25px;
-            font-size: 1.4rem;
-            font-weight: bold;
-        }
+        
         
         #left {
             flex-basis: 60%;
@@ -289,6 +284,19 @@ body {
             max-width: 65%;
             display: flex;
             flex-direction: column;
+            
+            h5 {
+                font-style: italic;
+                margin-bottom: 10px;
+                font-size: 1.4rem;
+                font-weight: bold;
+            }
+            
+            h6 {
+                font-style: italic;
+                margin-bottom: 25px;
+                font-size: 0.9rem;
+            }
             
             select {
                 margin-bottom: 10px;

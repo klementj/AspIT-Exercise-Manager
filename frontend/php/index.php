@@ -61,7 +61,8 @@ foreach($_SESSION as $item) {
                 <option value="2">V1</option>
                 <option value="3">S1</option>
             </select>
-            <h5 id="author">Lasse Hels</h5>
+            <h5 id="author"><?php echo $_SESSION['firstName'] . ' ' . $_SESSION['lastName'] ?></h5>
+            <h6 id="lastUpdated">Last updated: 2017-12-14 11:03:28</h6>
             <section class="editor-wrapper">
                 <div class="toolbar">
                     <button id="headerBig" class="editor-button" tabindex="-1">
