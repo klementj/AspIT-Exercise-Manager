@@ -13,6 +13,8 @@ if (isset($_SESSION['userId'])) {
 
         INSERT INTO authors(UserId, ExerciseId)
         VALUES(?, @Id);
+        
+        SELECT @Id;
 
         COMMIT;"
     );
@@ -21,12 +23,22 @@ if (isset($_SESSION['userId'])) {
     $stmt->bindParam(3, $content);
     $stmt->bindParam(4, $_SESSION['userId']);
     $stmt->execute();
+    
+    $stmt->nextRowset();
+    $stmt->nextRowset();
+    $stmt->nextRowset();
+    $stmt->nextRowset();
+    
+    if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+        $exerciseId = $row[0];
+    }
 
     /*Close connection*/
     $dbh = null;
     
-    /*Redirect to other page with success*/
-//    header('location: ../../frontend/php/index.php');
+    /*Return inserted exercise id*/
+    echo $exerciseId;
+    
 } else {
     /*error user not logged in*/
     $dbh = null;
