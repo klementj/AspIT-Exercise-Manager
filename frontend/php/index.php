@@ -17,11 +17,12 @@ foreach($_SESSION as $item) {
     <link rel="stylesheet" href="../css/nola.css">
     <link rel="stylesheet" href="../fa/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../prism/prism.css">
+    <script type="text/javascript">var accessLevel = '<?php echo $_SESSION['accessLevel'] ?>'</script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="../prism/prism.js"></script>
+    <script src="../../backend/js/nola.js"></script>
     <script src="../js/script.js"></script>
     <script src="../js/nolabuttons.js"></script>
-    <script src="../../backend/js/nola.js"></script>
     <script src="../js/form.js"></script>
 </head>
 <body>
@@ -60,7 +61,8 @@ foreach($_SESSION as $item) {
                 <option value="2">V1</option>
                 <option value="3">S1</option>
             </select>
-            <h5 id="author">Lasse Hels</h5>
+            <h5 id="author"><?php echo $_SESSION['firstName'] . ' ' . $_SESSION['lastName'] ?></h5>
+            <h6 id="lastUpdated">Last updated: 2017-12-14 11:03:28</h6>
             <section class="editor-wrapper">
                 <div class="toolbar">
                     <button id="headerBig" class="editor-button" tabindex="-1">
@@ -117,15 +119,20 @@ foreach($_SESSION as $item) {
             <article id="mainContent" ></article>
         </article>
         <aside id="right">
-            <div>
-                <form id="saveForm">
-                    <button type="button" id="saveBtn">Save</button>
-                </form>
-                <button id="publishBtn">Publish</button>
-            </div>
-            <div>
-                <button id="deleteBtn">Delete</button>
-            </div>
+            <?php 
+                if ($_SESSION['accessLevel'] < 2) {
+                    echo 
+                        '<div>
+                            <form id="saveForm">
+                                <button type="button" id="saveBtn">Save</button>
+                            </form>
+                            <button id="publishBtn">Publish</button>
+                        </div>
+                        <div>
+                            <button id="deleteBtn">Delete</button>
+                        </div>';
+                }
+            ?>
         </aside>
     </main>
     <footer></footer>

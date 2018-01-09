@@ -26,7 +26,9 @@ if (isset($_SESSION['userId'])) {
     /*Close connection*/
     $dbh = null;
     
-    /*Redirect to other page with success*/
+    /*Return updated exercise id*/
+    echo $exerciseId;
+    
 } else {
     /*error user not logged in*/
     $dbh = null;
