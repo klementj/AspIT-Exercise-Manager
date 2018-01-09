@@ -51,6 +51,9 @@ if (isset($_SESSION['userId'])) {
         /*Close connection*/
         $dbh = null;
         
+        /*Return updated exercise id*/
+        echo $oldExerciseId;
+        
     } else {
         /*error older version of exercise not found*/
         $dbh = null;

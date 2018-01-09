@@ -27,6 +27,8 @@ if (isset($_SESSION['userId'])) {
 
         SET @ExId = LAST_INSERT_ID();
         
+        SELECT @ExId;
+        
         INSERT INTO authors(UserId, ExerciseId, Timestamp) VALUES";
     
     /*Insert previous version's author list as new exercise's author list*/
@@ -42,18 +44,26 @@ if (isset($_SESSION['userId'])) {
     
     COMMIT;";
     
-    echo $sql;
-    
     $statement = $dbh->prepare($sql);
     $statement->bindParam(1, $subjectId);
     $statement->bindParam(2, $title);
     $statement->bindParam(3, $content);
     $statement->execute();
+    
+    $stmt->nextRowset();
+    $stmt->nextRowset();
+    $stmt->nextRowset();
+    
+    if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+        $exerciseId = $row[0];
+    }
 
     /*Close connection*/
     $dbh = null;
     
-    /*Redirect to other page with success*/
+    /*Return inserted exercise id*/
+    echo $exerciseId;
+    
 } else {
     /*error user not logged in*/
     $dbh = null;
