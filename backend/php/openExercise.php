@@ -87,6 +87,9 @@ if (isset($_SESSION['userId'])) {
             $statement->bindParam(3, $exerciseId);
             $statement->execute();
             
+            /*Close connection*/
+            $dbh = null;
+            
             /*Fetch exercise data*/
             if ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
                 array_push($result, $row);
