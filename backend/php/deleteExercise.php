@@ -27,6 +27,6 @@ if (isset($_SESSION['userId'])) {
     }
 } else {
     /*Error user not logged in*/
-    echo 'You must be logged in to open an exercise';
+    echo 'You must be logged in to delete an exercise';
 }
 ?>
