@@ -18,8 +18,10 @@ foreach ($_POST as $item) {
 }
 
 if ($emptyFields) {
+    
     $_SESSION['errMsg'] = 'Fields cannot be empty';
     header("location: ../../frontend/php/login.php?firstName=$firstName&lastName=$lastName&email=$email");
+    
 } 
 /*Check if password and repassword match*/ 
 else if ($password != $repassword) {
@@ -27,7 +29,15 @@ else if ($password != $repassword) {
     $_SESSION['errMsg'] = "Passwords do not match";
     header("location: ../../frontend/php/login.php?firstName=$firstName&lastName=$lastName&email=$email");
     
-} 
+}
+/*Check for valid email*/
+
+else if (!preg_match('/^[^@]+@[^@]+\.[^@]+$/', $email)) {
+    
+    $_SESSION['errMsg'] = 'Invalid email';
+    header("location: ../../frontend/php/login.php?firstName=$firstName&lastName=$lastName&email=$email");
+    
+}
 else {
     require "connect.php";
     
