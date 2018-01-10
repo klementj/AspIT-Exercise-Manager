@@ -1,10 +1,8 @@
 <?php
 session_start();
 
-foreach($_SESSION as $item) {
-    if (!isset($item)) {
-        header('location: login.php');
-    }
+if (!isset($_SESSION["userId"])) {
+    header('location: login.php');
 }
 ?>
 <!DOCTYPE html>
