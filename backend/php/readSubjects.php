@@ -1,7 +1,7 @@
 <?php
 require 'connect.php';
 
-$stmt->prepare("SELECT * FROM subjects ORDER BY SubjectName;");
+$stmt = $dbh->prepare("SELECT * FROM subjects ORDER BY SubjectName;");
 $stmt->execute();
 
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {

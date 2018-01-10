@@ -21,7 +21,8 @@ $(document).ready(function() {
     
     var $title = '';
     var $content = '';
-    var $exerciseId;
+    var $subject = '';
+    var $exerciseId = null;
     
     $('#openNewExercise').click(function() {
         
@@ -48,11 +49,12 @@ $(document).ready(function() {
         // Get values from HTML
         $title = $('#titleInput').val();
         $content = $('#LMLeditor').val();
+        $subject = $('#subjectSelect').val();
         var $form = $('#saveForm');
         
         // Create our input fields to be inserted into our form
-        let exerciseId = $('<input>').attr('type', 'hidden').attr('name', 'exerciseId').val('36');
-        let subjectInput = $('<input>').attr('type', 'hidden').attr('name', 'subjectId').val('1');
+        let exerciseId = $('<input>').attr('type', 'hidden').attr('name', 'exerciseId').val( $exerciseId );
+        let subjectInput = $('<input>').attr('type', 'hidden').attr('name', 'subjectId').val( $subject );
         let titleInput = $('<input>').attr('type', 'hidden').attr('name', 'title').val( $title );
         let contentInput = $('<input>').attr('type', 'hidden').attr('name', 'content').val( $content );
         
@@ -68,8 +70,20 @@ $(document).ready(function() {
             url: '../../backend/php/submitExercise.php',
             data: $form.serialize(),
             processData: true,
-            success: function() {
-                alert('det virk');
+            success: function(response) {
+                if (/^\d+$/.test(response)) {
+                    $exerciseId = response;
+                    
+                    const now = new Date();
+                    const hour = ( '0' + now.getHours() ).slice(-2);
+                    const minutes = ( '0' + now.getMinutes() ).slice(-2);
+                    
+                    $('#lastUpdated').css('display', 'block');
+                    $('#lastUpdated').text( 'Last updated: ' + now.getFullYear() + '-' + now.getMonth() + 1 + '-' + now.getDate() + ' ' + hour + ':' + minutes );
+                    
+                } else {
+                    alert(response);
+                }
             }
             
         });
@@ -96,12 +110,22 @@ $(document).ready(function() {
                 } else {
                     
                     let responseArr = $.parseJSON(response);
-                    console.log(responseArr);
-                    $('#mainContent').text( '' );
+                    let authorString = '';
+                    
+                    responseArr[0]['CreationDate'] = responseArr[0]['CreationDate'].slice(0, -3);
+                    responseArr[0]['LastUpdated'] = responseArr[0]['LastUpdated'].slice(0, -3);
+                    
+                    for (var i = 0; i < responseArr[2].length; i++) {
+                        authorString += ', ' + responseArr[2][i]['FirstName'] + ' ' + responseArr[2][i]['LastName'];
+                    }
+                    
+                    $('#mainContent').text('');
                     
                     $('#titleInput').val( responseArr[0]['Title'] );
                     $('#subjectSelect').val( responseArr[0]['SubjectId'] );
-                    $('#author').text( 'Created: ' + responseArr[0]['CreationDate'] + ' by ' + responseArr[1]['FirstName'] + ' ' + responseArr[1]['LastName'] );
+                    $('#author').text( 'Created: ' + responseArr[0]['CreationDate'] + ' by ' + responseArr[1]['FirstName'] + ' ' + responseArr[1]['LastName'] + authorString);
+                    $('#lastUpdated').css('display', 'block');
+                    $('#lastUpdated').text( 'Last updated: ' + responseArr[0]['LastUpdated'] );
                     $('#LMLeditor').val( responseArr[0]['Content'] );
                     $exerciseId = responseArr[0]['ExerciseId'];
                     FadeOut();
@@ -111,6 +135,22 @@ $(document).ready(function() {
             }
             
         });
+        
+    });
+    
+    $('#createNewExercise').click(function() {
+        
+        if ($('#preview').css('display') == 'none') {
+            $('#edit').click();
+        }
+        
+        $('#titleInput').val('');
+        $('#subjectSelect')[0].selectedIndex = 0;
+        $('#author').text(userName);
+        $('#lastUpdated').css('display', 'none');
+        $('#lastUpdated').text('');
+        $('.editor').val('');
+        $exerciseId = null;
         
     });
     

@@ -227,25 +227,35 @@ $(document).ready(function() {
         // Translates text in textarea from syntax to HTML elements
         LMLTranslate();
 
-        // Converts title to an input
+        // Hides title input field and shows title h1
         $('#titleInput').css('display', 'none');
         $('#title').css('display', 'inline-block');
         $('#title').text( $('#titleInput').val() );
-
+        
+        // Hides subject selection box and shows subject as text instead
+        $('#subjectSelect').css('display', 'none');
+        $('#subject').text( $('#subjectSelect option:selected').text() );
+        $('#subject').css('display', 'block');
+        
         // Swaps which button is shown
         $previewBtn.css('display', 'none');
         $editBtn.css('display', 'inline-block');
-
+        
         Prism.highlightAll();
     }
 
     function Edit() {
         // Restores HTML to what it was previous to preview
         $('#mainContent').html($prevLeftHTML);
-
+        
+        // Hides title h1 and shows title input field
         $('#title').css('display', 'none');
         $('#titleInput').css('display', 'inline-block');
-
+        
+        // Hides subject text and shows subject selection box
+        $('#subjectSelect').css('display', 'inline-block');
+        $('#subject').css('display', 'none');
+        
         // Unhides textarea
         $('.editor-wrapper').css('display', 'block');
 

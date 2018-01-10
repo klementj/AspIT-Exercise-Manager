@@ -58,7 +58,7 @@ if (isset($_SESSION['userId'])) {
                 WHERE ExerciseId = ?;" .
                 
                 /*Select original author*/
-                "SELECT users.FirstName, users.LastName, authors.Timestamp
+                "SELECT users.FirstName, users.LastName
                 FROM authors
                 JOIN users ON authors.UserId = users.UserId
                 WHERE authors.ExerciseId = ?
@@ -73,18 +73,19 @@ if (isset($_SESSION['userId'])) {
                 LIMIT 1;" .
                 
                 "CREATE TEMPORARY TABLE t1 AS 
-                SELECT * 
+                SELECT *
                 FROM authors
                 ORDER BY Timestamp DESC;
 
-                SELECT users.FirstName, users.LastName, t1.Timestamp
+                SELECT users.FirstName, users.LastName
                 FROM t1
                 JOIN users ON t1.UserId = users.UserId
-                WHERE t1.ExerciseId = ?
+                WHERE t1.ExerciseId = ? AND t1.UserId != @OrigAuthId
                 GROUP BY t1.UserId;");
             $statement->bindParam(1, $exerciseId);
             $statement->bindParam(2, $exerciseId);
             $statement->bindParam(3, $exerciseId);
+            $statement->bindParam(4, $exerciseId);
             $statement->execute();
             
             /*Close connection*/
@@ -102,6 +103,7 @@ if (isset($_SESSION['userId'])) {
             }
             
             /*Fetch author list*/
+            $statement->nextRowset();
             $statement->nextRowset();
             $statement->nextRowset();
             while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {

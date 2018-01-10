@@ -15,7 +15,10 @@ if (!isset($_SESSION["userId"])) {
     <link rel="stylesheet" href="../css/nola.css">
     <link rel="stylesheet" href="../fa/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../prism/prism.css">
-    <script type="text/javascript">var accessLevel = '<?php echo $_SESSION['accessLevel'] ?>'</script>
+    <script type="text/javascript">
+        var accessLevel = '<?php echo $_SESSION['accessLevel'] ?>';
+        var userName = '<?php echo $_SESSION['firstName'] . ' ' . $_SESSION['lastName'] ?>'
+    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="../prism/prism.js"></script>
     <script src="../../backend/js/nola.js"></script>
@@ -51,16 +54,18 @@ if (!isset($_SESSION["userId"])) {
                 <button id="openNewExercise">
                     <a href="#">Open</a>
                 </button>
+                <button id="createNewExercise">
+                    <a href="#">New</a>
+                </button>
             </nav>
             <h1 id="title"></h1>
             <input type="text" id="titleInput" spellcheck="false" placeholder="Title" tabindex="1">
             <select name="subject" id="subjectSelect">
-                <option value="1">T1</option>
-                <option value="2">V1</option>
-                <option value="3">S1</option>
+                <?php require '../../backend/php/readSubjects.php'; ?>
             </select>
+            <p id="subject"></p>
             <h5 id="author"><?php echo $_SESSION['firstName'] . ' ' . $_SESSION['lastName'] ?></h5>
-            <h6 id="lastUpdated">Last updated: 2017-12-14 11:03:28</h6>
+            <h6 id="lastUpdated"></h6>
             <section class="editor-wrapper">
                 <div class="toolbar">
                     <button id="headerBig" class="editor-button" tabindex="-1">
