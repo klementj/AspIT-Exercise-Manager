@@ -26,6 +26,8 @@ $(document).ready(function() {
     
     $('#openNewExercise').click(function() {
         
+        
+        
         const overlay = $('#overlay');
         const modal = $('#openModal');
         

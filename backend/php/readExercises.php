@@ -34,22 +34,43 @@ if (isset($_SESSION['userId'])) {
     $stmt->execute();
     $stmt->nextRowset();
     
+    /*Declare result array*/
+    $result = [];
+    
+    /*Loop through all exercises*/
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        /*Insert php loop here with row values (Date index is named Date)*/
+        
+        /*Filter all exercises that slip through the WHERE/GROUP BY clause*/
+        /*Each exercise is selected multiple times, and access level filter is applied before latest author filter in the sql*/
         if ($row['UserId'] == GetLatestAuthorId($row['ExerciseId'])) {
-            ?>
-            <tr>
-                <td class="tTitle">
-                    <a href="#" data-id="<?php echo $row['ExerciseId'] ?>"><?php echo $row['Title'] ?></a>
-                    <?php if ($row['AccessLevel'] == 0) { echo '<i class="fa fa-lock" aria-hidden="true" title="This exercise is private. Only you can see it."></i>'; } ?>
-                </td>
-                <td class="tAuthor"><?php echo $row['FirstName'] . ' ' . $row['LastName'] ?></td>
-                <td class="tSubject"><?php echo $row['SubjectName'] ?></td>
-                <td class="tDate"><?php echo $row['Date'] ?></td>
-            </tr>
-            <?php
+            
+            /*Declare html for each table row*/
+            htmlString = 
+                '<tr>
+                    <td class="tTitle">
+                        <a href="#" data-id="' . $row['ExerciseId'] . '">' . $row['Title'];
+
+            if ($row['AccessLevel'] == 0) {
+                htmlString .= '<i class="fa fa-lock" aria-hidden="true" title="This exercise is private. Only you can see it."></i>';
+            }
+            
+            htmlString .=
+                        '</a>
+                    </td>
+                    <td class="tAuthor">' . $row['FirstName'] . ' ' . $row['LastName'] . '</td>
+                    <td class="tSubject">' . $row['SubjectName'] . '</td>
+                    <td class="tDate"' . $row['Date'] . '</td>
+                </tr>';
+            
+            /*Push html to array*/
+            array_push($result, htmlString);
+            
         }
     }
+    
+    /*Encode array*/
+    echo json_encode($result);
+    
 } else {
     /*Error user not logged in*/
     echo 'Must be logged in';
