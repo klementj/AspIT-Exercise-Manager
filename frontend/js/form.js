@@ -1,51 +1,9 @@
-function FadeOut() {
+function Fade(fadeIn) {
     
     const overlay = $('#overlay');
     const modal = $('#openModal');
-
-    overlay.animate({
-        opacity: 0
-    }, 100, function() {
-        overlay.css('display', 'none');
-    });
-
-    modal.animate({
-        opacity: 0
-    }, 100, function() {
-        modal.css('display', 'none');
-    });
     
-}
-
-$(document).ready(function() {
-    
-    var $title = '';
-    var $content = '';
-    var $subject = '';
-    var $exerciseId = null;
-    
-    if (accessLevel === '2') {
-        
-        $('#edit').css('display', 'none');
-        $('#preview').css('display', 'none');
-        $('#titleInput').css('display', 'none');
-        $('#title').css('display', 'none');
-        $('#subjectSelect').css('display', 'none');
-        $('#subject').css('display', 'none');
-        $('#author').css('display', 'none');
-        $('#lastUpdated').css('display', 'none');
-        $('.editor-wrapper').css('display', 'none');
-        $('#overlay').css('display', 'block');
-        $('#overlay').css('opacity', '1');
-        $('#openModal').css('display', 'flex');
-        $('#openModal').css('opacity', '1');
-        
-    }
-    
-    $('#openNewExercise').click(function() {
-        
-        const overlay = $('#overlay');
-        const modal = $('#openModal');
+    if (fadeIn) {
         
         overlay.css('display', 'block');
         modal.css('display', 'flex');
@@ -58,9 +16,63 @@ $(document).ready(function() {
             opacity: 1
         }, 100);
         
+    } else {
+        
+        overlay.animate({
+            opacity: 0
+        }, 100, function() {
+            overlay.css('display', 'none');
+        });
+        
+        modal.animate({
+            opacity: 0
+        }, 100, function() {
+            modal.css('display', 'none');
+        });
+        
+    }
+    
+}
+
+$(document).ready(function() {
+    
+    var $title = '';
+    var $content = '';
+    var $subject = '';
+    var $exerciseId = null;
+    
+    // Making sure the right elements are displayed based on user accesslevel
+    if (parseInt(accessLevel) < 2) {
+        
+        $('#preview').css('display', 'inline-block');
+        $('#exerciseCreationContainer').css('display', 'block');
+        $('#preview').animate({
+            opacity: 1
+        }, 1000);
+        $('#exerciseCreationContainer').animate({
+            opacity: 1
+        }, 1000);
+        
+    } else {
+        
+        $('#overlay').css({
+            'display': 'flex',
+            'opacity': '1'
+        });
+        $('#openModal').css({
+            'display': 'flex',
+            'opacity': '1'
+        });
+        
+    }
+    
+    $('#openNewExercise').click(function() {
+        Fade(true);
     });
     
-    $('#overlay').click(FadeOut);
+    $('#overlay').click(function() {
+        Fade(false);
+    });
     
     $('#saveBtn').click(function() {
         
@@ -175,7 +187,7 @@ $(document).ready(function() {
                     $('#lastUpdated').text( 'Last updated: ' + responseArr[0]['LastUpdated'] );
                     $('#LMLeditor').val( responseArr[0]['Content'] );
                     $exerciseId = responseArr[0]['ExerciseId'];
-                    FadeOut();
+                    Fade(false);
                     $('#preview').click();
                     
                 }

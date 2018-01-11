@@ -56,74 +56,76 @@ if (!isset($_SESSION["userId"])) {
                 </button>
                 <?php 
                     if ($_SESSION['accessLevel'] < 2) {
-                        echo 
+                        echo
                         '<button id="createNewExercise">
                             <a href="#">New</a>
                         </button>';
                     }
                 ?>
             </nav>
-            <h1 id="title"></h1>
-            <input type="text" id="titleInput" spellcheck="false" placeholder="Title" tabindex="1">
-            <select name="subject" id="subjectSelect">
-                <?php require '../../backend/php/readSubjects.php'; ?>
-            </select>
-            <p id="subject"></p>
-            <h5 id="author"><?php echo $_SESSION['firstName'] . ' ' . $_SESSION['lastName'] ?></h5>
-            <h6 id="lastUpdated"></h6>
-            <section class="editor-wrapper">
-                <div class="toolbar">
-                    <button id="headerBig" class="editor-button" tabindex="-1">
-                        <i class="fa fa-header" aria-hidden="true"></i>1
-                        <span class="tooltiptext disable-select">Big header</span>
-                    </button>
-                    <button id="headerMedium" class="editor-button" tabindex="-1">
-                            <i class="fa fa-header" aria-hidden="true"></i>2
-                            <span class="tooltiptext disable-select">Medium header</span>
-                    </button>
-                    <button id="headerSmall" class="editor-button" tabindex="-1">
-                            <i class="fa fa-header" aria-hidden="true"></i>3
-                            <span class="tooltiptext disable-select">Small header</span>
-                    </button>
-                    <button id="list" class="editor-button" tabindex="-1">
-                            <i class="fa fa-list" aria-hidden="true"></i>
-                            <span class="tooltiptext disable-select">List</span>
-                    </button>
-                    <button id="codeblock" class="editor-button" tabindex="-1">
-                            <i class="fa fa-code" aria-hidden="true"></i>
-                            <span class="tooltiptext disable-select">Codeblock</span>
-                    </button>
-                    <button id="footnote" class="editor-button" tabindex="-1">
-                            <i class="fa fa-sticky-note" aria-hidden="true"></i>
-                            <span class="tooltiptext disable-select">Footnote</span>
-                    </button>
-                    <button id="italic" class="editor-button" tabindex="-1">
-                            <i class="fa fa-italic" aria-hidden="true"></i>
-                            <span class="tooltiptext disable-select">Italic</span>
-                    </button>
-                    <button id="bold" class="editor-button" tabindex="-1">
-                            <i class="fa fa-bold" aria-hidden="true"></i>
-                            <span class="tooltiptext disable-select">Bold</span>
-                    </button>
-                    <button id="textColor" class="editor-button" tabindex="-1">
-                        <i class="fa fa-paint-brush" aria-hidden="true"></i>
-                        <span class="tooltiptext disable-select">Text color</span>
-                    </button>
-                    <button id="inlineCode" class="editor-button" tabindex="-1">
-                            <span id="code">C</span>
-                            <span class="tooltiptext disable-select">Inline code</span>
-                    </button>
-                    <button id="link" class="editor-button" tabindex="-1">
-                            <i class="fa fa-external-link" aria-hidden="true"></i>
-                            <span class="tooltiptext disable-select">Link</span>
-                    </button>
-                    <button id="image" class="editor-button" tabindex="-1">
-                            <i class="fa fa-file-image-o" aria-hidden="true"></i>
-                            <span class="tooltiptext disable-select">Image</span>
-                    </button>
-                </div>
-                <textarea class="editor" id="LMLeditor" placeholder="Description..." tabindex="2"></textarea>
-            </section>
+            <div id="exerciseCreationContainer">
+                <h1 id="title"></h1>
+                <input type="text" id="titleInput" spellcheck="false" placeholder="Title" tabindex="1" value="Untitled">
+                <select name="subject" id="subjectSelect">
+                    <?php require '../../backend/php/readSubjects.php'; ?>
+                </select>
+                <p id="subject"></p>
+                <h5 id="author"><?php echo $_SESSION['firstName'] . ' ' . $_SESSION['lastName'] ?></h5>
+                <h6 id="lastUpdated"></h6>
+                <section class="editor-wrapper">
+                    <div class="toolbar">
+                        <button id="headerBig" class="editor-button" tabindex="-1">
+                            <i class="fa fa-header" aria-hidden="true"></i>1
+                            <span class="tooltiptext disable-select">Big header</span>
+                        </button>
+                        <button id="headerMedium" class="editor-button" tabindex="-1">
+                                <i class="fa fa-header" aria-hidden="true"></i>2
+                                <span class="tooltiptext disable-select">Medium header</span>
+                        </button>
+                        <button id="headerSmall" class="editor-button" tabindex="-1">
+                                <i class="fa fa-header" aria-hidden="true"></i>3
+                                <span class="tooltiptext disable-select">Small header</span>
+                        </button>
+                        <button id="list" class="editor-button" tabindex="-1">
+                                <i class="fa fa-list" aria-hidden="true"></i>
+                                <span class="tooltiptext disable-select">List</span>
+                        </button>
+                        <button id="codeblock" class="editor-button" tabindex="-1">
+                                <i class="fa fa-code" aria-hidden="true"></i>
+                                <span class="tooltiptext disable-select">Codeblock</span>
+                        </button>
+                        <button id="footnote" class="editor-button" tabindex="-1">
+                                <i class="fa fa-sticky-note" aria-hidden="true"></i>
+                                <span class="tooltiptext disable-select">Footnote</span>
+                        </button>
+                        <button id="italic" class="editor-button" tabindex="-1">
+                                <i class="fa fa-italic" aria-hidden="true"></i>
+                                <span class="tooltiptext disable-select">Italic</span>
+                        </button>
+                        <button id="bold" class="editor-button" tabindex="-1">
+                                <i class="fa fa-bold" aria-hidden="true"></i>
+                                <span class="tooltiptext disable-select">Bold</span>
+                        </button>
+                        <button id="textColor" class="editor-button" tabindex="-1">
+                            <i class="fa fa-paint-brush" aria-hidden="true"></i>
+                            <span class="tooltiptext disable-select">Text color</span>
+                        </button>
+                        <button id="inlineCode" class="editor-button" tabindex="-1">
+                                <span id="code">C</span>
+                                <span class="tooltiptext disable-select">Inline code</span>
+                        </button>
+                        <button id="link" class="editor-button" tabindex="-1">
+                                <i class="fa fa-external-link" aria-hidden="true"></i>
+                                <span class="tooltiptext disable-select">Link</span>
+                        </button>
+                        <button id="image" class="editor-button" tabindex="-1">
+                                <i class="fa fa-file-image-o" aria-hidden="true"></i>
+                                <span class="tooltiptext disable-select">Image</span>
+                        </button>
+                    </div>
+                    <textarea class="editor" id="LMLeditor" placeholder="Description..." tabindex="2"></textarea>
+                </section>
+            </div>
             <article id="mainContent" ></article>
         </article>
         <aside id="right">
