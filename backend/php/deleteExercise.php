@@ -12,8 +12,8 @@ if (isset($_SESSION['userId'])) {
         require 'connect.php';
         
         $stmt = $dbh->prepare(
-            "DELETE from exercises WHERE ExerciseId = ?;
-            DELETE from authors WHERE ExerciseId = ?;"
+            "DELETE from authors WHERE ExerciseId = ?;
+            DELETE from exercises WHERE ExerciseId = ?;"
         );
         $stmt->bindParam(1, $exerciseId);
         $stmt->bindParam(2, $exerciseId);
