@@ -52,6 +52,9 @@ else {
         $_SESSION['errMsg'] = 'Email already in use';
         header("location: ../../frontend/php/login.php?firstName=$firstName&lastName=$lastName&email=$email");
     } else {
+        /*Hash and salt password*/
+        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+        
         /*Insert user and login credential into database*/
         $statement = $dbh->prepare(
             "BEGIN;
@@ -68,7 +71,7 @@ else {
         $statement->bindParam(1, $firstName);
         $statement->bindParam(2, $lastName);
         $statement->bindParam(3, $email);
-        $statement->bindparam(4, $password);
+        $statement->bindparam(4, $passwordHash);
         $statement->execute();
         
         unset($_SESSION['isRegistering']);
