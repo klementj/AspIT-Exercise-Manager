@@ -1,35 +1,9 @@
-function FadeOut() {
+function Fade(fadeIn) {
     
     const overlay = $('#overlay');
     const modal = $('#openModal');
-
-    overlay.animate({
-        opacity: 0
-    }, 100, function() {
-        overlay.css('display', 'none');
-    });
-
-    modal.animate({
-        opacity: 0
-    }, 100, function() {
-        modal.css('display', 'none');
-    });
     
-}
-
-$(document).ready(function() {
-    
-    var $title = '';
-    var $content = '';
-    var $subject = '';
-    var $exerciseId = null;
-    
-    $('#openNewExercise').click(function() {
-        
-        
-        
-        const overlay = $('#overlay');
-        const modal = $('#openModal');
+    if (fadeIn) {
         
         overlay.css('display', 'block');
         modal.css('display', 'flex');
@@ -42,9 +16,63 @@ $(document).ready(function() {
             opacity: 1
         }, 100);
         
+    } else {
+        
+        overlay.animate({
+            opacity: 0
+        }, 100, function() {
+            overlay.css('display', 'none');
+        });
+        
+        modal.animate({
+            opacity: 0
+        }, 100, function() {
+            modal.css('display', 'none');
+        });
+        
+    }
+    
+}
+
+$(document).ready(function() {
+    
+    var $title = '';
+    var $content = '';
+    var $subject = '';
+    var $exerciseId = null;
+    
+    // Making sure the right elements are displayed based on user accesslevel
+    if (parseInt(accessLevel) < 2) {
+        
+        $('#preview').css('display', 'inline-block');
+        $('#exerciseCreationContainer').css('display', 'block');
+        $('#preview').animate({
+            opacity: 1
+        }, 1000);
+        $('#exerciseCreationContainer').animate({
+            opacity: 1
+        }, 1000);
+        
+    } else {
+        
+        $('#overlay').css({
+            'display': 'flex',
+            'opacity': '1'
+        });
+        $('#openModal').css({
+            'display': 'flex',
+            'opacity': '1'
+        });
+        
+    }
+    
+    $('#openNewExercise').click(function() {
+        Fade(true);
     });
     
-    $('#overlay').click(FadeOut);
+    $('#overlay').click(function() {
+        Fade(false);
+    });
     
     $('#saveBtn').click(function() {
         
@@ -83,12 +111,40 @@ $(document).ready(function() {
                     $('#lastUpdated').css('display', 'block');
                     $('#lastUpdated').text( 'Last updated: ' + now.getFullYear() + '-' + now.getMonth() + 1 + '-' + now.getDate() + ' ' + hour + ':' + minutes );
                     
+                    //TODO Save animation
+                    
                 } else {
                     alert(response);
                 }
             }
             
         });
+        
+    });
+    
+    $('#deleteBtn').click(function() {
+        
+        const confirmation = confirm('Are you sure you want to delete "' + $('#titleInput').val() + '"?');
+        
+        console.log($exerciseId);
+        
+        if (confirmation && $exerciseId != null) {
+            
+            $.ajax({
+                
+                type: 'POST',
+                url: '../../backend/php/deleteExercise.php',
+                data: {
+                    'exerciseId' : $exerciseId,
+                },
+                success: function(response) {
+                    $('#createNewExercise').click();
+                    // TODO Delete animation
+                }
+                
+            })
+            
+        }
         
     });
     
@@ -126,11 +182,12 @@ $(document).ready(function() {
                     $('#titleInput').val( responseArr[0]['Title'] );
                     $('#subjectSelect').val( responseArr[0]['SubjectId'] );
                     $('#author').text( 'Created: ' + responseArr[0]['CreationDate'] + ' by ' + responseArr[1]['FirstName'] + ' ' + responseArr[1]['LastName'] + authorString);
+                    $('#author').css('display', 'block');
                     $('#lastUpdated').css('display', 'block');
                     $('#lastUpdated').text( 'Last updated: ' + responseArr[0]['LastUpdated'] );
                     $('#LMLeditor').val( responseArr[0]['Content'] );
                     $exerciseId = responseArr[0]['ExerciseId'];
-                    FadeOut();
+                    Fade(false);
                     $('#preview').click();
                     
                 }
