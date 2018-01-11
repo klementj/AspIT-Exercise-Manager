@@ -54,9 +54,14 @@ if (!isset($_SESSION["userId"])) {
                 <button id="openNewExercise">
                     <a href="#">Open</a>
                 </button>
-                <button id="createNewExercise">
-                    <a href="#">New</a>
-                </button>
+                <?php 
+                    if ($_SESSION['accessLevel'] < 2) {
+                        echo 
+                        '<button id="createNewExercise">
+                            <a href="#">New</a>
+                        </button>';
+                    }
+                ?>
             </nav>
             <h1 id="title"></h1>
             <input type="text" id="titleInput" spellcheck="false" placeholder="Title" tabindex="1">

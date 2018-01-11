@@ -237,34 +237,42 @@ $(document).ready(function() {
         $('#subject').text( $('#subjectSelect option:selected').text() );
         $('#subject').css('display', 'block');
         
-        // Swaps which button is shown
-        $previewBtn.css('display', 'none');
-        $editBtn.css('display', 'inline-block');
+        if (accessLevel < 2) {
+            
+            // Swaps which button is shown
+            $previewBtn.css('display', 'none');
+            $editBtn.css('display', 'inline-block');
+            
+        }
         
         Prism.highlightAll();
     }
 
     function Edit() {
-        // Restores HTML to what it was previous to preview
-        $('#mainContent').html($prevLeftHTML);
-        
-        // Hides title h1 and shows title input field
-        $('#title').css('display', 'none');
-        $('#titleInput').css('display', 'inline-block');
-        
-        // Hides subject text and shows subject selection box
-        $('#subjectSelect').css('display', 'inline-block');
-        $('#subject').css('display', 'none');
-        
-        // Unhides textarea
-        $('.editor-wrapper').css('display', 'block');
+        if (accessLevel < 2) {
+            
+            // Restores HTML to what it was previous to preview
+            $('#mainContent').html($prevLeftHTML);
 
-        // Sets textarea content to what it was previous to preview
-        $('#LMLeditor').val($prevContent);
+            // Hides title h1 and shows title input field
+            $('#title').css('display', 'none');
+            $('#titleInput').css('display', 'inline-block');
 
-        // Swaps which button is shown
-        $previewBtn.css('display', 'inline-block');
-        $editBtn.css('display', 'none');
+            // Hides subject text and shows subject selection box
+            $('#subjectSelect').css('display', 'inline-block');
+            $('#subject').css('display', 'none');
+
+            // Unhides textarea
+            $('.editor-wrapper').css('display', 'block');
+
+            // Sets textarea content to what it was previous to preview
+            $('#LMLeditor').val($prevContent);
+
+            // Swaps which button is shown
+            $previewBtn.css('display', 'inline-block');
+            $editBtn.css('display', 'none');
+            
+        }
     }
     
     $previewBtn.click(Preview);
