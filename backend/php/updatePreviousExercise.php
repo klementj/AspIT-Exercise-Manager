@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 /*Validate user logged in*/
 if (isset($_SESSION['userId'])) {
     /*Find current user's version of the updated exercise*/

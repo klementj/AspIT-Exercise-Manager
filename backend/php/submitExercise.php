@@ -28,7 +28,7 @@ if ($_SESSION['accessLevel'] > 1) {
                 if (GetLatestAuthorId($exerciseId) == $_SESSION['userId']) {
                     require "updateThisExercise.php";
                 } else {
-                    require "updatePreviousExercise.php";
+                    require "transferExercise.php";
                 }
             }
         }
