@@ -76,8 +76,14 @@ $(document).ready(function() {
     
     $('#saveBtn').click(function() {
         
+        // Set title based on text in the title input field, or as 'Untitled' if the title input field is empty
+        if ( $.trim($('#titleInput').val()) == '' ) {
+            $title = 'Untitled';
+        } else {
+            $title = $('#titleInput').val();
+        }
+        
         // Get values from HTML
-        $title = $('#titleInput').val();
         $content = $('#LMLeditor').val();
         $subject = $('#subjectSelect').val();
         var $form = $('#saveForm');
@@ -125,8 +131,6 @@ $(document).ready(function() {
     $('#deleteBtn').click(function() {
         
         const confirmation = confirm('Are you sure you want to delete "' + $('#titleInput').val() + '"?');
-        
-        console.log($exerciseId);
         
         if (confirmation && $exerciseId != null) {
             
