@@ -61,7 +61,7 @@ if (isset($_SESSION['userId'])) {
                     </td>
                     <td class="tAuthor">' . $row['FirstName'] . ' ' . $row['LastName'] . '</td>
                     <td class="tSubject">' . $row['SubjectName'] . '</td>
-                    <td class="tDate"' . $row['Date'] . '</td>
+                    <td class="tDate">' . $row['Date'] . '</td>
                 </tr>';
             
             /*Push html to array*/
