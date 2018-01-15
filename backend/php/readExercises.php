@@ -50,15 +50,14 @@ if (isset($_SESSION['userId'])) {
             $htmlString = 
                 '<tr>
                     <td class="tTitle">
-                        <a href="#" data-id="' . $row['ExerciseId'] . '">' . $row['Title'];
+                        <a href="#" data-id="' . $row['ExerciseId'] . '">' . $row['Title'] . '</a>';
 
             if ($row['AccessLevel'] == 0) {
                 $htmlString .= '<i class="fa fa-lock" aria-hidden="true" title="This exercise is private. Only you can see it."></i>';
             }
             
             $htmlString .=
-                        '</a>
-                    </td>
+                    '</td>
                     <td class="tAuthor">' . $row['FirstName'] . ' ' . $row['LastName'] . '</td>
                     <td class="tSubject">' . $row['SubjectName'] . '</td>
                     <td class="tDate">' . $row['Date'] . '</td>
