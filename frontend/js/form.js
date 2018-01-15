@@ -67,6 +67,28 @@ $(document).ready(function() {
     }
     
     $('#openNewExercise').click(function() {
+        
+        $.ajax({
+        
+            type: 'POST',
+            url: '../../backend/readExercises.php',
+            datatype: 'text',
+            success: function(response) {
+                if (false) {
+                    
+                    
+                    
+                } else {
+                    
+                    let responseArr = $.parseJSON(response);
+                    
+                    
+                    
+                }
+            }
+            
+        });
+        
         Fade(true);
     });
     
