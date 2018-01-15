@@ -68,6 +68,8 @@ $(document).ready(function() {
     
     $('#openNewExercise').click(function() {
         
+        $('#tableContainer').children('table').children('tbody').html('');
+        
         $.ajax({
         
             type: 'POST',
@@ -79,10 +81,15 @@ $(document).ready(function() {
                     
                     
                 } else {
-                    
                     let responseArr = $.parseJSON(response);
                     
+                    $tableBody = $('#tableContainer').children('table').children('tbody');
                     
+                    for (i = 0; i < responseArr.length; i++) {
+                        
+                        $tableBody.append(responseArr[i]);
+                        
+                    }
                     
                 }
             }
