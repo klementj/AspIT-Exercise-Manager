@@ -38,8 +38,6 @@ if (!isset($_SESSION["userId"])) {
                     </li>
                 </ul>
             </div>
-            <img src="../../img/aspitlogo.png" alt="AspIT logo">
-            <div></div>
         </nav>
     </header>
     <main>
@@ -51,27 +49,29 @@ if (!isset($_SESSION["userId"])) {
                 <i class="fa fa-file-text fa-2x" id="preview" aria-hidden="true">
                     <span class="faTooltip disable-select">Preview mode</span>
                 </i>
-                <button id="openNewExercise">
-                    <a href="#">Open</a>
-                </button>
                 <?php 
                     if ($_SESSION['accessLevel'] < 2) {
-                        echo
-                        '<button id="createNewExercise">
-                            <a href="#">New</a>
-                        </button>';
+                        echo 
+                            '<div class="buttonContainer">
+                                <button id="createNewExercise">
+                                    <a href="#">New</a>
+                                </button>
+                                <button id="openNewExercise">
+                                    <a href="#">Open</a>
+                                </button>
+                                <form id="saveForm">
+                                    <button type="button" id="saveBtn">Save</button>
+                                </form>
+                                <button id="publishBtn">Publish</button>
+                                <button id="deleteBtn">Delete</button>
+                            </div>';
                     }
                 ?>
             </nav>
             <div id="exerciseCreationContainer">
                 <h1 id="title"></h1>
                 <input type="text" id="titleInput" spellcheck="false" placeholder="Title" tabindex="1" value="Untitled">
-                <select name="subject" id="subjectSelect">
-                    <?php require '../../backend/php/readSubjects.php'; ?>
-                </select>
                 <p id="subject"></p>
-                <h5 id="author"><?php echo $_SESSION['firstName'] . ' ' . $_SESSION['lastName'] ?></h5>
-                <h6 id="lastUpdated"></h6>
                 <section class="editor-wrapper">
                     <div class="toolbar">
                         <button id="headerBig" class="editor-button" tabindex="-1">
@@ -125,25 +125,14 @@ if (!isset($_SESSION["userId"])) {
                     </div>
                     <textarea class="editor" id="LMLeditor" placeholder="Description..." tabindex="2"></textarea>
                 </section>
+                <select name="subject" id="subjectSelect">
+                    <?php require '../../backend/php/readSubjects.php'; ?>
+                </select>
+                <h5 id="author"><?php echo $_SESSION['firstName'] . ' ' . $_SESSION['lastName'] ?></h5>
+                <h6 id="lastUpdated"></h6>
             </div>
             <article id="mainContent" ></article>
         </article>
-        <aside id="right">
-            <?php 
-                if ($_SESSION['accessLevel'] < 2) {
-                    echo 
-                        '<div>
-                            <form id="saveForm">
-                                <button type="button" id="saveBtn">Save</button>
-                            </form>
-                            <button id="publishBtn">Publish</button>
-                        </div>
-                        <div>
-                            <button id="deleteBtn">Delete</button>
-                        </div>';
-                }
-            ?>
-        </aside>
     </main>
     <footer></footer>
 <div id="overlay"></div>
@@ -166,6 +155,9 @@ if (!isset($_SESSION["userId"])) {
             </tbody>
         </table>
     </div>
+</div>
+<div id="publishModal">
+    
 </div>
 </body>
 </html>
