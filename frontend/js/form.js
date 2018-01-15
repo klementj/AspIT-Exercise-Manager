@@ -174,7 +174,7 @@ $(document).ready(function() {
         
     });
     
-    $('.tTitle a').click(function() {
+    $('.tTitle a').click(function(event) {
         
         event.preventDefault();
         
