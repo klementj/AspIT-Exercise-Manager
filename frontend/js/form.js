@@ -1,4 +1,4 @@
-function Fade(fadeIn) {
+function OpenExerciseFade(fadeIn) {
     
     const overlay = $('#overlay');
     const modal = $('#openModal');
@@ -71,7 +71,7 @@ $(document).ready(function() {
         $.ajax({
         
             type: 'POST',
-            url: '../../backend/readExercises.php',
+            url: '../../backend/php/readExercises.php',
             datatype: 'text',
             success: function(response) {
                 if (false) {
@@ -89,11 +89,11 @@ $(document).ready(function() {
             
         });
         
-        Fade(true);
+        OpenExerciseFade(true);
     });
     
     $('#overlay').click(function() {
-        Fade(false);
+        OpenExerciseFade(false);
     });
     
     $('#saveBtn').click(function() {
@@ -213,7 +213,7 @@ $(document).ready(function() {
                     $('#lastUpdated').text( 'Last updated: ' + responseArr[0]['LastUpdated'] );
                     $('#LMLeditor').val( responseArr[0]['Content'] );
                     $exerciseId = responseArr[0]['ExerciseId'];
-                    Fade(false);
+                    OpenExerciseFade(false);
                     $('#preview').click();
                     
                 }

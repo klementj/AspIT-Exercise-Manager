@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require 'getLatestAuthorId.php';
 /*Validate user logged in*/
 if (isset($_SESSION['userId'])) {
@@ -45,16 +47,16 @@ if (isset($_SESSION['userId'])) {
         if ($row['UserId'] == GetLatestAuthorId($row['ExerciseId'])) {
             
             /*Declare html for each table row*/
-            htmlString = 
+            $htmlString = 
                 '<tr>
                     <td class="tTitle">
                         <a href="#" data-id="' . $row['ExerciseId'] . '">' . $row['Title'];
 
             if ($row['AccessLevel'] == 0) {
-                htmlString .= '<i class="fa fa-lock" aria-hidden="true" title="This exercise is private. Only you can see it."></i>';
+                $htmlString .= '<i class="fa fa-lock" aria-hidden="true" title="This exercise is private. Only you can see it."></i>';
             }
             
-            htmlString .=
+            $htmlString .=
                         '</a>
                     </td>
                     <td class="tAuthor">' . $row['FirstName'] . ' ' . $row['LastName'] . '</td>
@@ -63,7 +65,7 @@ if (isset($_SESSION['userId'])) {
                 </tr>';
             
             /*Push html to array*/
-            array_push($result, htmlString);
+            array_push($result, $htmlString);
             
         }
     }

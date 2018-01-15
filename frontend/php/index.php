@@ -163,7 +163,6 @@ if (!isset($_SESSION["userId"])) {
                 </tr>
             </thead>
             <tbody>
-                <?php require '../../backend/php/readExercises.php' ?>
             </tbody>
         </table>
     </div>
