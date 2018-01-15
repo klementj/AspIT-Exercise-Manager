@@ -76,22 +76,65 @@ $(document).ready(function() {
             url: '../../backend/php/readExercises.php',
             datatype: 'text',
             success: function(response) {
-                if (false) {
-                    
-                    
-                    
-                } else {
-                    let responseArr = $.parseJSON(response);
-                    
-                    $tableBody = $('#tableContainer').children('table').children('tbody');
-                    
-                    for (i = 0; i < responseArr.length; i++) {
-                        
-                        $tableBody.append(responseArr[i]);
-                        
-                    }
-                    
+                
+                let responseArr = $.parseJSON(response);
+
+                $tableBody = $('#tableContainer').children('table').children('tbody');
+
+                for (i = 0; i < responseArr.length; i++) {
+
+                    $tableBody.append(responseArr[i]);
+
                 }
+                
+                $('.tTitle a').click(function(event) {
+                    
+                    event.preventDefault();
+                    
+                    $.ajax({
+                        
+                        type: 'POST',
+                        url: '../../backend/php/openExercise.php',
+                        datatype: 'text',
+                        data: {
+                            'exerciseId' : $(this).attr('data-id')
+                        },
+                        success: function(response) {
+                            if (response === 'Innaccessible exercise' || response === 'Exercise not found' || response === 'You must be logged in to open an exercise') {
+
+                                alert(response);
+                                
+                            } else {
+                                
+                                let responseArr = $.parseJSON(response);
+                                let authorString = '';
+                                
+                                responseArr[0]['CreationDate'] = responseArr[0]['CreationDate'].slice(0, -3);
+                                responseArr[0]['LastUpdated'] = responseArr[0]['LastUpdated'].slice(0, -3);
+                                
+                                for (var i = 0; i < responseArr[2].length; i++) {
+                                    authorString += ', ' + responseArr[2][i]['FirstName'] + ' ' + responseArr[2][i]['LastName'];
+                                }
+                                
+                                $('#mainContent').text('');
+                                
+                                $('#titleInput').val( responseArr[0]['Title'] );
+                                $('#subjectSelect').val( responseArr[0]['SubjectId'] );
+                                $('#author').text( 'Created: ' + responseArr[0]['CreationDate'] + ' by ' + responseArr[1]['FirstName'] + ' ' + responseArr[1]['LastName'] + authorString);
+                                $('#author').css('display', 'block');
+                                $('#lastUpdated').css('display', 'block');
+                                $('#lastUpdated').text( 'Last updated: ' + responseArr[0]['LastUpdated'] );
+                                $('#LMLeditor').val( responseArr[0]['Content'] );
+                                $exerciseId = responseArr[0]['ExerciseId'];
+                                OpenExerciseFade(false);
+                                $('#preview').click();
+                                
+                            }
+                        }
+                        
+                    });
+                    
+                });
             }
             
         });
@@ -181,62 +224,13 @@ $(document).ready(function() {
         
     });
     
-    $('.tTitle a').click(function(event) {
-        
-        event.preventDefault();
-        
-        $.ajax({
-            
-            type: 'POST',
-            url: '../../backend/php/openExercise.php',
-            datatype: 'text',
-            data: {
-                'exerciseId' : $(this).attr('data-id')
-            },
-            success: function(response) {
-                if (response === 'Innaccessible exercise' || response === 'Exercise not found' || response === 'You must be logged in to open an exercise') {
-                    
-                    alert(response);
-                    
-                } else {
-                    
-                    let responseArr = $.parseJSON(response);
-                    let authorString = '';
-                    
-                    responseArr[0]['CreationDate'] = responseArr[0]['CreationDate'].slice(0, -3);
-                    responseArr[0]['LastUpdated'] = responseArr[0]['LastUpdated'].slice(0, -3);
-                    
-                    for (var i = 0; i < responseArr[2].length; i++) {
-                        authorString += ', ' + responseArr[2][i]['FirstName'] + ' ' + responseArr[2][i]['LastName'];
-                    }
-                    
-                    $('#mainContent').text('');
-                    
-                    $('#titleInput').val( responseArr[0]['Title'] );
-                    $('#subjectSelect').val( responseArr[0]['SubjectId'] );
-                    $('#author').text( 'Created: ' + responseArr[0]['CreationDate'] + ' by ' + responseArr[1]['FirstName'] + ' ' + responseArr[1]['LastName'] + authorString);
-                    $('#author').css('display', 'block');
-                    $('#lastUpdated').css('display', 'block');
-                    $('#lastUpdated').text( 'Last updated: ' + responseArr[0]['LastUpdated'] );
-                    $('#LMLeditor').val( responseArr[0]['Content'] );
-                    $exerciseId = responseArr[0]['ExerciseId'];
-                    OpenExerciseFade(false);
-                    $('#preview').click();
-                    
-                }
-            }
-            
-        });
-        
-    });
-    
     $('#createNewExercise').click(function() {
         
         if ($('#preview').css('display') == 'none') {
             $('#edit').click();
         }
         
-        $('#titleInput').val('');
+        $('#titleInput').val('Untitled');
         $('#subjectSelect')[0].selectedIndex = 0;
         $('#author').text(userName);
         $('#lastUpdated').css('display', 'none');
