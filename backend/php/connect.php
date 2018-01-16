@@ -1,10 +1,6 @@
 <?php
 
-/*Declare database access variables*/
-$host = "localhost";
-$dbName = "aspit-exercise-manager";
-$dbUsername = "root";
-$dbPassword = "";
+require "../../config.php";
 
 /*Establish connection*/
 try {
