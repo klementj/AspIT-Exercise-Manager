@@ -20,58 +20,60 @@ main {
         }
         
         #mainContent {
-
+            width: 65%;
+            
             h2 {
                 font-weight: 400;
                 @include textStyling(2.8rem, $marginBottom, block, normal);
             }
-
+            
             h3 {
                 font-weight: 400;
                 @include textStyling(2rem, $marginBottom, block, normal);
             }
-
+            
             h4 {
                 font-weight: 400;
                 @include textStyling(1.6rem, $marginBottom, block, normal);
             }
-
+            
             .content {
                 margin-bottom: $marginBottom;
             }
-
+            
             a {
                 color: black;
                 transition: 0.3s;
             }
-
+            
             a:hover {
                 color: #aaa;
                 transition: 0.3s;
             }
-
+            
             ul {
                 @include textStyling(1rem, $marginBottom);
                 margin-left: 2.3%;
             }
-
+            
             i {
                 font-style: inherit;
             }
-
+            
             .code {
                 font-family: monospace;
                 font-size: 1.1rem;
             }
-
+            
             .sidenote {
                 float: right;
-                margin-right: 40%;
+                margin-right: -40%;
                 clear: right;
                 max-width: 30%;
                 text-align: end;
+                font-size: 0.8rem;
             }
-
+            
             .sidenote::before {
                 content: counter(sidenote-counter) " ";
                 font-size: 0.8rem;
@@ -79,12 +81,13 @@ main {
                 bottom: 5px;
                 left: 1px;
             }
-
+            
             .sidenoteCounter {
                 content: counter(sidenote-counter) " ";
                 position: relative;
+                margin-right: 2px;
             }
-
+            
             .sidenoteCounter::before {
                 content: counter(sidenote-counter) " ";
                 font-size: 0.8rem;
@@ -92,25 +95,25 @@ main {
                 bottom: 3px;
                 counter-increment: sidenote-counter;
             }
-
+            
             .left-img {
                 max-width: 100%;
                 margin-bottom: $marginBottom;
             }
-
+            
             .right-img {
                 float: right;
-                margin-right: 40%;
+                margin-right: -40%;
                 max-width: 66%;
                 margin-bottom: $marginBottom;
             }
-
+            
             .big-img {
                 width: 166%;
                 max-width: 166%;
                 margin-bottom: $marginBottom;
             }
-
+            
             iframe {
                 margin-bottom: $marginBottom;
             }

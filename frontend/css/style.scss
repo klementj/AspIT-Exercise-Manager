@@ -421,10 +421,51 @@ body {
                 }
             }
         }
-    
     }
     
     footer {
         height: 100px;
+    }
+}
+
+@media print {
+    html {
+        font-size: 12px;
+        
+        body {
+        
+            header {
+                display: none;
+            }
+            
+            main {
+                
+                #left {
+                    
+                    nav {
+                        display: none;
+                    }
+                    
+                    #exerciseCreationContainer {
+                        color: black;
+                        
+                        #lastUpdated, #author, #subject {
+                            display: none !important;
+                        }
+                    }
+                    
+                    #mainContent {
+                        width: 100%;
+                        color: black;
+                        
+                        .sidenote, p, h2, h3, h4 {
+                            orphans: 3;
+                            widow: 3;
+                            color: black;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

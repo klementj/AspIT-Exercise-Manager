@@ -287,14 +287,14 @@ $(document).ready(function() {
             return '<label for="sidenote" class="sidenoteCounter"></label>\n'
                 + '<span class="sidenote">' + b + '</span>';
         });
-
+        
         /*Bold translation*/
         /*Regex:
         '\*' targets '*'*/
         output = output.replace(/\*\*(.*?)\*\*/g, function(a, b) {
             return '<strong>' + b + '</strong>';
         });
-
+        
         /*Italics translation*/
         /*Regex:
         '\|' targets '|'*/
