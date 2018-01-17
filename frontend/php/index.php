@@ -45,24 +45,28 @@ if (!isset($_SESSION["userId"])) {
                 <i class="fa fa-eye fa-2x" id="preview" aria-hidden="true">
                     <span class="faTooltip disable-select">Preview mode</span>
                 </i>
-                <?php 
-                    if ($_SESSION['accessLevel'] < 2) {
-                        echo 
-                            '<div class="buttonContainer">
-                                <button id="createNewExercise">
+                <div class="buttonContainer">
+                    <?php 
+                        if ($_SESSION['accessLevel'] < 2) {
+                            echo 
+                                '<button id="createNewExercise">
                                     <a href="#">New</a>
-                                </button>
-                                <button id="openNewExercise">
+                                </button>';
+                        }
+                            echo
+                                '<button id="openNewExercise">
                                     <a href="#">Open</a>
-                                </button>
-                                <form id="saveForm">
+                                </button>';
+                        if ($_SESSION['accessLevel'] < 2) {
+                            echo
+                                '<form id="saveForm">
                                     <button type="button" id="saveBtn">Save</button>
                                 </form>
                                 <button id="publishBtn">Visibility</button>
-                                <button id="deleteBtn">Delete</button>
-                            </div>';
-                    }
-                ?>
+                                <button id="deleteBtn">Delete</button>';
+                        }
+                    ?>
+                </div>
             </nav>
             <div id="exerciseCreationContainer">
                 <h1 id="title"></h1>

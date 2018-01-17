@@ -40,5 +40,9 @@ function GetLatestAuthorId($exerciseId) {
     }
 }
 
-
+if (isset($_POST['jsPath'])) {
+    $exerciseId = $_POST['exerciseId'];
+    
+    echo GetLatestAuthorId($exerciseId);
+}
 ?>
