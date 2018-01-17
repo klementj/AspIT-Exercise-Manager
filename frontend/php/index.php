@@ -120,7 +120,11 @@ if (!isset($_SESSION["userId"])) {
                         </button>
                         <button id="image" class="editor-button" tabindex="-1">
                                 <i class="fa fa-file-image-o" aria-hidden="true"></i>
-                                <span class="tooltiptext disable-select">Image</span>
+                                <span class="tooltiptext disable-select">Image url</span>
+                        </button>
+                        <button id="imageUpload" class="editor-button" tabindex="-1">
+                                <i class="fa fa-upload" aria-hidden="true"></i>
+                                <span class="tooltiptext disable-select">Upload image</span>
                         </button>
                     </div>
                     <textarea class="editor" id="LMLeditor" placeholder="Description..." tabindex="2"></textarea>
@@ -168,6 +172,10 @@ if (!isset($_SESSION["userId"])) {
         <input type="radio" name="visibility" value="2"><b>Public</b><br> All students can view but not edit your exercise. All teachers can view and edit your exercise.
     </div>
     <button>Ok</button>
+</div>
+<div id="imgUploadModal">
+    <input type="file" name="fileToUpload">
+    <button id="imgUploadBtn">Ok</button>
 </div>
 </body>
 </html>

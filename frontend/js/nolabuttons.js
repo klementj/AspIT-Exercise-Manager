@@ -1,3 +1,39 @@
+function ImgUploadFade(fadeIn) {
+    
+    const overlay = $('#overlay');
+    const modal = $('#imgUploadModal');
+    
+    if (fadeIn) {
+        
+        overlay.css('display', 'block');
+        modal.css('display', 'block');
+        
+        overlay.animate({
+            opacity: 1
+        }, 100);
+        
+        modal.animate({
+            opacity: 1
+        }, 100);
+        
+    } else {
+        
+        overlay.animate({
+            opacity: 0
+        }, 100, function() {
+            overlay.css('display', 'none');
+        });
+        
+        modal.animate({
+            opacity: 0
+        }, 100, function() {
+            modal.css('display', 'none');
+        });
+        
+    }
+    
+}
+
 $(document).ready(function() {
     
     $('#headerBig').click(function(){
@@ -48,19 +84,23 @@ $(document).ready(function() {
         InsertSyntax('!! https://source.unsplash.com/random/400x400 left', '', '', true);
     });
     
-    $(/*Other image button here*/).click(function() {
-        /*Make image upload form visible*/
+    $('#imageUpload').click(function() {
+        ImgUploadFade(true);
     });
     
-    $(/*Image upload form's submit button here*/).click(function() {
+    $('#overlay').click(function() {
+        ImgUploadFade(false);
+    });
+    
+    $('#imgUploadBtn').click(function() {
         /*Validate that file input has a value*/
-        if (isset($(/*Input element here*/).val())) {
+        if ($('#imgUploadModal input').val().length) {
             $.ajax({
                 
-                type: 'FILES',
+                type: 'POST',
                 url: '../../backend/php/uploadImage.php',
                 data: {
-                    'fileToUpload': $(/*Input element here*/).val();
+                    'fileToUpload': $('#imgUploadModal input').val()
                 },
                 success: function(response) {
                     if (response.split(' ')[0] == 'Error:') {

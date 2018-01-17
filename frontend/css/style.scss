@@ -122,6 +122,19 @@ body {
         }
     }
     
+    #imgUploadModal {
+        @include modalStyle(auto, 300px, 40%, 30px);
+        
+        input {
+            margin-bottom: 20px;
+        }
+        
+        button {
+            float: right;
+            @include btnStyle(#4CAF50);
+        }
+    }
+    
     #openModal {
         @include modalStyle(85vh, 700px, 3%, 25px);
         flex-direction: column;
@@ -383,6 +396,7 @@ body {
                         background: none;
                         border: none;
                         margin-right: 5px;
+                        cursor: pointer;
                         
                         .tooltiptext {
                             left: 44%;
