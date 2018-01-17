@@ -1,5 +1,7 @@
 <?php
 session_start();
+
+/*Import function*/
 require 'getLatestAuthorId.php';
 
 /*Validate user logged in*/
@@ -11,6 +13,9 @@ if (isset($_SESSION['userId'])) {
     if (GetLatestAuthorId($exerciseId) == $userId) {
         require 'connect.php';
         
+        /*SQL:
+        1: Delete all authors belonging to exercise to be deleted
+        2: Delete exercise*/
         $stmt = $dbh->prepare(
             "DELETE from authors WHERE ExerciseId = ?;
             DELETE from exercises WHERE ExerciseId = ?;"

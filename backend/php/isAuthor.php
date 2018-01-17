@@ -3,9 +3,11 @@ function IsAuthor($exerciseId, $userId) {
     /*If exercise and user have ids that are numbers*/
     if (isset($exerciseId) && isset($userId)) {
         if (is_numeric($exerciseId) && is_numeric($userId)) {
-            /*Find user id in list of authors*/
             require "connect.php";
             
+            /*Find user id in list of authors*/
+            /*SQL:
+            Select all columns from authors that match both the exercise and user*/
             $stmt = $dbh->prepare(
                 "SELECT * FROM authors
                 WHERE ExerciseId = ? AND UserId = ?;"
@@ -14,6 +16,7 @@ function IsAuthor($exerciseId, $userId) {
             $stmt->bindParam(2, $userId);
             $stmt->execute();
 
+            /*Fetch results*/
             if ($author = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 /*Close connection and return result*/
                 $dbh = null;

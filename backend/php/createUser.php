@@ -7,7 +7,11 @@ $lastName = $_POST['lastName'];
 $email = $_POST['email'];
 $password = $_POST['password'];
 $repassword = $_POST['repassword'];
+
+/*Make sure register form is displayed even on reload*/
 $_SESSION['isRegistering'] = true;
+
+/*Boolean to check for empty fields*/
 $emptyFields = false;
 
 // Loop through POST to look for empty fields
@@ -17,12 +21,14 @@ foreach ($_POST as $item) {
     }
 }
 
+/*If any fields are empty return error*/
 if ($emptyFields) {
     
     $_SESSION['errMsg'] = 'Fields cannot be empty';
     header("location: ../../frontend/php/login.php?firstName=$firstName&lastName=$lastName&email=$email");
     
-} 
+}
+
 /*Check if password and repassword match*/ 
 else if ($password != $repassword) {
     
@@ -30,8 +36,8 @@ else if ($password != $repassword) {
     header("location: ../../frontend/php/login.php?firstName=$firstName&lastName=$lastName&email=$email");
     
 }
-/*Check for valid email*/
 
+/*Check for valid email*/
 else if (!preg_match('/^[^@]+@[^@]+\.[^@]+$/', $email)) {
     
     $_SESSION['errMsg'] = 'Invalid email';
@@ -55,9 +61,15 @@ else {
         /*Hash and salt password*/
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
         
-        /*Insert user and login credential into database*/
+        /*SQL:
+        1: Begins transaction
+        2: Inserts into users
+        3: Saves the newly created id of the inserted user
+        4: Inserts into logincredentials
+        5: Commits transaction*/
         $statement = $dbh->prepare(
             "BEGIN;
+            
             INSERT INTO users(FirstName, LastName, Email) 
             VALUES(?, ?, ?); 
             
@@ -74,8 +86,9 @@ else {
         $statement->bindparam(4, $passwordHash);
         $statement->execute();
         
+        /*Allow the login form to display when login.php loads again*/
         unset($_SESSION['isRegistering']);
-        /*Redirect to other page with success*/
+        /*Redirect to login.php*/
         header("location: ../../frontend/php/login.php");
     }
 }

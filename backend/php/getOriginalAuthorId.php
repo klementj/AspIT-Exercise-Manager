@@ -3,9 +3,14 @@ function GetOriginalAuthorId($exerciseId) {
     /*If exercise has an id that is a number*/
     if (isset($exerciseId)) {
         if (is_numeric($exerciseId)) {
-            /*Find the first author to the exercise, which is the original author*/
             require "connect.php";
 
+            /*Find the first author to the exercise, which is the original author*/
+            /*SQL:
+            Select UserId from the authors table
+            Only authors that belong to the exercise in question
+            Order the authors by oldest timestamp first
+            Only select the first (oldest) author*/
             $stmt = $dbh->prepare(
                 "SELECT UserId FROM authors 
                 WHERE ExerciseId = ? 
@@ -15,6 +20,7 @@ function GetOriginalAuthorId($exerciseId) {
             $stmt->bindParam(1, $exerciseId);
             $stmt->execute();
 
+            /*Fetch results*/
             if ($author = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 /*Close connection and return result*/
                 $dbh = null;

@@ -4,8 +4,16 @@ if (isset($_SESSION['userId'])) {
     /*Insert new exercise into database*/
     require "connect.php";
 
+    /*SQL:
+    1: Begins a transaction
+    2: Inserts into exercises
+    3: Saves the newly created id of the inserted exercise
+    4: Inserts into authors
+    5: Selects the id of the inserted exercise
+    6: Commits transaction*/
     $stmt = $dbh->prepare(
-        "BEGIN; 
+        "BEGIN;
+        
         INSERT INTO exercises(SubjectId, Title, Content) 
         VALUES(?, ?, ?);
 
@@ -24,11 +32,13 @@ if (isset($_SESSION['userId'])) {
     $stmt->bindParam(4, $_SESSION['userId']);
     $stmt->execute();
     
+    /*Cycle through result sets to reach the SELECT statement*/
     $stmt->nextRowset();
     $stmt->nextRowset();
     $stmt->nextRowset();
     $stmt->nextRowset();
     
+    /*Fetch results*/
     if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
         $exerciseId = $row[0];
     }
