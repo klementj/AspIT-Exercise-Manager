@@ -70,22 +70,6 @@ function VisibilityModalFade(fadeIn) {
     
 }
 
-function IsLatestAuthor(Id) {
-    console.log(typeof parseInt(Id));
-    $.ajax({
-        
-        type: 'POST',
-        url: '../../backend/php/getLatestAuthorId.php',
-        data: {GetLatestAuthorId: 'add', argument: [parseInt(Id)]},
-        success: function(response) {
-            console.log(response);
-            console.log(userId);
-        }
-        
-    });
-    
-}
-
 $(document).ready(function() {
     
     var $title = '';
@@ -93,37 +77,12 @@ $(document).ready(function() {
     var $subject = '';
     var $exerciseId = null;
     
-    // Making sure the right elements are displayed based on user accesslevel
-    if (parseInt(accessLevel) < 2) {
-        
-        $('#preview').css('display', 'inline-block');
-        $('#exerciseCreationContainer').css('display', 'block');
-        $('#preview').animate({
-            opacity: 1
-        }, 1000);
-        $('#exerciseCreationContainer').animate({
-            opacity: 1
-        }, 1000);
-        
-    } else {
-        
-        $('#overlay').css({
-            'display': 'flex',
-            'opacity': '1'
-        });
-        $('#openModal').css({
-            'display': 'flex',
-            'opacity': '1'
-        });
-        
-    }
-    
     $('#openNewExercise').click(function() {
         
         $('#tableContainer').children('table').children('tbody').html('');
         
         $.ajax({
-        
+            
             type: 'POST',
             url: '../../backend/php/readExercises.php',
             datatype: 'text',
@@ -153,7 +112,7 @@ $(document).ready(function() {
                         },
                         success: function(response) {
                             if (response === 'Innaccessible exercise' || response === 'Exercise not found' || response === 'You must be logged in to open an exercise') {
-
+                                
                                 alert(response);
                                 
                             } else {
@@ -178,6 +137,24 @@ $(document).ready(function() {
                                 $('#lastUpdated').text( 'Last updated: ' + responseArr[0]['LastUpdated'] );
                                 $('#LMLeditor').val( responseArr[0]['Content'] );
                                 $exerciseId = responseArr[0]['ExerciseId'];
+                                
+                                // Ajax call to check whether user is latest author on the opened exercise
+                                // Show visibility button if they are, and hide it if they are not
+                                $.ajax({
+                                    
+                                    type: 'POST',
+                                    url: '../../backend/php/getLatestAuthorId.php',
+                                    data: {'jsPath' : 'true', 'exerciseId' : $exerciseId},
+                                    success: function(response) {
+                                        if (userId == response) {
+                                            $('#publishBtn').css('display', 'inline-block');
+                                        } else {
+                                            $('#publishBtn').css('display', 'none');
+                                        }
+                                    }
+                                    
+                                });
+                                
                                 OpenExerciseFade(false);
                                 $('#preview').click();
                                 
@@ -197,7 +174,7 @@ $(document).ready(function() {
     $('#overlay').click(function() {
         OpenExerciseFade(false);
         VisibilityModalFade(false);
-        IsLatestAuthor($exerciseId);
+        
     });
     
     $('#saveBtn').click(function() {
@@ -358,5 +335,21 @@ $(document).ready(function() {
         }
         
     });
+    
+    // Making sure the right elements are displayed based on user accesslevel
+    if (parseInt(accessLevel) < 2) {
+        
+        $('#preview').css('display', 'inline-block');
+        $('#exerciseCreationContainer').css('display', 'block');
+        $('#preview').animate({
+            opacity: 1
+        }, 1000);
+        $('#exerciseCreationContainer').animate({
+            opacity: 1
+        }, 1000);
+        
+    } else {
+        $('#openNewExercise').click();
+    }
     
 });

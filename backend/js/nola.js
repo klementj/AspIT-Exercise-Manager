@@ -341,13 +341,19 @@ $(document).ready(function() {
         // Gets current HTML and textarea value so we can restore them later
         $prevContent = $('#LMLeditor').val();
         $prevLeftHTML = $('#mainContent').html();
-
+        
+        // Shows exercise creation container so the children can be displayed
+        $('#exerciseCreationContainer').css({
+            opacity: 1,
+            display: 'block'
+        });
+        
         // Hides text editor
         $('.editor-wrapper').css('display', 'none');
-
+        
         // Translates text in textarea from syntax to HTML elements
         LMLTranslate();
-
+        
         // Hides title input field and shows title h1
         $('#titleInput').css('display', 'none');
         $('#title').css('display', 'inline-block');
@@ -357,6 +363,7 @@ $(document).ready(function() {
         $('#subjectSelect').css('display', 'none');
         $('#subject').text( $('#subjectSelect option:selected').text() );
         $('#subject').css('display', 'block');
+        
         
         if (accessLevel < 2) {
             
@@ -374,21 +381,21 @@ $(document).ready(function() {
             
             // Restores HTML to what it was previous to preview
             $('#mainContent').html($prevLeftHTML);
-
+            
             // Hides title h1 and shows title input field
             $('#title').css('display', 'none');
             $('#titleInput').css('display', 'inline-block');
-
+            
             // Hides subject text and shows subject selection box
             $('#subjectSelect').css('display', 'inline-block');
             $('#subject').css('display', 'none');
-
+            
             // Unhides textarea
             $('.editor-wrapper').css('display', 'block');
-
+            
             // Sets textarea content to what it was previous to preview
             $('#LMLeditor').val($prevContent);
-
+            
             // Swaps which button is shown
             $previewBtn.css('display', 'inline-block');
             $editBtn.css('display', 'none');
