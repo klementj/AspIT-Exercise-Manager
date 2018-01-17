@@ -1,5 +1,7 @@
 <?php
 session_start();
+
+/*Import functions*/
 require "getOriginalAuthorId.php";
 require "getLatestAuthorId.php";
 
@@ -7,11 +9,13 @@ require "getLatestAuthorId.php";
 if (isset($_SESSION['userId'])) {
     $exerciseId = $_POST['exerciseId'];
     $userId = $_SESSION['userId'];
+    
+    /*Declare boolean for accessibility of exercise*/
     $isAccessible = false;
     
-    /*Retrieve access level of requested exercise*/
     require 'connect.php';
     
+    /*Retrieve access level of requested exercise*/
     $stmt = $dbh->prepare("SELECT AccessLevel FROM exercises WHERE ExerciseId = ?");
     $stmt->bindParam(1, $exerciseId);
     $stmt->execute();
@@ -28,8 +32,8 @@ if (isset($_SESSION['userId'])) {
                 break;
             
             case 1:
-                /*Exercise is visible only to teacher-level access levels, and user access level must be of that level or higher, or they must be latest author*/
-                if ($userId == GetLatestAuthorId($exerciseId) || $_SESSION['accessLevel'] < 2) {
+                /*Exercise is visible only to teacher-level access levels, and user access level must be of that level or higher to view*/
+                if ($_SESSION['accessLevel'] < 2) {
                     $isAccessible = true;
                 }
                 break;
@@ -47,10 +51,10 @@ if (isset($_SESSION['userId'])) {
         }
         
         if ($isAccessible) {
+            /*Declare arrays for exercise and authors*/
             $result = [];
             $authors = [];
             
-            /*Read entire exercise*/
             $statement = $dbh->prepare(
                 /*Select exercise data*/
                 "SELECT ExerciseId, SubjectId, Title, Content, CreationDate, LastUpdated, Accesslevel 
@@ -65,19 +69,21 @@ if (isset($_SESSION['userId'])) {
                 ORDER BY authors.Timestamp ASC
                 LIMIT 1;" .
                 
-                /*Select latest authors list: Filter away original author, create temporary table of sorted authors, and select*/
+                /*Select original author and save their id*/
                 "SELECT authors.UserId INTO @OrigAuthId
                 FROM authors
                 WHERE authors.ExerciseId = ?
                 ORDER BY authors.Timestamp ASC
                 LIMIT 1;" .
                 
+                /*Create a temporary table of authors sorted after newest timestamp*/
                 "CREATE TEMPORARY TABLE t1 AS 
                 SELECT *
                 FROM authors
-                ORDER BY Timestamp DESC;
+                ORDER BY Timestamp DESC;" .
 
-                SELECT users.FirstName, users.LastName
+                /*Select all unique users (GROUP BY) that are authors belonging to the exercise in question and that are not the original author*/
+                "SELECT users.FirstName, users.LastName
                 FROM t1
                 JOIN users ON t1.UserId = users.UserId
                 WHERE t1.ExerciseId = ? AND t1.UserId != @OrigAuthId
@@ -110,8 +116,10 @@ if (isset($_SESSION['userId'])) {
                 array_push($authors, $row);
             }
             
+            /*Push author list into the rest of the result array*/
             array_push($result, $authors);
             
+            /*Echo json encoded result array*/
             echo json_encode($result);
             
         } else {

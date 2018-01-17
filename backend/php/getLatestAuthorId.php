@@ -3,9 +3,14 @@ function GetLatestAuthorId($exerciseId) {
     /*If exercise has an id that is a number*/
     if (isset($exerciseId)) {
         if (is_numeric($exerciseId)) {
-            /*Find the latest author to the exercise*/
             require "connect.php";
 
+            /*Find the latest author to the exercise*/
+            /*SQL:
+            Select UserId from the authors table
+            Only authors that belong to the exercise in question
+            Order the authors by newest timestamp first
+            Only select the first (newest) author*/
             $stmt = $dbh->prepare(
                 "SELECT UserId FROM authors 
                 WHERE ExerciseId = ? 
@@ -15,6 +20,7 @@ function GetLatestAuthorId($exerciseId) {
             $stmt->bindParam(1, $exerciseId);
             $stmt->execute();
 
+            /*Fetch results*/
             if ($author = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 /*Close connection and return result*/
                 $dbh = null;
@@ -26,13 +32,17 @@ function GetLatestAuthorId($exerciseId) {
             }
         } else {
             /*error not a number*/
-            $dbh = null;
             throw new Exception('Invalid argument type');
         }
     } else {
         /*error null argument*/
-        $dbh = null;
         throw new Exception('Argument null');
     }
+}
+
+if (isset($_POST['jsPath'])) {
+    $exerciseId = $_POST['exerciseId'];
+    
+    echo GetLatestAuthorId($exerciseId);
 }
 ?>

@@ -19,7 +19,12 @@ if (isset($_SESSION['userId'])) {
         array_push($authors, array($author['UserId'], $author['Timestamp']));
     }
     
-    /*Prepare insertion sql statement*/
+    /*SQL:
+    1: Begins transaction
+    2: Inserts into exercises
+    3: Saves the newly created id of the inserted exercise
+    4: Selects that id
+    5: Prepare to insert into authors*/
     $sql = "BEGIN; 
     
         INSERT INTO exercises(SubjectId, Title, Content) 
@@ -39,7 +44,7 @@ if (isset($_SESSION['userId'])) {
         }
     }
     
-    /*Insert current user in author list*/
+    /*Insert current user in author list and then commit transaction*/
     $sql .= "('" . $_SESSION['userId'] . "', @ExId, NOW());
     
     COMMIT;";
@@ -50,10 +55,12 @@ if (isset($_SESSION['userId'])) {
     $statement->bindParam(3, $content);
     $statement->execute();
     
+    /*Cycle through result sets to the select statement*/
     $stmt->nextRowset();
     $stmt->nextRowset();
     $stmt->nextRowset();
     
+    /*Fetch results*/
     if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
         $exerciseId = $row[0];
     }

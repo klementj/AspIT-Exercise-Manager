@@ -1,4 +1,9 @@
 <?php
+session_start();
+
+/*Import function*/
+require 'getLatestAuthorId.php';
+
 /*Validate user logged in*/
 if (isset($_SESSION['userId'])) {
     $accessLevel = $_POST['accessLevel'];
@@ -24,7 +29,7 @@ if (isset($_SESSION['userId'])) {
             $dbh = null;
         } else {
             /*Error user is not latest author and does not have permission to publish*/
-            echo 'You do not have permission to publish this exercise';
+            echo 'You do not have permission to publish this exercise. You must be the latest author to change visibility state.';
         }
     } else {
         /*Error invalid access level*/

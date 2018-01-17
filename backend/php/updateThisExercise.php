@@ -1,8 +1,13 @@
 <?php
 /*Validate user logged in*/
 if (isset($_SESSION['userId'])) {
-    /*Update exercise in database*/
     require "connect.php";
+
+    /*SQL:
+    1: Begins transaction
+    2: Updates the exercise in question
+    3: Insert current user into authors
+    4: Commit transaction*/
     $stmt = $dbh->prepare(
         "BEGIN;
         

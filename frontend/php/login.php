@@ -34,7 +34,7 @@ if (!empty($_GET['email'])) {
     <main>
         <form action="../../backend/php/session.php" method="post" id="login" <?php if (isset($_SESSION['isRegistering'])) { echo 'style="display: none;"'; } ?>>
             <div class="inputContainer">
-                <input type="text" name="email" placeholder="AspIT email">
+                <input type="text" name="email" spellcheck="false" placeholder="AspIT email">
                 <i class="fa fa-user" aria-hidden="true"></i>
             </div>
             <div class="inputContainer">
@@ -59,15 +59,15 @@ if (!empty($_GET['email'])) {
         </form>
         <form action="../../backend/php/createUser.php" method="post" id="register" <?php if (isset($_SESSION['isRegistering'])) { echo 'style="display: block;"'; unset($_SESSION['isRegistering']); } ?>>
             <div class="inputContainer">
-                <input type="text" name="firstName" placeholder="First name" value="<?php echo $firstName ?>">
+                <input type="text" name="firstName" spellcheck="false" placeholder="First name" value="<?php echo $firstName ?>">
                 <i class="fa fa-user" aria-hidden="true"></i>
             </div>
             <div class="inputContainer">
-                <input type="text" name="lastName" placeholder="Last name" value="<?php echo $lastName ?>">
+                <input type="text" name="lastName" spellcheck="false" placeholder="Last name" value="<?php echo $lastName ?>">
                 <i class="fa fa-user" aria-hidden="true"></i>
             </div>
             <div class="inputContainer">
-                <input type="email" name="email" placeholder="AspIT email" value="<?php echo $email ?>">
+                <input type="email" name="email" spellcheck="false" placeholder="AspIT email" value="<?php echo $email ?>">
                 <i class="fa fa-user" aria-hidden="true"></i>
             </div>
             <div class="inputContainer">

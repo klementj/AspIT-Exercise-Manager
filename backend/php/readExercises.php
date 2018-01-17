@@ -1,10 +1,15 @@
 <?php
 session_start();
 
+/*Import function*/
 require 'getLatestAuthorId.php';
+
 /*Validate user logged in*/
 if (isset($_SESSION['userId'])) {
     /*Get exercises from database*/
+    /*SQL:
+    1: Create temporary table of authors sorted by newest timestamp
+    2: Select from exercises (with lots of joins) and format date*/
     $sql = 
         "CREATE TEMPORARY TABLE t1 AS 
         SELECT * 
@@ -25,6 +30,7 @@ if (isset($_SESSION['userId'])) {
         $sql .= "WHERE exercises.AccessLevel > 1 OR users.UserId = ? ";
     }
     
+    /*Allow only unique exercises and order by latest date updated*/
     $sql .= 
         "GROUP BY exercises.ExerciseId
         ORDER BY exercises.LastUpdated DESC;";
@@ -52,6 +58,7 @@ if (isset($_SESSION['userId'])) {
                     <td class="tTitle">
                         <a href="#" data-id="' . $row['ExerciseId'] . '">' . $row['Title'] . '</a>';
 
+            /*If exercise is private, add a lock icon to title*/
             if ($row['AccessLevel'] == 0) {
                 $htmlString .= '<i class="fa fa-lock" aria-hidden="true" title="This exercise is private. Only you can see it."></i>';
             }

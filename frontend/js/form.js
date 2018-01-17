@@ -34,6 +34,42 @@ function OpenExerciseFade(fadeIn) {
     
 }
 
+function VisibilityModalFade(fadeIn) {
+    
+    const overlay = $('#overlay');
+    const modal = $('#publishModal');
+    
+    if (fadeIn) {
+        
+        overlay.css('display', 'block');
+        modal.css('display', 'block');
+        
+        overlay.animate({
+            opacity: 1
+        }, 100);
+        
+        modal.animate({
+            opacity: 1
+        }, 100);
+        
+    } else {
+        
+        overlay.animate({
+            opacity: 0
+        }, 100, function() {
+            overlay.css('display', 'none');
+        });
+        
+        modal.animate({
+            opacity: 0
+        }, 100, function() {
+            modal.css('display', 'none');
+        });
+        
+    }
+    
+}
+
 $(document).ready(function() {
     
     var $title = '';
@@ -41,50 +77,25 @@ $(document).ready(function() {
     var $subject = '';
     var $exerciseId = null;
     
-    // Making sure the right elements are displayed based on user accesslevel
-    if (parseInt(accessLevel) < 2) {
-        
-        $('#preview').css('display', 'inline-block');
-        $('#exerciseCreationContainer').css('display', 'block');
-        $('#preview').animate({
-            opacity: 1
-        }, 1000);
-        $('#exerciseCreationContainer').animate({
-            opacity: 1
-        }, 1000);
-        
-    } else {
-        
-        $('#overlay').css({
-            'display': 'flex',
-            'opacity': '1'
-        });
-        $('#openModal').css({
-            'display': 'flex',
-            'opacity': '1'
-        });
-        
-    }
-    
     $('#openNewExercise').click(function() {
         
         $('#tableContainer').children('table').children('tbody').html('');
         
         $.ajax({
-        
+            
             type: 'POST',
             url: '../../backend/php/readExercises.php',
             datatype: 'text',
             success: function(response) {
                 
                 let responseArr = $.parseJSON(response);
-
+                
                 $tableBody = $('#tableContainer').children('table').children('tbody');
-
+                
                 for (i = 0; i < responseArr.length; i++) {
-
+                    
                     $tableBody.append(responseArr[i]);
-
+                    
                 }
                 
                 $('.tTitle a').click(function(event) {
@@ -101,7 +112,7 @@ $(document).ready(function() {
                         },
                         success: function(response) {
                             if (response === 'Innaccessible exercise' || response === 'Exercise not found' || response === 'You must be logged in to open an exercise') {
-
+                                
                                 alert(response);
                                 
                             } else {
@@ -126,6 +137,24 @@ $(document).ready(function() {
                                 $('#lastUpdated').text( 'Last updated: ' + responseArr[0]['LastUpdated'] );
                                 $('#LMLeditor').val( responseArr[0]['Content'] );
                                 $exerciseId = responseArr[0]['ExerciseId'];
+                                
+                                // Ajax call to check whether user is latest author on the opened exercise
+                                // Show visibility button if they are, and hide it if they are not
+                                $.ajax({
+                                    
+                                    type: 'POST',
+                                    url: '../../backend/php/getLatestAuthorId.php',
+                                    data: {'jsPath' : 'true', 'exerciseId' : $exerciseId},
+                                    success: function(response) {
+                                        if (userId == response) {
+                                            $('#publishBtn').css('display', 'inline-block');
+                                        } else {
+                                            $('#publishBtn').css('display', 'none');
+                                        }
+                                    }
+                                    
+                                });
+                                
                                 OpenExerciseFade(false);
                                 $('#preview').click();
                                 
@@ -144,6 +173,8 @@ $(document).ready(function() {
     
     $('#overlay').click(function() {
         OpenExerciseFade(false);
+        VisibilityModalFade(false);
+        
     });
     
     $('#saveBtn').click(function() {
@@ -186,6 +217,7 @@ $(document).ready(function() {
                     const hour = ( '0' + now.getHours() ).slice(-2);
                     const minutes = ( '0' + now.getMinutes() ).slice(-2);
                     
+                    $('#publishBtn').css('display', 'inline-block');
                     $('#lastUpdated').css('display', 'block');
                     $('#lastUpdated').text( 'Last updated: ' + now.getFullYear() + '-' + now.getMonth() + 1 + '-' + now.getDate() + ' ' + hour + ':' + minutes );
                     
@@ -230,6 +262,7 @@ $(document).ready(function() {
             $('#edit').click();
         }
         
+        $('#publishBtn').css('display', 'none');
         $('#titleInput').val('Untitled');
         $('#subjectSelect')[0].selectedIndex = 0;
         $('#author').text(userName);
@@ -239,5 +272,84 @@ $(document).ready(function() {
         $exerciseId = null;
         
     });
+    
+    $('#publishBtn').click(function() {
+        
+        if ($exerciseId != null) {
+            
+            $.ajax({
+
+                type: 'POST',
+                url: '../../backend/php/getExerciseAccessLevel.php',
+                data: {
+                    'exerciseId' : $exerciseId,
+                },
+                success: function(response) {
+                    
+                    const exerciseAccessLevel = response;
+                    
+                    $('#publishModal input[value=' + exerciseAccessLevel + ']').prop('checked', true);
+                    
+                },
+                error: function(response) {
+                    alert(response);
+                }
+                
+            });
+            
+        } else {
+            $('#publishModal input[value=0]').prop('checked', true);
+        }
+        
+        VisibilityModalFade(true);
+    });
+    
+    $('#publishModal button').click(function() {
+        
+        if ($exerciseId != null) {
+        
+        const exerciseAccessLevel = $('#publishModal input:checked').val();
+        
+        $.ajax({
+            
+            type: 'POST',
+            url: '../../backend/php/publish.php',
+            data: {
+                'accessLevel' : exerciseAccessLevel,
+                'exerciseId' : $exerciseId,
+            },
+            success: function(response) {
+                if (response === 'You do not have permission to publish this exercise. You must be the latest author to change visibility state.' || response === 'Invalid access level' || response === 'You must be logged in to publish an exercise') {
+                    alert(response);
+                }
+                VisibilityModalFade(false);
+            },
+            error: function(response) {
+                alert(response);
+            }
+            
+        });
+            
+        } else {
+            alert('You must save an exercise before changing its visibility state.');
+        }
+        
+    });
+    
+    // Making sure the right elements are displayed based on user accesslevel
+    if (parseInt(accessLevel) < 2) {
+        
+        $('#preview').css('display', 'inline-block');
+        $('#exerciseCreationContainer').css('display', 'block');
+        $('#preview').animate({
+            opacity: 1
+        }, 1000);
+        $('#exerciseCreationContainer').animate({
+            opacity: 1
+        }, 1000);
+        
+    } else {
+        $('#openNewExercise').click();
+    }
     
 });

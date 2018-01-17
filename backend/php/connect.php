@@ -1,5 +1,5 @@
 <?php
-
+/*Get database connection variables from config.php*/
 require "../../config.php";
 
 /*Establish connection*/
