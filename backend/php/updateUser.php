@@ -18,41 +18,48 @@ if (isset($_SESSION['userId'])) {
     
     /*Validate user's old password before updating*/
     $stmt = $dbh->prepare(
-        "SELECT UserId FROM loginCredentials 
-        WHERE UserId = ? AND Password = ?;"
+        "SELECT Password FROM loginCredentials 
+        WHERE UserId = ?;"
     );
     $stmt->bindParam(1, $userId);
-    $stmt->bindParam(2, $oldPassword);
     $stmt->execute();
     
-    /*If old password is correct, begin update*/
+    /*Fetch results*/
     if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $statement = $dbh->prepare(
-            "BEGIN;
+        /*Verify password*/
+        if (password_verify($oldPassword, $row['Password'])) {
+            
+            /*SQL:
+            1: Begins transaction
+            2: Updates user
+            3: Updates logincredential
+            4: Commits transaction*/
+            $statement = $dbh->prepare(
+                "BEGIN;
 
-            UPDATE users
-            SET FirstName = ?, LastName = ?, Email = ?, AccessLevel = ?
-            WHERE UserId = ?;
+                UPDATE users
+                SET FirstName = ?, LastName = ?, Email = ?, AccessLevel = ?
+                WHERE UserId = ?;
 
-            UPDATE loginCredentials
-            SET Password = ?
-            WHERE UserId = ?;
+                UPDATE loginCredentials
+                SET Password = ?
+                WHERE UserId = ?;
 
-            COMMIT;"
-        );
-        $statement->bindParam(1, $firstName);
-        $statement->bindParam(2, $lastName);
-        $statement->bindParam(3, $email);
-        $statement->bindParam(4, $accessLevel);
-        $statement->bindParam(5, $userId);
-        $statement->bindParam(6, $password);
-        $statement->bindParam(7, $userId);
-        $statement->execute();
+                COMMIT;"
+            );
+            $statement->bindParam(1, $firstName);
+            $statement->bindParam(2, $lastName);
+            $statement->bindParam(3, $email);
+            $statement->bindParam(4, $accessLevel);
+            $statement->bindParam(5, $userId);
+            $statement->bindParam(6, $password);
+            $statement->bindParam(7, $userId);
+            $statement->execute();
 
-        /*Close connection*/
-        $dbh = null;
-
-        /*Redirect to other page with success*/
+            /*Close connection*/
+            $dbh = null;
+        }
+        
     } else {
         /*error old password incorrect*/
         $dbh = null;
