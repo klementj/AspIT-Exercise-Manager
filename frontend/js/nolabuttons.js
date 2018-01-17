@@ -95,13 +95,18 @@ $(document).ready(function() {
     $('#imgUploadBtn').click(function() {
         /*Validate that file input has a value*/
         if ($('#imgUploadModal input').val().length) {
+            var file_data = $('#imgUploadModal input').prop('files')[0];
+            var form_data = new FormData();
+            form_data.append('fileToUpload', file_data);
             $.ajax({
                 
-                type: 'POST',
                 url: '../../backend/php/uploadImage.php',
-                data: {
-                    'fileToUpload': $('#imgUploadModal input').val()
-                },
+                dataType: 'text',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: form_data,
+                type: 'POST',
                 success: function(response) {
                     if (response.split(' ')[0] == 'Error:') {
                         /*On error, alert error*/
