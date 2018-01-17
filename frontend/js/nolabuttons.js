@@ -48,6 +48,37 @@ $(document).ready(function() {
         InsertSyntax('!! https://source.unsplash.com/random/400x400 left', '', '', true);
     });
     
+    $(/*Other image button here*/).click(function() {
+        /*Make image upload form visible*/
+    });
+    
+    $(/*Image upload form's submit button here*/).click(function() {
+        /*Validate that file input has a value*/
+        if (isset($(/*Input element here*/).val())) {
+            $.ajax({
+                
+                type: 'FILES',
+                url: '../../backend/php/uploadImage.php',
+                data: {
+                    'fileToUpload': $(/*Input element here*/).val();
+                },
+                success: function(response) {
+                    if (response.split(' ')[0] == 'Error:') {
+                        /*On error, alert error*/
+                        alert(response);
+                    } else {
+                        /*On success, insert image in editor*/
+                        InsertSyntax('!! ' + response + ' left', '', '', true);
+                    }
+                },
+                error: function(response) {
+                    alert(response);
+                }
+                
+            });
+        }
+    });
+    
     // Textarea we will be editing in
     var $element = $('.editor')[0];
     

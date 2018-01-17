@@ -21,32 +21,32 @@ if (isset($_POST["submit"])) {
                 if ($_FILES["fileToUpload"]["size"] <= 5000000) {
                     
                     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                        /*Successful upload*/
                         echo $target_file;
-                        echo "Succes";
                     } else {
                         /*Error file transfer failed*/
-                        echo 6;
+                        echo 'Error: File transfer failed';
                     }
                     
                 } else {
                     /*Error file greater than 5Mb*/
-                    echo 5;
+                    echo 'Error: File cannot be greater than 5Mb';
                 }
 
             } else {
                 /*Error file already exists*/
-                echo 4;
+                echo 'Error: File of this name already exists';
             }
         } else {
             /*Error invalid image format*/
-            echo 3;
+            echo 'Error: Invalid image format';
         }
     } else {
         /*Error file is not an image*/
-        echo 2;
+        echo 'Error: File is not an image';
     }
 } else {
     /*Error no submission*/
-    echo 1;
+    echo 'Error: No submission';
 }
 ?>
