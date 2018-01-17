@@ -1,11 +1,15 @@
 $(document).ready(function() {
     
+    /*Declare array of input split after newlines for line-level LML translation*/
     var inputLines;
+    
+    /*Declare array of lines from inputLines that have undergone line-level LML translation*/
     var outputLines;
+    
+    /*Declare single-string output for inline-level LML translation*/
     var output;
-    var rightOutputLines;
-    var rightOutput;
-
+    
+    /*Declare line-level LML syntax*/
     const header1Syntax = '#';
     const header2Syntax = '##';
     const header3Syntax = '###';
@@ -13,18 +17,29 @@ $(document).ready(function() {
     const imageSyntax = '!!';
     const listSyntax = '*';
     
+    /*Declare booleans that allow for special processing of codeblocks with and without html*/
     var codeblocking = false;
     var htmlCodeBlocking = false;
 
+    /*Begin translation*/
     function LMLTranslate() {
+        
+        /*Get input of textarea to be translated*/
         textarea = document.getElementById("LMLeditor");
         input = textarea.value;
-        output = "";
+        
+        /*Assign values to inputLines, declare length of outputLines, and assign output*/
         inputLines = input.split(/\n/g);
         outputLines = Array(inputLines.length);
-
+        output = "";
+        
+        /*Begin line-level LML translation*/
         for (i = 0; i < inputLines.length; i++) {
+            
+            /*Check if outside a codeblock*/
             if (!codeblocking) {
+                
+                /*For each line in inputLines, based on the first word of that line, identify possible LML syntax and apply proper html tags. Then output to corresponding line in outputLines*/
                 switch(inputLines[i].split(' ')[0]) {
                     case header1Syntax:
                         Header1(i);
@@ -60,12 +75,22 @@ $(document).ready(function() {
                 }
             }
             else {
+                
+                /*For each line in inputLines while inside a codeblock, check first word for end-of-codeblock statement while ignoring all other syntax*/
                 switch(inputLines[i].split(' ')[0]) {
                     case codeblockSyntax:
+                        /*In case of codeblock syntax, run Codeblock function to end codeblock*/
                         Codeblock(i);
                         break;
                     default:
+                        
+                        /*In case of no codeblock syntax, run default behavior*/
                         if (htmlCodeBlocking) {
+                            
+                            /*To prevent weird html bahavior, replace '<' with the equivalent '&lt'*/
+                            /*Regex:
+                            '\<' targets '<'
+                            'g' after the closing slash tells regex to keep searching the string instead of stopping at first match*/
                             outputLines[i] = inputLines[i].replace(/\</g, '&lt') + '\n';
                         }
                         else {
@@ -75,13 +100,20 @@ $(document).ready(function() {
                 }
             }
             
+            /*For each line in inputLines, add the corresponding outputLines line to output*/
             output += outputLines[i];
         }
-
+        
+        /*Run inline LML translation*/
         outputFormatting();
-
+        
+        /*Insert translated text into main content container*/
         $('#mainContent').html( $('#mainContent').html() + output );
     }
+    
+    /**/
+    /*Line-level translation functions*/
+    /**/
     
     function Header1(i) {
         outputLines[i] = '<h2>' + inputLines[i].slice(header1Syntax.length + 1) + '</h2>\n';
@@ -97,6 +129,8 @@ $(document).ready(function() {
 
     function Codeblock(i) {
         if (codeblocking) {
+            
+            /*If already inside a codeblock, end the codeblock and set codeblock booleans to false*/
             outputLines[i] = '</code></pre>\n';
             codeblocking = false;
             
@@ -106,24 +140,45 @@ $(document).ready(function() {
         }
         
         else {
+            
+            /*If not inside a codeblock, begin the codeblock and set codeblock booleans to true*/
+            
+            /*Get codeblock's language from second word in line*/
             language = inputLines[i].split(' ')[1].toLowerCase();
+            
+            /*Insert pre and code tags in accordance with Prism functionality*/
             outputLines[i] = '<pre class="language-' + language + '"><code class="language-' + language + '">';
+            
+            /*Set codeblocking boolean to true. If the codeblock is html, set that boolean to true as well*/
             codeblocking = true;
             if (language == 'html') { htmlCodeBlocking = true; }
         }
     }
 
     function Image(i) {
+        
+        /*Declare tags, an array of each word in the line*/
         tags = inputLines[i].split(' ');
+        
+        /*Declare image url, image size/position (default left), and image alt text*/
         link = "";
         size = "left";
         text = "";
+        
         if (tags.length > 1) {
+            
+            /*If there is more than the initial image syntax tag, next tag must be image url*/
             link = tags[1];
+            
             if (tags.length > 2) {
+                
                 if (tags[2].toLowerCase() == 'left' || tags[2].toLowerCase() == 'right' || tags[2].toLowerCase() == 'big') {
+                    
+                    /*If the next tag is left, right, or big, the tag defines the image size/position*/
                     size = tags[2].toLowerCase();
                     if (tags.length > 3) {
+                        
+                        /*If there are more tags, they are added together to form the image's alt text*/
                         for (j = 3; j < tags.length; j++) {
                             if (j == 3) { text += tags[j]; }
                             else { text += ' ' + tags[j]; }
@@ -131,6 +186,8 @@ $(document).ready(function() {
                     }
                 }
                 else {
+                    
+                    /*If the next tag is not left, right, or big, image size reverts to default and the rest of the tags are added together to form the image's alt text*/
                     for (j = 2; j < tags.length; j++) {
                         if (j == 2) { text += tags[j]; }
                         else { text += ' ' + tags[j]; }
@@ -138,42 +195,71 @@ $(document).ready(function() {
                 }
             }
         }
+        
+        /*Return finished img element as output*/
         outputLines[i] = '<img class="' + size + '-img" src="' + link + '" alt="' + text + '">\n';
     }
 
     function List(i) {
+        
+        /*If at the first index of inputLines*/
         if (i == 0){
+            
             if (i == inputLines.length - 1) {
+                
+                /*If current line is input's first and last line, begin and complete ul at current line*/
                 outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>\n';
             }
             else {
+                
+                /*If current line is input's first line, begin ul*/
                 outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n';
                 if (inputLines[i + 1].split(' ')[0] != '*') {
+                    
+                    /*If next line does not have list syntax, end ul at current line*/
                     outputLines[i] += '\n</ul>\n';
                 }
             }
         }
+        
+        /*If at the last index of inputLines*/
         else if (i == inputLines.length - 1) {
+            
             if (inputLines[i - 1].split(' ')[0] != '*') {
+                
+                /*If current line is input's last line and previous line does not have list syntax, begin and complete ul at current line*/
                 outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>\n';
             }
             else {
+                
+                /*If current line is input's last line and previous line has list syntax, complete ul at current line*/
                 outputLines[i] = '<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>\n';
             }
         }
+        
+        /*If neaither at the first or last indexes of inputLines*/
         else if (i > 0 && i < inputLines.length - 1){
+            
             if (inputLines[i - 1].split(' ')[0] != '*') {
                 if (inputLines[i + 1].split(' ')[0] != '*'){
+                    
+                    /*If previous line and next line do not have list syntax, begin and complete ul at current line*/
                     outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>\n'
                 }
                 else {
+                    
+                    /*If previous line does not have list syntax but next line does, begin ul at current line*/
                     outputLines[i] = '<ul>\n<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n';
                 }
             }
             else if (inputLines[i + 1].split(' ')[0] != '*') {
+                
+                /*If previous line has list syntax but next line does not, complete ul at current line*/
                 outputLines[i] = '<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n</ul>\n';
             }
             else {
+                
+                /*If previous line and next line both have list syntax, simply insert as list item*/
                 outputLines[i] = '<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n';
             }
         }
@@ -182,30 +268,65 @@ $(document).ready(function() {
     function Paragraph(i) {
         outputLines[i] = '<p class="content">' + inputLines[i] + '</p>\n';
     }
-
+    
+    /**/
+    /*Inline-level translation function*/
+    /**/
+    
     function outputFormatting() {
-        output = output.replace(/\$\$(.*)\$\$/g, function(a, b) {
+        
+        /*Sidenote translation*/
+        /*Regex:
+        '\$' targets '$'
+        parantheses group their content to allow the function to target that content specifically
+        '.' targets any character
+        '*?' matches preceding target 0 to unlimited times, as few times as possible (this ensures that the Regex doesn't simply tag the beginning of the first match and the end of the last match, but instead properly tag each match)
+        'g' after the closing slash tells regex to keep searching the string instead of stopping at first match*/
+        /*Function: parameter b is the content of the first set of parantheses*/
+        output = output.replace(/\$\$(.*?)\$\$/g, function(a, b) {
             return '<label for="sidenote" class="sidenoteCounter"></label>\n'
                 + '<span class="sidenote">' + b + '</span>';
         });
 
-        output = output.replace(/\*\*([^\*]*)\*\*/g, function(a, b) {
+        /*Bold translation*/
+        /*Regex:
+        '\*' targets '*'*/
+        output = output.replace(/\*\*(.*?)\*\*/g, function(a, b) {
             return '<strong>' + b + '</strong>';
         });
 
-        output = output.replace(/\|\|(.*)\|\|/g, function(a, b) {
+        /*Italics translation*/
+        /*Regex:
+        '\|' targets '|'*/
+        output = output.replace(/\|\|(.*?)\|\|/g, function(a, b) {
             return '<em>' + b + '</em>';
         });
 
-        output = output.replace(/\[\[(.*)\]\]/g, function(a, b) {
+        /*Inline code translation*/
+        /*Regex:
+        '\[' targets '['
+        '\]' targets ']'*/
+        output = output.replace(/\[\[(.*?)\]\]/g, function(a, b) {
             return '<code>' + b + '</code>';
         });
 
-        output = output.replace(/\@\<(.*)\<(.*)\>\>/g, function(a, b, c) {
+        /*Link translation*/
+        /*Regex:
+        '\@' targets '@'
+        '\<' targets '<'
+        '\>' targets '>'*/
+        /*Function: parameter b is the content of the first set of parantheses (url) and c is the second set (link text)*/
+        output = output.replace(/\@\<(.*?)\<(.*?)\>\>/g, function(a, b, c) {
             return '<a href="' + b + '">' + c + '</a>';
         });
 
-        output = output.replace(/\#\{(.+)\{(.*)\}\}/g, function(a, b, c) {
+        /*Colored text translation*/
+        /*Regex:
+        '\#' targets '#'
+        '\{' targets '{'
+        '\}' targets '}'*/
+        /*Function: parameter b is the color, parameter c is the text to be colored*/
+        output = output.replace(/\#\{(.*?)\{(.*?)\}\}/g, function(a, b, c) {
             return '<i style="color:' + b + '">' + c + '</i>';
         });
     }
