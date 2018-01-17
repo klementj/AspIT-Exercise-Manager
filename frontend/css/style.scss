@@ -249,7 +249,6 @@ body {
             
             h5 {
                 font-style: italic;
-                margin-bottom: 10px;
                 font-size: 1.4rem;
                 font-weight: bold;
             }
@@ -267,7 +266,6 @@ body {
             }
             
             #subject {
-                margin-bottom: 10px;
                 font-weight: bold;
                 display: none;
             }
@@ -429,16 +427,20 @@ body {
 }
 
 @media print {
+    
     html {
         font-size: 12px;
         
         body {
-        
+            margin: 2mm !important;
+            
             header {
                 display: none;
             }
             
             main {
+                width: 80%;
+                margin-left: 10%;
                 
                 #left {
                     
@@ -449,20 +451,28 @@ body {
                     #exerciseCreationContainer {
                         color: black;
                         
+                        #title {
+                            margin-top: 50px;
+                        }
+                        
                         #lastUpdated, #author, #subject {
                             display: none !important;
                         }
                     }
                     
                     #mainContent {
-                        width: 100%;
                         color: black;
+                        
+                        h2, h3, h4 {
+                            page-break-after: avoid;
+                        }
                         
                         .sidenote, p, h2, h3, h4 {
                             orphans: 3;
                             widow: 3;
                             color: black;
                         }
+                        
                     }
                 }
             }

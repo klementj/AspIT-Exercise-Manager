@@ -21,7 +21,6 @@ if (isset($_POST["submit"])) {
                 if ($_FILES["fileToUpload"]["size"] <= 5000000) {
                     
                     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                        echo $target_file;
                         echo "Succes";
                     } else {
                         /*Error file transfer failed*/
