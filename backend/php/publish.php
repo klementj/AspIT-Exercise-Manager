@@ -1,6 +1,8 @@
 <?php
-require 'getLatestAuthorId.php';
 session_start();
+
+/*Import function*/
+require 'getLatestAuthorId.php';
 
 /*Validate user logged in*/
 if (isset($_SESSION['userId'])) {
