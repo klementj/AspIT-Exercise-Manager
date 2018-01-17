@@ -1,14 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Oxygen:300,400,700');
 
-@mixin btnStyle($background, $width: 120px, $height: 40px) {
+@mixin btnStyle($background: none, $width: 100px, $height: 30px) {
     width: $width;
     height: $height;
     border: none;
     background: $background;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     font-family: $font;
     font-size: 1rem;
-    font-weight: bold;
     cursor: pointer;
 }
 
@@ -60,9 +58,9 @@ $font: 'Oxygen', sans-serif;
 $darken: 10%;
 $blueBtnColor: #42A5F5;
 $blueBtnHoverColor: darken(#42A5F5, $darken);
-$greenBtnColor: #66BB6A;
+$greenBtnColor: #008000;
 $greenBtnHoverColor: darken(#66BB6A, $darken);
-$redBtnColor: #EF5350;
+$redBtnColor: #ff0000;
 $redBtnHoverColor: darken(#EF5350, $darken);
 
 * {
@@ -100,7 +98,28 @@ body {
     }
     
     #publishModal {
-        @include modalStyle(30vh, 200px, 50%, 10px);
+        @include modalStyle(auto, 300px, 25%, 30px);
+        
+        h1 {
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+        
+        div:not(:last-child) {
+            margin-bottom: 15px;
+        }
+        
+        div {
+            
+            input {
+                margin-right: 5px;
+            }
+        }
+        
+        button {
+            float: right;
+            @include btnStyle(#4CAF50);
+        }
     }
     
     #openModal {
@@ -176,6 +195,10 @@ body {
                 
                 td {
                     padding: 5px;
+                    
+                    i {
+                        margin-left: 5px;
+                    }
                 }
             }
         }
@@ -188,7 +211,7 @@ body {
         flex-direction: row;
         border-bottom: 1px solid #ebebeb;
         box-shadow: 0 0px 1px rgba(0,0,0,0.2);
-        margin-bottom: 10px;
+        margin-bottom: 20px;
         background-color: #4CAF50;
         
         nav {
@@ -198,62 +221,12 @@ body {
             margin: 0 auto;
             display: flex;
             line-height: 50px;
-                
-            ul {
-                list-style-type: none;
-                display: inline-block;
-                
-                .fa-chevron-down {
-                    margin-left: 3px;
-                }
-                
-                .dropdown {
-                    position: relative;
-                    cursor: pointer;
-                    color: black;
-                
-                    .dropdownMenu {
-                        width: 150%;
-                        position: absolute;
-                        top: 80%;
-                        left: -30%;
-                        text-align: center;
-                        display: none;
-
-                        a {
-                            width: 100%;
-                            height: 100%;
-                            display: block;
-                            color: black;
-                            text-decoration: none;
-                            font-weight: bold;
-                            background: $greenBtnColor;
-                        }
-
-                        a:first-of-type {
-                            border-top-left-radius: 7px;
-                            border-top-right-radius: 7px;
-                        }
-
-                        a:last-of-type {
-                            border-bottom-left-radius: 7px;
-                            border-bottom-right-radius: 7px;
-                        }
-
-                        a:not(:last-of-type) {
-                            border-bottom: 1px solid black;
-                        }
-
-                        a:hover {
-                            background: $greenBtnHoverColor;
-                        }
-                    }
-                }
-            }
-        }
-
-            :nth-child(3) {
-                flex-basis: 40%;
+            
+            a {
+                color: #424242;
+                text-decoration: none;
+                font-weight: bold;
+                margin-left: 10px;
             }
         }
     }
@@ -300,15 +273,15 @@ body {
             }
             
             input {
-                width: 65%;
+                width: calc(65% - 20px);
                 display: inline-block;
                 font-family: $font;
-                font-weight: bold;
                 font-size: 4rem;
                 font-style: normal;
                 margin-bottom: 20px;
                 border: 1px solid #eee;
                 color: #424242;
+                padding: 5px 10px;
             }
             
             #exerciseCreationContainer {
@@ -317,18 +290,18 @@ body {
             }
             
             nav {
-                margin-bottom: 10px;
+                margin-bottom: 20px;
                 
                 i {
                     display: none;
                     cursor: pointer;
                     position: relative;
-                    font-size: 40px;
-                    color: black;
+                    font-size: 30px;
+                    color: #424242;
                     float: left;
                     
                     .faTooltip {
-                        @include hoverText(125%, -54px, 120px);
+                        @include hoverText(110%, -52px, 120px);
                     }
                 }
                 
@@ -366,28 +339,29 @@ body {
                         margin-left: 10px;
                     }
                     
-                    #createNewExercise, #saveBtn, #publishBtn {
-                        @include btnStyle($greenBtnColor);
+                    #createNewExercise a {
+                        color: $greenBtnColor;
                     }
                     
-                    #createNewExercise:hover, #saveBtn:hover, #publishBtn:hover {
-                        background: $greenBtnHoverColor;
+                    #createNewExercise, #saveBtn, #publishBtn {
+                        @include btnStyle();
+                    }
+                    
+                    #publishBtn {
+                        display: none;
                     }
                     
                     #openNewExercise {
-                        @include btnStyle($blueBtnColor);
+                        @include btnStyle();
                     }
                     
-                    #openNewExercise:hover {
-                        background: $blueBtnHoverColor; 
+                    #openNewExercise a {
+                        color: $blueBtnColor;
                     }
                     
                     #deleteBtn {
-                        @include btnStyle($redBtnColor);
-                    }
-                    
-                    #deleteBtn:hover {
-                        background: $redBtnHoverColor;
+                        color: $redBtnColor;
+                        @include btnStyle();
                     }
                 }
             }
@@ -397,21 +371,24 @@ body {
                 margin-bottom: 10px;
                 
                 .toolbar {
-                    border: 1px solid rgb(169, 169, 169);
+                    border: 1px solid rgba(169, 169, 169, 0.2);
                     border-bottom: none;
-                    padding: 5px;
+                    padding: 10px 5px;
                     width: calc(100% - 10px);
-                    background-color: #eef;
-                    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+                    background-color: white;
+                    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
                     
                     .editor-button {
                         height: 30px;
                         width: 40px;
                         position: relative;
+                        background: none;
+                        border: none;
+                        margin-right: 5px;
                         
                         .tooltiptext {
                             left: 44%;
-                            @include hoverText(130%, -64px, 120px);
+                            @include hoverText(100%, -64px, 120px);
                         }
                         
                         #code {
@@ -431,18 +408,21 @@ body {
                 }
                 
                 .editor {
-                    width: calc(100% - 10px);
-                    height: 700px;
+                    width: calc(100% - 20px);
+                    height: 600px;
                     min-height: 400px;
                     resize: vertical;
                     font-size: 16px;
-                    padding: 5px;
-                    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+                    padding: 10px;
+                    box-shadow: 0 0px 1px rgba(0,0,0,0.1);
                     font-family: $font;
                     letter-spacing: 0.5px;
+                    border: 1px solid rgba(169, 169, 169, 0.2);
                 }
             }
         }
+    
+    }
     
     footer {
         height: 100px;

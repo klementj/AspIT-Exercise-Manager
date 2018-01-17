@@ -17,7 +17,8 @@ if (!isset($_SESSION["userId"])) {
     <link rel="stylesheet" href="../prism/prism.css">
     <script type="text/javascript">
         var accessLevel = '<?php echo $_SESSION['accessLevel'] ?>';
-        var userName = '<?php echo $_SESSION['firstName'] . ' ' . $_SESSION['lastName'] ?>'
+        var userName = '<?php echo $_SESSION['firstName'] . ' ' . $_SESSION['lastName'] ?>';
+        var userId = '<?php echo $_SESSION['userId'] ?>';
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="../prism/prism.js"></script>
@@ -30,13 +31,8 @@ if (!isset($_SESSION["userId"])) {
     <header>
         <nav>
             <div>
-                <ul>
-                    <li class="dropdown"><b><?php echo $_SESSION['firstName'] ?></b><i class="fa fa-chevron-down" aria-hidden="true"></i>
-                    <div class="dropdownMenu">
-                        <a href="../../backend/php/logout.php">Logout</a>
-                    </div>
-                    </li>
-                </ul>
+                <b><?php echo $_SESSION['firstName'] ?></b>
+                <a href="../../backend/php/logout.php">Logout</a>
             </div>
         </nav>
     </header>
@@ -46,7 +42,7 @@ if (!isset($_SESSION["userId"])) {
                 <i class="fa fa-pencil-square-o fa-2x" id="edit" aria-hidden="true">
                     <span class="faTooltip disable-select">Back to editor</span>
                 </i>
-                <i class="fa fa-file-text fa-2x" id="preview" aria-hidden="true">
+                <i class="fa fa-eye fa-2x" id="preview" aria-hidden="true">
                     <span class="faTooltip disable-select">Preview mode</span>
                 </i>
                 <?php 
@@ -62,7 +58,7 @@ if (!isset($_SESSION["userId"])) {
                                 <form id="saveForm">
                                     <button type="button" id="saveBtn">Save</button>
                                 </form>
-                                <button id="publishBtn">Publish</button>
+                                <button id="publishBtn">Visibility</button>
                                 <button id="deleteBtn">Delete</button>
                             </div>';
                     }
@@ -86,33 +82,33 @@ if (!isset($_SESSION["userId"])) {
                                 <i class="fa fa-header" aria-hidden="true"></i>3
                                 <span class="tooltiptext disable-select">Small header</span>
                         </button>
-                        <button id="list" class="editor-button" tabindex="-1">
-                                <i class="fa fa-list" aria-hidden="true"></i>
-                                <span class="tooltiptext disable-select">List</span>
-                        </button>
-                        <button id="codeblock" class="editor-button" tabindex="-1">
-                                <i class="fa fa-code" aria-hidden="true"></i>
-                                <span class="tooltiptext disable-select">Codeblock</span>
-                        </button>
-                        <button id="footnote" class="editor-button" tabindex="-1">
-                                <i class="fa fa-sticky-note" aria-hidden="true"></i>
-                                <span class="tooltiptext disable-select">Footnote</span>
+                        <button id="bold" class="editor-button" tabindex="-1">
+                                <i class="fa fa-bold" aria-hidden="true"></i>
+                                <span class="tooltiptext disable-select">Bold</span>
                         </button>
                         <button id="italic" class="editor-button" tabindex="-1">
                                 <i class="fa fa-italic" aria-hidden="true"></i>
                                 <span class="tooltiptext disable-select">Italic</span>
                         </button>
-                        <button id="bold" class="editor-button" tabindex="-1">
-                                <i class="fa fa-bold" aria-hidden="true"></i>
-                                <span class="tooltiptext disable-select">Bold</span>
+                        <button id="inlineCode" class="editor-button" tabindex="-1">
+                                <span id="code">C</span>
+                                <span class="tooltiptext disable-select">Inline code</span>
                         </button>
                         <button id="textColor" class="editor-button" tabindex="-1">
                             <i class="fa fa-paint-brush" aria-hidden="true"></i>
                             <span class="tooltiptext disable-select">Text color</span>
                         </button>
-                        <button id="inlineCode" class="editor-button" tabindex="-1">
-                                <span id="code">C</span>
-                                <span class="tooltiptext disable-select">Inline code</span>
+                        <button id="list" class="editor-button" tabindex="-1">
+                                <i class="fa fa-list" aria-hidden="true"></i>
+                                <span class="tooltiptext disable-select">List</span>
+                        </button>
+                        <button id="footnote" class="editor-button" tabindex="-1">
+                                <i class="fa fa-sticky-note" aria-hidden="true"></i>
+                                <span class="tooltiptext disable-select">Footnote</span>
+                        </button>
+                        <button id="codeblock" class="editor-button" tabindex="-1">
+                                <i class="fa fa-code" aria-hidden="true"></i>
+                                <span class="tooltiptext disable-select">Codeblock</span>
                         </button>
                         <button id="link" class="editor-button" tabindex="-1">
                                 <i class="fa fa-external-link" aria-hidden="true"></i>
@@ -157,7 +153,17 @@ if (!isset($_SESSION["userId"])) {
     </div>
 </div>
 <div id="publishModal">
-    
+    <h1>Select who can view your exercise:</h1>
+    <div>
+        <input type="radio" name="visibility" value="0"><b>Private</b><br> Only you can view and edit your exercise.
+    </div>
+    <div>
+        <input type="radio" name="visibility" value="1"><b>Protected</b><br> All teachers can view and edit your exercise.
+    </div>
+    <div>
+        <input type="radio" name="visibility" value="2"><b>Public</b><br> All students can view but not edit your exercise. All teachers can view and edit your exercise.
+    </div>
+    <button>Ok</button>
 </div>
 </body>
 </html>
