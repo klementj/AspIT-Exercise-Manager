@@ -12,7 +12,7 @@ $repassword = $_POST['repassword'];
 /*Validate user logged in*/
 if (isset($_SESSION['userId'])) {
     /*Validate old password*/
-    require "connect.php";
+    require ((dirname(__FILE__)) . '/connect.php');
     
     $userId = $_SESSION['userId'];
     

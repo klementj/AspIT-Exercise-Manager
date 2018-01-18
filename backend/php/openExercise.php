@@ -2,8 +2,8 @@
 session_start();
 
 /*Import functions*/
-require "getOriginalAuthorId.php";
-require "getLatestAuthorId.php";
+require ((dirname(__FILE__)) . '/getOriginalAuthorId.php');
+require ((dirname(__FILE__)) . '/getLatestAuthorId.php');
 
 /*Validate user logged in*/
 if (isset($_SESSION['userId'])) {
@@ -13,7 +13,7 @@ if (isset($_SESSION['userId'])) {
     /*Declare boolean for accessibility of exercise*/
     $isAccessible = false;
     
-    require 'connect.php';
+    require ((dirname(__FILE__)) . '/connect.php');
     
     /*Retrieve access level of requested exercise*/
     $stmt = $dbh->prepare("SELECT AccessLevel FROM exercises WHERE ExerciseId = ?");

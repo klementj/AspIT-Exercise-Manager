@@ -3,7 +3,7 @@ function GetOriginalAuthorId($exerciseId) {
     /*If exercise has an id that is a number*/
     if (isset($exerciseId)) {
         if (is_numeric($exerciseId)) {
-            require "connect.php";
+            require ((dirname(__FILE__)) . '/connect.php');
 
             /*Find the first author to the exercise, which is the original author*/
             /*SQL:

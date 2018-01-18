@@ -2,7 +2,7 @@
 session_start();
 
 /*Import function*/
-require 'getLatestAuthorId.php';
+require ((dirname(__FILE__)) . '/getLatestAuthorId.php');
 
 /*Validate user logged in*/
 if (isset($_SESSION['userId'])) {
@@ -14,7 +14,7 @@ if (isset($_SESSION['userId'])) {
     if ($accessLevel >=0 && $accessLevel <=2) {
         /*Validate user is latest author of exercise*/
         if (GetLatestAuthorId($exerciseId) == $userId) {
-            require 'connect.php';
+            require ((dirname(__FILE__)) . '/connect.php');
 
             $stmt = $dbh->prepare(
                 "UPDATE exercises

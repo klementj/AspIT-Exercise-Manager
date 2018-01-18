@@ -2,8 +2,8 @@
 /*Validate user logged in*/
 if (isset($_SESSION['userId'])) {
     /*Insert new exercise into database*/
-    require "connect.php";
-
+    require ((dirname(__FILE__)) . "/connect.php");
+    
     /*SQL:
     1: Begins a transaction
     2: Inserts into exercises
@@ -16,14 +16,14 @@ if (isset($_SESSION['userId'])) {
         
         INSERT INTO exercises(SubjectId, Title, Content) 
         VALUES(?, ?, ?);
-
+        
         SET @Id = LAST_INSERT_ID();
-
+        
         INSERT INTO authors(UserId, ExerciseId)
         VALUES(?, @Id);
         
         SELECT @Id;
-
+        
         COMMIT;"
     );
     $stmt->bindParam(1, $subjectId);

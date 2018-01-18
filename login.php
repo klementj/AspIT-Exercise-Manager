@@ -24,15 +24,15 @@ if (!empty($_GET['email'])) {
 <head>
     <meta charset="UTF-8">
     <title>Log in | AspIT Exercise Manager</title>
-    <link rel="icon" href="../../img/aspitlogo.png">
-    <link rel="stylesheet" href="../css/login.css">
-    <link rel="stylesheet" href="../fa/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="img/aspitlogo.png">
+    <link rel="stylesheet" href="frontend/css/login.css">
+    <link rel="stylesheet" href="frontend/fa/font-awesome-4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="../js/login.js"></script>
+    <script src="frontend/js/login.js"></script>
 </head>
 <body>
     <main>
-        <form action="../../backend/php/session.php" method="post" id="login" <?php if (isset($_SESSION['isRegistering'])) { echo 'style="display: none;"'; } ?>>
+        <form action="backend/php/session.php" method="post" id="login" <?php if (isset($_SESSION['isRegistering'])) { echo 'style="display: none;"'; } ?>>
             <div class="inputContainer">
                 <input type="text" name="email" spellcheck="false" placeholder="AspIT email">
                 <i class="fa fa-user" aria-hidden="true"></i>
@@ -57,7 +57,7 @@ if (!empty($_GET['email'])) {
                 Don't have an account? <a id="registerFormShow" href="#">Register!</a>
             </div>
         </form>
-        <form action="../../backend/php/createUser.php" method="post" id="register" <?php if (isset($_SESSION['isRegistering'])) { echo 'style="display: block;"'; unset($_SESSION['isRegistering']); } ?>>
+        <form action="backend/php/createUser.php" method="post" id="register" <?php if (isset($_SESSION['isRegistering'])) { echo 'style="display: block;"'; unset($_SESSION['isRegistering']); } ?>>
             <div class="inputContainer">
                 <input type="text" name="firstName" spellcheck="false" placeholder="First name" value="<?php echo $firstName ?>">
                 <i class="fa fa-user" aria-hidden="true"></i>

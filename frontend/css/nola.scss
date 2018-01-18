@@ -57,7 +57,7 @@ main {
             }
             
             ul {
-                @include textStyling(1rem, $marginBottom);
+                @include textStyling(1rem);
                 margin-left: 2.3%;
             }
             
@@ -73,6 +73,7 @@ main {
             .sidenote {
                 float: right;
                 margin-right: -40%;
+                margin-bottom: 10px;
                 clear: right;
                 max-width: 30%;
                 min-width: 30%;
@@ -109,6 +110,7 @@ main {
             
             .right-img {
                 float: right;
+                clear: right;
                 margin-right: -40%;
                 max-width: 30%;
                 min-width: 30%;
@@ -116,7 +118,7 @@ main {
             }
             
             .big-img {
-                max-width: 100%;
+                max-width: 153.8%;
                 margin-bottom: $marginBottom;
             }
             

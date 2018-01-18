@@ -5,7 +5,7 @@ $exerciseId = $_POST['exerciseId'];
 if (isset($exerciseId)) {
     if (is_numeric($exerciseId)) {
         
-        require "connect.php";
+        require ((dirname(__FILE__)) . '/connect.php');
         /*Find the accesslevel of the exercise*/
         $stmt = $dbh->prepare(
         "SELECT AccessLevel FROM exercises

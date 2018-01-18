@@ -25,7 +25,7 @@ foreach ($_POST as $item) {
 if ($emptyFields) {
     
     $_SESSION['errMsg'] = 'Fields cannot be empty';
-    header("location: ../../frontend/php/login.php?firstName=$firstName&lastName=$lastName&email=$email");
+    header("location: ../../login.php?firstName=$firstName&lastName=$lastName&email=$email");
     
 }
 
@@ -33,7 +33,7 @@ if ($emptyFields) {
 else if ($password != $repassword) {
     
     $_SESSION['errMsg'] = "Passwords do not match";
-    header("location: ../../frontend/php/login.php?firstName=$firstName&lastName=$lastName&email=$email");
+    header("location: ../../login.php?firstName=$firstName&lastName=$lastName&email=$email");
     
 }
 
@@ -41,11 +41,11 @@ else if ($password != $repassword) {
 else if (!preg_match('/^[^@]+@[^@]+\.[^@]+$/', $email)) {
     
     $_SESSION['errMsg'] = 'Invalid email';
-    header("location: ../../frontend/php/login.php?firstName=$firstName&lastName=$lastName&email=$email");
+    header("location: ../../login.php?firstName=$firstName&lastName=$lastName&email=$email");
     
 }
 else {
-    require "connect.php";
+    require ((dirname(__FILE__)) . "/connect.php");
     
     /*Find duplicate emails in database*/
     $stmt = $dbh->prepare("SELECT * FROM users WHERE Email = ?");
@@ -56,7 +56,7 @@ else {
     if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         /*Redirect to other page with error message*/
         $_SESSION['errMsg'] = 'Email already in use';
-        header("location: ../../frontend/php/login.php?firstName=$firstName&lastName=$lastName&email=$email");
+        header("location: ../../login.php?firstName=$firstName&lastName=$lastName&email=$email");
     } else {
         /*Hash and salt password*/
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
@@ -89,7 +89,7 @@ else {
         /*Allow the login form to display when login.php loads again*/
         unset($_SESSION['isRegistering']);
         /*Redirect to login.php*/
-        header("location: ../../frontend/php/login.php");
+        header("location: ../../login.php");
     }
 }
 

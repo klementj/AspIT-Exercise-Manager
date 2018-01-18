@@ -1,7 +1,7 @@
 <?php
 /*Validate user logged in*/
 if (isset($_SESSION['userId'])) {
-    require "connect.php";
+    require ((dirname(__FILE__)) . '/connect.php');
 
     /*SQL:
     1: Begins transaction

@@ -3,8 +3,8 @@ function GetLatestAuthorId($exerciseId) {
     /*If exercise has an id that is a number*/
     if (isset($exerciseId)) {
         if (is_numeric($exerciseId)) {
-            require "connect.php";
-
+            require ((dirname(__FILE__)) . '/connect.php');
+            
             /*Find the latest author to the exercise*/
             /*SQL:
             Select UserId from the authors table

@@ -2,7 +2,7 @@
 /*Validate user logged in*/
 if (isset($_SESSION['userId'])) {
     /*Find current user's version of the updated exercise*/
-    require "connect.php";
+    require ((dirname(__FILE__)) . '/connect.php');
     
     $stmt = $dbh->prepare(
         "BEGIN; 

@@ -27,6 +27,8 @@ $(document).ready(function() {
         /*Get input of textarea to be translated*/
         textarea = document.getElementById("LMLeditor");
         input = textarea.value;
+        /*To prevent weird html bahavior, replace '<' with the equivalent '&lt' (may cause issues inside codeblocks that rely on '<'. Dunno)*/
+        input = input.replace(/\</g, '&lt');
         
         /*Assign values to inputLines, declare length of outputLines, and assign output*/
         inputLines = input.split(/\n/g);
@@ -172,7 +174,7 @@ $(document).ready(function() {
             
             if (tags.length > 2) {
                 
-                if (tags[2].toLowerCase() == 'left' || tags[2].toLowerCase() == 'right' || tags[2].toLowerCase() == 'big') {
+                if (tags[2].toLowerCase() == 'left' || tags[2].toLowerCase() == 'right' /*|| tags[2].toLowerCase() == 'big'*/) {
                     
                     /*If the next tag is left, right, or big, the tag defines the image size/position*/
                     size = tags[2].toLowerCase();
