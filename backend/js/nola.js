@@ -16,6 +16,7 @@ $(document).ready(function() {
     const codeblockSyntax = ';;';
     const imageSyntax = '!!';
     const listSyntax = '*';
+    const orderedListSyntax = /\d\./;
     
     /*Declare booleans that allow for special processing of codeblocks with and without html*/
     var codeblocking = false;
@@ -65,12 +66,26 @@ $(document).ready(function() {
                         List(i);
                         break;
                         
+                    case orderedListSyntax:
+                        console.log("Neh");
+                        OrderedList(i);
+                        break;
+                        
                     case '':
                         outputLines[i] = inputLines[i];
                         break;
 
                     default:
-                        Paragraph(i);
+                        /*Regular expressions don't work with switch cases, so ordered list syntax is identified here*/
+                        if (inputLines[i].split(' ')[0].match(orderedListSyntax)) {
+                            
+                            OrderedList(i);
+                            
+                        } else {
+                            
+                            Paragraph(i);
+                            
+                        }
                         break;
                 }
             }
@@ -237,7 +252,7 @@ $(document).ready(function() {
             }
         }
         
-        /*If neaither at the first or last indexes of inputLines*/
+        /*If neither at the first or last indexes of inputLines*/
         else if (i > 0 && i < inputLines.length - 1){
             
             if (inputLines[i - 1].split(' ')[0] != '*') {
@@ -261,6 +276,73 @@ $(document).ready(function() {
                 
                 /*If previous line and next line both have list syntax, simply insert as list item*/
                 outputLines[i] = '<li>' + inputLines[i].slice(listSyntax.length + 1) + '</li>\n';
+            }
+        }
+    }
+    
+    function OrderedList(i) {
+        
+        let listValue = inputLines[i].match(/^\d+/);
+        
+        /*If at the first index of inputLines*/
+        if (i == 0){
+            
+            if (i == inputLines.length - 1) {
+                
+                /*If current line is input's first and last line, begin and complete ol at current line*/
+                outputLines[i] = '<ol>\n<li value="' + listValue + '">' + inputLines[i].slice(listValue.length + 2) + '</li>\n</ol>\n';
+            }
+            else {
+                
+                /*If current line is input's first line, begin ol*/
+                outputLines[i] = '<ol>\n<li value="' + listValue + '">' + inputLines[i].slice(listSyntax.length + 2) + '</li>\n';
+                if (!inputLines[i + 1].split(' ')[0].match(/^\d+/)) {
+                    
+                    /*If next line does not have list syntax, end ol at current line*/
+                    outputLines[i] += '\n</ol>\n';
+                }
+            }
+        }
+        
+        /*If at the last index of inputLines*/
+        else if (i == inputLines.length - 1) {
+            
+            if (!inputLines[i - 1].split(' ')[0].match(/^\d+/)) {
+                
+                /*If current line is input's last line and previous line does not have list syntax, begin and complete ol at current line*/
+                outputLines[i] = '<ol>\n<li value="' + listValue + '">' + inputLines[i].slice(listSyntax.length + 2) + '</li>\n</ol>\n';
+            }
+            else {
+                
+                /*If current line is input's last line and previous line has list syntax, complete ol at current line*/
+                outputLines[i] = '<li value="' + listValue + '">' + inputLines[i].slice(listSyntax.length + 2) + '</li>\n</ol>\n';
+            }
+        }
+        
+        /*If neither at the first or last indexes of inputLines*/
+        else if (i > 0 && i < inputLines.length - 1){
+            
+            if (!inputLines[i - 1].split(' ')[0].match(/^\d+/)) {
+                if (!inputLines[i + 1].split(' ')[0].match(/^\d+/)){
+                    
+                    /*If previous line and next line do not have list syntax, begin and complete ol at current line*/
+                    outputLines[i] = '<ol>\n<li value="' + listValue + '">' + inputLines[i].slice(listSyntax.length + 2) + '</li>\n</ol>\n'
+                }
+                else {
+                    
+                    /*If previous line does not have list syntax but next line does, begin ol at current line*/
+                    outputLines[i] = '<ol>\n<li value="' + listValue + '">' + inputLines[i].slice(listSyntax.length + 2) + '</li>\n';
+                }
+            }
+            else if (!inputLines[i + 1].split(' ')[0].match(/^\d+/)) {
+                
+                /*If previous line has list syntax but next line does not, complete ol at current line*/
+                outputLines[i] = '<li value="' + listValue + '">' + inputLines[i].slice(listSyntax.length + 2) + '</li>\n</ol>\n';
+            }
+            else {
+                
+                /*If previous line and next line both have list syntax, simply insert as list item*/
+                outputLines[i] = '<li value="' + listValue + '">' + inputLines[i].slice(listSyntax.length + 2) + '</li>\n';
             }
         }
     }
