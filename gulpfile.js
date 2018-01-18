@@ -18,7 +18,9 @@ gulp.task('deploy', function () {
     var globs = [
         'frontend/**',
         'backend/**',
-        'img/**'
+        'img/**',
+        'index.php',
+        'login.php'
     ];
 
     return gulp.src( globs, { base: '.', buffer: false})
