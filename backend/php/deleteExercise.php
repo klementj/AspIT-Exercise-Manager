@@ -2,7 +2,7 @@
 session_start();
 
 /*Import function*/
-require 'getLatestAuthorId.php';
+require ((dirname(__FILE__)) . "/getLatestAuthorId.php");
 
 /*Validate user logged in*/
 if (isset($_SESSION['userId'])) {
@@ -11,7 +11,7 @@ if (isset($_SESSION['userId'])) {
     
     /*Validate user is latest author of exercise*/
     if (GetLatestAuthorId($exerciseId) == $userId) {
-        require 'connect.php';
+        require ((dirname(__FILE__)) . '/connect.php');
         
         /*SQL:
         1: Delete all authors belonging to exercise to be deleted

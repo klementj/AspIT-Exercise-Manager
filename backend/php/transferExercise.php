@@ -2,7 +2,7 @@
 /*Validate user logged in*/
 if (isset($_SESSION['userId'])) {
     /*Insert new exercise into database*/
-    require "connect.php";
+    require ((dirname(__FILE__)) . '/connect.php');
     
     /*Select all authors of original exercise*/
     $stmt = $dbh->prepare(

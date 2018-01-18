@@ -3,7 +3,7 @@ session_start();
 $email = $_POST['email'];
 $password = $_POST['password'];
 
-require "connect.php";
+require ((dirname(__FILE__)) . '/connect.php');
 
 /*Retrieve password from database*/
 $stmt = $dbh->prepare(
@@ -25,16 +25,16 @@ if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $_SESSION['accessLevel'] = $row['AccessLevel'];
 
         /*Redirect to other page with success*/
-        header('location: ../../frontend/php/index.php');
+        header('location: ../../index.php');
     } else {
         /*Redirect to other page with error*/
         $_SESSION['errMsg'] = 'Invalid username or password';
-        header('location: ../../frontend/php/login.php');
+        header('location: ../../login.php');
     }
 } else {
     /*Redirect to other page with error*/
     $_SESSION['errMsg'] = 'Invalid username or password';
-    header('location: ../../frontend/php/login.php');
+    header('location: ../../login.php');
 }
 
 /*Close connection*/

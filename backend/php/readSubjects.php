@@ -1,5 +1,5 @@
 <?php
-require 'connect.php';
+require ((dirname(__FILE__)) . '/connect.php');
 
 /*Select all subjects and sort by name*/
 $stmt = $dbh->prepare("SELECT * FROM subjects ORDER BY SubjectName;");

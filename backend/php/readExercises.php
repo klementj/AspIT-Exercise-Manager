@@ -2,7 +2,7 @@
 session_start();
 
 /*Import function*/
-require 'getLatestAuthorId.php';
+require ((dirname(__FILE__)) . '/getLatestAuthorId.php');
 
 /*Validate user logged in*/
 if (isset($_SESSION['userId'])) {
@@ -35,7 +35,7 @@ if (isset($_SESSION['userId'])) {
         "GROUP BY exercises.ExerciseId
         ORDER BY exercises.LastUpdated DESC;";
     
-    require 'connect.php';
+    require ((dirname(__FILE__)) . '/connect.php');
     
     $stmt = $dbh->prepare($sql);
     $stmt->bindParam(1, $_SESSION['userId']);
@@ -57,7 +57,7 @@ if (isset($_SESSION['userId'])) {
                 '<tr>
                     <td class="tTitle">
                         <a href="#" data-id="' . $row['ExerciseId'] . '">' . $row['Title'] . '</a>';
-
+            
             /*If exercise is private, add a lock icon to title*/
             if ($row['AccessLevel'] == 0) {
                 $htmlString .= '<i class="fa fa-lock" aria-hidden="true" title="This exercise is private. Only you can see it."></i>';
@@ -69,7 +69,7 @@ if (isset($_SESSION['userId'])) {
                     <td class="tSubject">' . $row['SubjectName'] . '</td>
                     <td class="tDate">' . $row['Date'] . '</td>
                 </tr>';
-            
+                
             /*Push html to array*/
             array_push($result, $htmlString);
             

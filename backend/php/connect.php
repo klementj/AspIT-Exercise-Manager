@@ -1,6 +1,6 @@
 <?php
 /*Get database connection variables from config.php*/
-require "../../config.php";
+require ((dirname(__FILE__)) . "/../../config.php");
 
 /*Establish connection*/
 try {

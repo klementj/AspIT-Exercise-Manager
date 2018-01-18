@@ -1,7 +1,7 @@
 <?php
 /*Import functions and session variables*/
-require "isAuthor.php";
-require "getLatestAuthorId.php";
+require ((dirname(__FILE__)) . '/isAuthor.php');
+require ((dirname(__FILE__)) . '/getLatestAuthorId.php');
 session_start();
 
 /*Validate user accessLevel*/
@@ -21,19 +21,19 @@ if ($_SESSION['accessLevel'] > 1) {
     try {
         if (empty($exerciseId)) {
             /*If there is no exercise id, the exercise is completely new*/
-            require "createExercise.php";
+            require ((dirname(__FILE__)) . '/createExercise.php');
         }
         else {
             if (!IsAuthor($exerciseId, $_SESSION['userId'])) {
                 /*If current user is not on the author list, new exercise is added and user is added as latest author*/
-                require "transferExercise.php";
+                require ((dirname(__FILE__)) . '/transferExercise.php');
             } else {
                 if (GetLatestAuthorId($exerciseId) == $_SESSION['userId']) {
                     /*If current user is latest author, simply update the exercise*/
-                    require "updateThisExercise.php";
+                    require ((dirname(__FILE__)) . '/updateThisExercise.php');
                 } else {
                     /*If current user is not latest author but is on the author list, new exercise is added and user is added as latest author*/
-                    require "transferExercise.php";
+                    require ((dirname(__FILE__)) . '/transferExercise.php');
                 }
             }
         }

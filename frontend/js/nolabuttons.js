@@ -81,7 +81,7 @@ $(document).ready(function() {
     });
     
     $('#image').click(function(){
-        InsertSyntax('!! https://source.unsplash.com/random/400x400 left', '', '', true);
+        InsertSyntax('!! https://source.unsplash.com/random/400x400 left\n\n', '', '', true);
     });
     
     $('#imageUpload').click(function() {
@@ -95,12 +95,14 @@ $(document).ready(function() {
     $('#imgUploadBtn').click(function() {
         /*Validate that file input has a value*/
         if ($('#imgUploadModal input').val().length) {
+            
             var file_data = $('#imgUploadModal input').prop('files')[0];
             var form_data = new FormData();
             form_data.append('fileToUpload', file_data);
+            
             $.ajax({
                 
-                url: '../../backend/php/uploadImage.php',
+                url: 'backend/php/uploadImage.php',
                 dataType: 'text',
                 cache: false,
                 contentType: false,
@@ -113,7 +115,8 @@ $(document).ready(function() {
                         alert(response);
                     } else {
                         /*On success, insert image in editor*/
-                        InsertSyntax('!! ' + response + ' left', '', '', true);
+                        InsertSyntax('!! ' + response + ' left\n\n', '', '', true);
+                        ImgUploadFade(false);
                     }
                 },
                 error: function(response) {

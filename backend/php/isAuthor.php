@@ -3,7 +3,7 @@ function IsAuthor($exerciseId, $userId) {
     /*If exercise and user have ids that are numbers*/
     if (isset($exerciseId) && isset($userId)) {
         if (is_numeric($exerciseId) && is_numeric($userId)) {
-            require "connect.php";
+            require ((dirname(__FILE__)) . '/connect.php');
             
             /*Find user id in list of authors*/
             /*SQL:

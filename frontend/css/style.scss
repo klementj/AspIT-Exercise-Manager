@@ -261,7 +261,6 @@ body {
             }
             
             h5 {
-                font-style: italic;
                 font-size: 1.4rem;
                 font-weight: bold;
             }
@@ -298,6 +297,7 @@ body {
             #exerciseCreationContainer {
                 display: none;
                 opacity: 0;
+                margin-bottom: 10px;
             }
             
             nav {
@@ -338,7 +338,6 @@ body {
                     }
                     
                     a {
-                        color: black;
                         text-decoration: none;
                     }
                     
@@ -346,33 +345,75 @@ body {
                         outline: 0px;
                     }
                     
-                    #createNewExercise {
-                        margin-left: 10px;
-                    }
-                    
-                    #createNewExercise a {
-                        color: $greenBtnColor;
-                    }
-                    
                     #createNewExercise, #saveBtn, #publishBtn {
                         @include btnStyle();
                     }
                     
-                    #publishBtn {
-                        display: none;
+                    #createNewExercise {
+                        margin-left: 10px;
+                        transition: background-color 0.3s;
+                    }
+                    
+                    #createNewExercise:hover {
+                        background-color: $greenBtnColor;
+                    }
+                    
+                    #createNewExercise a {
+                        color: $greenBtnColor;
+                        transition: color 0.3s;
+                    }
+                    
+                    #createNewExercise:hover a {
+                        color: white;
+                        transition: color 0.3s;
                     }
                     
                     #openNewExercise {
                         @include btnStyle();
+                        transition: background-color 0.3s;
+                    }
+                    
+                    #openNewExercise:hover {
+                        background-color: $blueBtnColor;
                     }
                     
                     #openNewExercise a {
                         color: $blueBtnColor;
+                        transition: color 0.3s;
+                        
+                    }
+                    
+                    #openNewExercise:hover a {
+                        color: white;
+                        transition: color 0.3s;
+                    }
+                    
+                    #saveBtn {
+                        transition: background-color 0.3s;
+                    }
+                    
+                    #saveBtn:hover {
+                        background-color: #c5c5c550;
+                    }
+                    
+                    #publishBtn {
+                        transition: background-color 0.3s;
+                        display: none;
+                    }
+                    
+                    #publishBtn:hover {
+                        background-color: #c5c5c550;
                     }
                     
                     #deleteBtn {
-                        color: $redBtnColor;
                         @include btnStyle();
+                        color: $redBtnColor;
+                        transition: background-color 0.3s, color 0.3s;
+                    }
+                    
+                    #deleteBtn:hover {
+                        background-color: $redBtnColor;
+                        color: white;
                     }
                 }
             }
