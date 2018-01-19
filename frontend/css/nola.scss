@@ -58,6 +58,7 @@ main {
             
             ul {
                 @include textStyling(1rem);
+                margin-bottom: 20px;
                 margin-left: 2.3%;
             }
             

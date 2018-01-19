@@ -26,7 +26,6 @@ gulp.task('deploy', function () {
     var globs = [
         'frontend/**',
         'backend/**',
-        'img/**',
         'index.php',
         'login.php'
     ];
@@ -74,7 +73,7 @@ gulp.task('minify', function () {
     return gulp.src('frontend/css/*.css')
       .pipe(minify())
       .pipe(rename({suffix: '.min'}))
-
+        
       // Define destination folder for .min.css  
       .pipe(gulp.dest('frontend/css'))
 });

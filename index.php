@@ -126,6 +126,10 @@ if (!isset($_SESSION["userId"])) {
                                 <i class="fa fa-upload" aria-hidden="true"></i>
                                 <span class="tooltiptext disable-select">Upload image</span>
                         </button>
+                        <button id="syntaxHelp" class="editor-button" tabindex="-1">
+                                <i class="fa fa-question" aria-hidden="true"></i>
+                                <span class="tooltiptext disable-select">Syntax help</span>
+                        </button>
                     </div>
                     <textarea class="editor" id="LMLeditor" spellcheck="false" placeholder="Description..." tabindex="2"></textarea>
                 </section>
@@ -176,6 +180,110 @@ if (!isset($_SESSION["userId"])) {
 <div id="imgUploadModal">
     <input type="file" name="fileToUpload">
     <button id="imgUploadBtn">Ok</button>
+</div>
+<div id="syntaxModal">
+    <table>
+        <thead>
+            <tr>
+                <th>You type</th>
+                <th>You get</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="youType"># Big header</td>
+                <td class="youSee"><h2>Big header</h2></td>
+            </tr>
+            <tr>
+                <td class="youType">## Medium header</td>
+                <td class="youSee"><h3>Medium header</h3></td>
+            </tr>
+            <tr>
+                <td class="youType">### Small header</td>
+                <td class="youSee"><h4>Small header</h4></td>
+            </tr>
+            <tr>
+                <td class="youType">**bold**</td>
+                <td class="youSee"><b>bold</b></td>
+            </tr>
+            <tr>
+                <td class="youType">||italic||</td>
+                <td class="youSee"><em>italic</em></td>
+            </tr>
+            <tr>
+                <td class="youType">[[code]]</td>
+                <td class="youSee code">code</td>
+            </tr>
+            <tr>
+                <td class="youType">#{Blue{colored text}}</td>
+                <td class="youSee blue">colored text</td>
+            </tr>
+            <tr>
+                <td class="youType">
+                    * List item<br>
+                    * List item<br>
+                    * List item
+               </td>
+                <td class="youSee">
+                    <ul>
+                        <li>List item</li>
+                        <li>List item</li>
+                        <li>List item</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td class="youType">
+                    1. List item<br>
+                    2. List item<br>
+                    3. List item
+               </td>
+                <td class="youSee">
+                    <ol>
+                        <li>List item</li>
+                        <li>List item</li>
+                        <li>List item</li>
+                    </ol>
+                </td>
+            </tr>
+            <tr>
+                <td class="youType">Sidenote $$text text$$</td>
+                <td class="youSee"><span class="sidenote">Sidenote</span><span class="sidenoteText">text text</span></td>
+            </tr>
+            <tr>
+                <td class="youType">
+                    ;; html <br>
+                    &lt;div&gt;&lt;/div&gt;<br>
+                    ;;
+                </td>
+                <td class="youSee">
+                    <pre class="language-html">
+                        <code class="language-html">
+&lt;div&gt;&lt;/div&gt;
+                        </code>
+                    </pre>
+                </td>
+            </tr>
+            <tr>
+                <td class="youType">[Link text](www.google.dk/)</td>
+                <td class="youSee"><a href="https://www.google.dk/">Link text</a></td>
+            </tr>
+            <tr>
+                <td class="youType">
+                    !! https://i.imgur.com/eOSai4B.png left
+                    <br>
+                    <br>
+                    <b>Left</b> positions the image to the left.
+                    <br>
+                    <b>Right</b> positions the image to the right.
+                </td>
+                <td class="youSee">
+                    <img src="https://i.imgur.com/eOSai4B.png" alt="example image">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button>Ok</button>
 </div>
 </body>
 </html>

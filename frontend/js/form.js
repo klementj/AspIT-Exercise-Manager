@@ -70,6 +70,42 @@ function VisibilityModalFade(fadeIn) {
     
 }
 
+function SyntaxModalFade(fadeIn) {
+    
+    const overlay = $('#overlay');
+    const modal = $('#syntaxModal');
+    
+    if (fadeIn) {
+        
+        overlay.css('display', 'block');
+        modal.css('display', 'block');
+        
+        overlay.animate({
+            opacity: 1
+        }, 100);
+        
+        modal.animate({
+            opacity: 1
+        }, 100);
+        
+    } else {
+        
+        overlay.animate({
+            opacity: 0
+        }, 100, function() {
+            overlay.css('display', 'none');
+        });
+        
+        modal.animate({
+            opacity: 0
+        }, 100, function() {
+            modal.css('display', 'none');
+        });
+        
+    }
+    
+}
+
 $(document).ready(function() {
     
     var $title = '';
@@ -174,7 +210,7 @@ $(document).ready(function() {
     $('#overlay').click(function() {
         OpenExerciseFade(false);
         VisibilityModalFade(false);
-        
+        SyntaxModalFade(false);
     });
     
     $('#saveBtn').click(function() {
@@ -333,6 +369,12 @@ $(document).ready(function() {
         } else {
             alert('You must save an exercise before changing its visibility state.');
         }
+        
+    });
+    
+    $('#syntaxHelp').click(function() {
+        
+        SyntaxModalFade(true);
         
     });
     
