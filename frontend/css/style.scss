@@ -119,6 +119,7 @@ body {
         button {
             float: right;
             @include btnStyle(#4CAF50);
+            color: white;
         }
     }
     
@@ -132,11 +133,103 @@ body {
         button {
             float: right;
             @include btnStyle(#4CAF50);
+            color: white;
         }
     }
     
     #syntaxModal {
-        @include modalStyle(75vh, 300px, 5%, 30px 10px);
+        @include modalStyle(auto, 520px, 5%, 10px);
+        font-size: 14px;
+        
+        button {
+            @include btnStyle(#4CAF50);
+            float: right;
+            color: white;
+            margin-top: 20px;
+        }
+        
+        table {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            
+            thead {
+                
+                tr {
+                    display: flex;
+                    justify-content: space-around;
+                    background-color: #4CAF50;
+                    color: white;
+                    padding: 10px 0px;
+                }
+            }
+            
+            tbody {
+                
+                tr {
+                    display: flex;
+                    
+                    td {
+                        flex: 1;
+                        padding: 10px 5px;
+                        max-width: calc(50% - 10px);
+                        word-wrap: break-word;
+                    }
+                }
+                
+                tr:nth-child(odd) {
+                    background-color: #ddd;
+                }
+                
+                .code {
+                    font-family: monospace;
+                }
+                
+                .blue {
+                    color: blue;
+                }
+                
+                ul {
+                    margin-left: 17px;
+                }
+                
+                ol {
+                    margin-left: 17px;
+                }
+                
+                .sidenote::after {
+                    content: "1";
+                    font-size: 11px;
+                    position: relative;
+                    bottom: 4px;
+                }
+                
+                .sidenoteText {
+                    float: right;
+                    font-size: 11px;
+                }
+                
+                .sidenoteText::before {
+                    content: "1";
+                    font-size: 9px;
+                    position: relative;
+                    bottom: 3px;
+                    right: 1px;
+                }
+                
+                .language-html {
+                    overflow: unset;
+                    max-height: 50px;
+                    margin-bottom: 0px;
+                    line-height: 0px;
+                }
+                
+                img {
+                    max-height: 100%;
+                    max-width: 100%;
+                }
+            }
+        }
     }
     
     #openModal {
