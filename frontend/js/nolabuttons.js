@@ -77,7 +77,7 @@ $(document).ready(function() {
     });
     
     $('#link').click(function(){
-        InsertSyntax('@', '<http://www.aspit.dk/<', '>>', false, 23);
+        InsertSyntax('', '[](', 'http://www.aspit.dk/)', false, 1);
     });
     
     $('#image').click(function(){

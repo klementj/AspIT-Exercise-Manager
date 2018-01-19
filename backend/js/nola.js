@@ -400,8 +400,8 @@ $(document).ready(function() {
         '\<' targets '<'
         '\>' targets '>'*/
         /*Function: parameter b is the content of the first set of parantheses (url) and c is the second set (link text)*/
-        output = output.replace(/\@\<(.*?)\<(.*?)\>\>/g, function(a, b, c) {
-            return '<a href="' + b + '">' + c + '</a>';
+        output = output.replace(/\[(.*?)\]\((.*?)\)/g, function(a, b, c) {
+            return '<a href="' + c + '">' + b + '</a>';
         });
 
         /*Colored text translation*/

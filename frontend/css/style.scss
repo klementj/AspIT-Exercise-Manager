@@ -136,7 +136,7 @@ body {
     }
     
     #syntaxModal {
-        @include modalStyle(75vh, 300px, 5%, 30px);
+        @include modalStyle(75vh, 300px, 5%, 30px 10px);
     }
     
     #openModal {
