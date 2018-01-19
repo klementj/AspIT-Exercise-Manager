@@ -126,6 +126,9 @@ if (!isset($_SESSION["userId"])) {
                                 <i class="fa fa-upload" aria-hidden="true"></i>
                                 <span class="tooltiptext disable-select">Upload image</span>
                         </button>
+                        <button id="syntaxHelp" class="editor-button" tabindex="-1">
+                                <i class="fa fa-question" aria-hidden="true"></i>
+                        </button>
                     </div>
                     <textarea class="editor" id="LMLeditor" spellcheck="false" placeholder="Description..." tabindex="2"></textarea>
                 </section>
@@ -176,6 +179,67 @@ if (!isset($_SESSION["userId"])) {
 <div id="imgUploadModal">
     <input type="file" name="fileToUpload">
     <button id="imgUploadBtn">Ok</button>
+</div>
+<div id="syntaxModal">
+    <table>
+        <thead>
+            <tr>
+                <th>You type</th>
+                <th>You get</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td># Big header</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>## Medium header</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>### Small header</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>**bold**</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>||italic||</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>[[inline code]]</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    <button>Ok</button>
 </div>
 </body>
 </html>

@@ -135,6 +135,10 @@ body {
         }
     }
     
+    #syntaxModal {
+        @include modalStyle(75vh, 300px, 5%, 30px);
+    }
+    
     #openModal {
         @include modalStyle(85vh, 700px, 3%, 25px);
         flex-direction: column;
@@ -429,6 +433,10 @@ body {
                     width: calc(100% - 10px);
                     background-color: white;
                     box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+                    
+                    #syntaxHelp {
+                        float: right;
+                    }
                     
                     .editor-button {
                         height: 30px;
