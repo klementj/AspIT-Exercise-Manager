@@ -60,7 +60,7 @@ if (isset($_SESSION['userId'])) {
             
             /*If exercise is private, add a lock icon to title*/
             if ($row['AccessLevel'] == 0) {
-                $htmlString .= '<i class="fa fa-lock" aria-hidden="true" title="This exercise is private. Only you can see it."></i>';
+                $htmlString .= '<i class="fa fa-eye-slash" aria-hidden="true" title="This exercise is private. Only you can see it."></i>';
             }
             
             $htmlString .=

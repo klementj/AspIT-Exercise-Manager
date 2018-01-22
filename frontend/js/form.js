@@ -106,6 +106,25 @@ function SyntaxModalFade(fadeIn) {
     
 }
 
+function MessageAnimation(element) {
+    
+    $animTime = 250;
+    
+    $(element).css({
+        'opacity': 1
+    });
+    $(element).animate({
+        top: '33px'
+    }, $animTime, 'swing', function() {
+        $(element).animate({
+            opacity: 0 
+        }, $animTime, 'swing', function() {
+            $(element).css('top', '17px');
+        });
+    });
+    
+}
+
 $(document).ready(function() {
     
     var $title = '';
@@ -257,7 +276,7 @@ $(document).ready(function() {
                     $('#lastUpdated').css('display', 'block');
                     $('#lastUpdated').text( 'Last updated: ' + now.getFullYear() + '-' + now.getMonth() + 1 + '-' + now.getDate() + ' ' + hour + ':' + minutes );
                     
-                    //TODO Save animation
+                    MessageAnimation($('#saveBtn span'));
                     
                 } else {
                     alert(response);
@@ -283,7 +302,7 @@ $(document).ready(function() {
                 },
                 success: function(response) {
                     $('#createNewExercise').click();
-                    // TODO Delete animation
+                    MessageAnimation($('#deleteBtn span'));
                 }
                 
             })
@@ -373,9 +392,7 @@ $(document).ready(function() {
     });
     
     $('#syntaxHelp').click(function() {
-        
         SyntaxModalFade(true);
-        
     });
     
     // Making sure the right elements are displayed based on user accesslevel
