@@ -32,7 +32,7 @@ if (!isset($_SESSION["userId"])) {
         <nav>
             <div>
                 <b><?php echo $_SESSION['firstName'] ?></b>
-                <a href="backend/php/logout.php">Logout</a>
+                <a href="backend/php/logout.php">Log out</a>
             </div>
         </nav>
     </header>
@@ -60,10 +60,10 @@ if (!isset($_SESSION["userId"])) {
                         if ($_SESSION['accessLevel'] < 2) {
                             echo
                                 '<form id="saveForm">
-                                    <button type="button" id="saveBtn">Save</button>
+                                    <button type="button" id="saveBtn">Save<span>Saved!</span></button>
                                 </form>
                                 <button id="publishBtn">Visibility</button>
-                                <button id="deleteBtn">Delete</button>';
+                                <button id="deleteBtn">Delete<span>Deleted!</span></button>';
                         }
                     ?>
                 </div>
