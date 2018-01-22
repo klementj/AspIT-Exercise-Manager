@@ -25,16 +25,16 @@ if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $_SESSION['accessLevel'] = $row['AccessLevel'];
 
         /*Redirect to other page with success*/
-        header('location: ../../index.php');
+        header('location: ../index.php');
     } else {
         /*Redirect to other page with error*/
         $_SESSION['errMsg'] = 'Invalid username or password';
-        header('location: ../../login.php');
+        header('location: ../login.php');
     }
 } else {
     /*Redirect to other page with error*/
     $_SESSION['errMsg'] = 'Invalid username or password';
-    header('location: ../../login.php');
+    header('location: ../login.php');
 }
 
 /*Close connection*/

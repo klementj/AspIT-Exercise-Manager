@@ -11,7 +11,7 @@ var gutil = require('gulp-util');
 var ftp = require('vinyl-ftp');
 
 // Create config.json with {"host":"HOSTNAME","user":"YOUR_USERNAME","password":"YOUR_PASSWORD"}
-var config = require('./config.json');
+var config = require('./config/config.json');
 
 gulp.task('deploy', function () {
     var conn = ftp.create({
@@ -24,16 +24,19 @@ gulp.task('deploy', function () {
 
     // Define what to upload
     var globs = [
-        'frontend/**',
-        'backend/**',
+        'css/**',
+        'php/**',
+        'js/**',
+        'img/**',
+        'fonts/**',
         'index.php',
         'login.php'
     ];
 
     return gulp.src( globs, { base: '.', buffer: false})
         // Name of folder to upload to
-        .pipe( conn.newer('/KLJO/AspIT-Exercise-Manager'))
-        .pipe( conn.dest('/KLJO/AspIT-Exercise-Manager'))
+        .pipe( conn.newer('/KLJO/AspIT-Exercise-Manager2'))
+        .pipe( conn.dest('/KLJO/AspIT-Exercise-Manager2'))
 });
 
 
@@ -49,11 +52,11 @@ var sass = require('gulp-sass');
 
 gulp.task('transpile', function () {
     // Define source folder for .scss files
-    return gulp.src('frontend/scss/style.scss')
+    return gulp.src('scss/style.scss')
       .pipe(sass())
       
       // Define destination folder for .css file
-      .pipe(gulp.dest('frontend/css'))
+      .pipe(gulp.dest('css'))
 });
 
 
@@ -70,10 +73,10 @@ var rename = require('gulp-rename');
 
 gulp.task('minify', function () {
     // Define source folder for .css file
-    return gulp.src('frontend/css/*.css')
+    return gulp.src('css/*.css')
       .pipe(minify())
       .pipe(rename({suffix: '.min'}))
         
       // Define destination folder for .min.css  
-      .pipe(gulp.dest('frontend/css'))
+      .pipe(gulp.dest('css'))
 });

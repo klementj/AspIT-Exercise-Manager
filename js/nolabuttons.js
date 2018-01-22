@@ -102,7 +102,7 @@ $(document).ready(function() {
             
             $.ajax({
                 
-                url: 'backend/php/uploadImage.php',
+                url: 'php/uploadImage.php',
                 dataType: 'text',
                 cache: false,
                 contentType: false,

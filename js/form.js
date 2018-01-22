@@ -139,7 +139,7 @@ $(document).ready(function() {
         $.ajax({
             
             type: 'POST',
-            url: 'backend/php/readExercises.php',
+            url: 'php/readExercises.php',
             datatype: 'text',
             success: function(response) {
                 
@@ -160,7 +160,7 @@ $(document).ready(function() {
                     $.ajax({
                         
                         type: 'POST',
-                        url: 'backend/php/openExercise.php',
+                        url: 'php/openExercise.php',
                         datatype: 'text',
                         data: {
                             'exerciseId' : $(this).attr('data-id')
@@ -198,7 +198,7 @@ $(document).ready(function() {
                                 $.ajax({
                                     
                                     type: 'POST',
-                                    url: 'backend/php/getLatestAuthorId.php',
+                                    url: 'php/getLatestAuthorId.php',
                                     data: {'jsPath' : 'true', 'exerciseId' : $exerciseId},
                                     success: function(response) {
                                         if (userId == response) {
@@ -261,7 +261,7 @@ $(document).ready(function() {
         $.ajax({
             
             type: 'POST',
-            url: 'backend/php/submitExercise.php',
+            url: 'php/submitExercise.php',
             data: $form.serialize(),
             processData: true,
             success: function(response) {
@@ -296,7 +296,7 @@ $(document).ready(function() {
             $.ajax({
                 
                 type: 'POST',
-                url: 'backend/php/deleteExercise.php',
+                url: 'php/deleteExercise.php',
                 data: {
                     'exerciseId' : $exerciseId,
                 },
@@ -335,7 +335,7 @@ $(document).ready(function() {
             $.ajax({
 
                 type: 'POST',
-                url: 'backend/php/getExerciseAccessLevel.php',
+                url: 'php/getExerciseAccessLevel.php',
                 data: {
                     'exerciseId' : $exerciseId,
                 },
@@ -368,7 +368,7 @@ $(document).ready(function() {
         $.ajax({
             
             type: 'POST',
-            url: 'backend/php/publish.php',
+            url: 'php/publish.php',
             data: {
                 'accessLevel' : exerciseAccessLevel,
                 'exerciseId' : $exerciseId,
