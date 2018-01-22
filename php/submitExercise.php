@@ -29,7 +29,7 @@ if ($_SESSION['accessLevel'] > 1) {
                 require ((dirname(__FILE__)) . '/createExercise.php');
             }
         }
-        else if (GetLatestAuthorId($exerciseId) == $_SESSION['userId'])) {
+        else if (GetLatestAuthorId($exerciseId) == $_SESSION['userId']) {
             /*If current user is latest author, simply update the exercise*/
             require ((dirname(__FILE__)) . '/updateExercise.php');
         }
