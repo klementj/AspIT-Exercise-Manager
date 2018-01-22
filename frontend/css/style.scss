@@ -544,6 +544,8 @@ body {
                     width: calc(100% - 10px);
                     background-color: white;
                     box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+                    display: flex;
+                    flex-wrap: wrap;
                     
                     #syntaxHelp {
                         float: right;
@@ -555,8 +557,8 @@ body {
                         position: relative;
                         background: none;
                         border: none;
-                        margin-right: 5px;
                         cursor: pointer;
+                        flex: 1 0 40px;
                         
                         .tooltiptext {
                             @include hoverText(100%, -60px, 120px);
