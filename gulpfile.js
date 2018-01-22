@@ -35,8 +35,8 @@ gulp.task('deploy', function () {
 
     return gulp.src( globs, { base: '.', buffer: false})
         // Name of folder to upload to
-        .pipe( conn.newer('/KLJO/AspIT-Exercise-Manager2'))
-        .pipe( conn.dest('/KLJO/AspIT-Exercise-Manager2'))
+        .pipe( conn.newer('/KLJO/AspIT-Exercise-Manager'))
+        .pipe( conn.dest('/KLJO/AspIT-Exercise-Manager'))
 });
 
 
