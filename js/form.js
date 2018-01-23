@@ -280,7 +280,7 @@ $(document).ready(function() {
                     MessageAnimation($('#saveBtn span'));
                     
                 } else {
-                    console.log(response);
+                    alert(response);
                 }
             }
             
