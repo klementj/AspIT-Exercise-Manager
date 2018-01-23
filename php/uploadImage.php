@@ -1,6 +1,6 @@
 <?php
 /*Declare target directory, file, and file extension*/
-$target_dir = ((dirname(__FILE__)) . "/../../img/");
+$target_dir = ((dirname(__FILE__)) . "/../img/");
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 

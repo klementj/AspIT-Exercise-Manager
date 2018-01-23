@@ -11,28 +11,26 @@ if (!isset($_SESSION["userId"])) {
     <meta charset="UTF-8">
     <title>AspIT Exercise Manager</title>
     <link rel="icon" href="img/aspitlogo.png">
-    <link rel="stylesheet" href="frontend/css/style.css">
-    <link rel="stylesheet" href="frontend/css/nola.css">
-    <link rel="stylesheet" href="frontend/fa/font-awesome-4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="frontend/prism/prism.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="prism.css">
     <script type="text/javascript">
         var accessLevel = '<?php echo $_SESSION['accessLevel'] ?>';
         var userName = '<?php echo $_SESSION['firstName'] . ' ' . $_SESSION['lastName'] ?>';
         var userId = '<?php echo $_SESSION['userId'] ?>';
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="frontend/prism/prism.js"></script>
-    <script src="backend/js/nola.js"></script>
-    <script src="frontend/js/script.js"></script>
-    <script src="frontend/js/nolabuttons.js"></script>
-    <script src="frontend/js/form.js"></script>
+    <script src="js/prism.js"></script>
+    <script src="js/nola.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/nolabuttons.js"></script>
+    <script src="js/form.js"></script>
 </head>
 <body>
     <header>
         <nav>
             <div>
                 <b><?php echo $_SESSION['firstName'] ?></b>
-                <a href="backend/php/logout.php">Log out</a>
+                <a href="php/logout.php">Log out</a>
             </div>
         </nav>
     </header>
@@ -134,7 +132,7 @@ if (!isset($_SESSION["userId"])) {
                     <textarea class="editor" id="LMLeditor" spellcheck="false" placeholder="Description..." tabindex="2"></textarea>
                 </section>
                 <select name="subject" id="subjectSelect">
-                    <?php require 'backend/php/readSubjects.php'; ?>
+                    <?php require 'php/readSubjects.php'; ?>
                 </select>
                 <h5 id="author"><?php echo $_SESSION['firstName'] . ' ' . $_SESSION['lastName'] ?></h5>
                 <h6 id="lastUpdated"></h6>
