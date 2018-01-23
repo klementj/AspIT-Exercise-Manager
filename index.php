@@ -12,7 +12,7 @@ if (!isset($_SESSION["userId"])) {
     <title>AspIT Exercise Manager</title>
     <link rel="icon" href="img/aspitlogo.png">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="prism.css">
+    <link rel="stylesheet" href="css/prism.css">
     <script type="text/javascript">
         var accessLevel = '<?php echo $_SESSION['accessLevel'] ?>';
         var userName = '<?php echo $_SESSION['firstName'] . ' ' . $_SESSION['lastName'] ?>';
