@@ -348,6 +348,7 @@ body {
     main {
         width: 70%;
         margin: 0 auto;
+        margin-bottom: 20px;
         display: flex;
         flex-direction: row;
         
@@ -547,10 +548,6 @@ body {
                     display: flex;
                     flex-wrap: wrap;
                     
-                    #syntaxHelp {
-                        float: right;
-                    }
-                    
                     .editor-button {
                         height: 30px;
                         width: 40px;
@@ -597,7 +594,11 @@ body {
     }
     
     footer {
-        height: 100px;
+        height: auto;
+        padding: 15px 0px;
+        display: flex;
+        justify-content: space-around;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
     }
 }
 

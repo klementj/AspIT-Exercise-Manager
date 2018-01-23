@@ -265,6 +265,7 @@ $(document).ready(function() {
             data: $form.serialize(),
             processData: true,
             success: function(response) {
+                // Check if response is number
                 if (/^\d+$/.test(response)) {
                     $exerciseId = response;
                     
@@ -279,7 +280,7 @@ $(document).ready(function() {
                     MessageAnimation($('#saveBtn span'));
                     
                 } else {
-                    alert(response);
+                    console.log(response);
                 }
             }
             

@@ -4,7 +4,7 @@ function HasSameTitle($userId, $inputTitle) {
     if (isset($userId)) {
         if (is_numeric($userId)) {
             /*Declare boolean to register duplicate titles*/
-            $bool = true;
+            $bool = false;
             
             require ((dirname(__FILE__)) . '/connect.php');
             
@@ -15,7 +15,7 @@ function HasSameTitle($userId, $inputTitle) {
             $stmt = $dbh->prepare(
                 "CREATE TEMPORARY TABLE t1 AS 
                 SELECT * 
-                FROM authors 
+                FROM authors
                 ORDER BY Timestamp DESC;
                 
                 CREATE TEMPORARY TABLE t2 AS
@@ -34,6 +34,8 @@ function HasSameTitle($userId, $inputTitle) {
             /*Declare result array*/
             $resultArray = array();
             
+            $stmt->nextRowset();
+            $stmt->nextRowset();
             /*Fetch results*/
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 /*Push result to array*/
@@ -41,9 +43,9 @@ function HasSameTitle($userId, $inputTitle) {
             }
             
             /*For each title in array, check against input title*/
-            foreach ($title as $resultArray) {
+            foreach ($resultArray as $title) {
                 if ($inputTitle == $title) {
-                    $bool = false;
+                    $bool = true;
                 }
             }
             

@@ -142,7 +142,9 @@ if (!isset($_SESSION["userId"])) {
             <article id="mainContent"></article>
         </article>
     </main>
-    <footer></footer>
+    <footer>
+        <p>Created by Lasse Hels and Noah Bro-Jørgensen - 2018</p>
+    </footer>
 <div id="overlay"></div>
 <div id="openModal">
     <div id="inputContainer">
