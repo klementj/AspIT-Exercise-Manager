@@ -1,7 +1,5 @@
-nola.css
-nola.css.map
-style.css
-style.css.map
+*.css
+*.css.map
 config.json
 node_modules
 ~*.tmp
