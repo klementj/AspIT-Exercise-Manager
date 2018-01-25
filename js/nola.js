@@ -31,7 +31,7 @@ $(document).ready(function() {
         /*Get input of textarea to be translated*/
         textarea = document.getElementById("LMLeditor");
         input = textarea.value;
-        /*To prevent weird html bahavior, replace '<' with the equivalent '&lt' (may cause issues inside codeblocks that rely on '<'. Dunno)*/
+        /*To prevent weird html behavior, replace '<' with the equivalent '&lt' (may cause issues inside codeblocks that rely on '<'. Dunno)*/
         input = input.replace(/\</g, '&lt');
         
         /*Assign values to inputLines, declare length of outputLines, and assign output*/
@@ -225,40 +225,37 @@ $(document).ready(function() {
     
     function Table(i) {
         
+        /*Regex:
+        Parantheses with '?:' at the beginning specifies that this is a non-capturing group
+        '\|' matches '|'
+        '\s' matches whitespace characters
+        '+?' matches preceding target 1 to unlimited times, as few times as possible
+        '.' targets any character
+        '|' inside parantheses specify expression to the right of '|' OR to the left of '|'*/
+        let colCounter = new RegExp('(?:\\|\\s*?.+?\\s*?\\||\\s*?.+?\\s*?\\|)', 'g');
+        
+        /*Regex:
+        '^' anchors search to start of string
+        '*?' matches preceding target 0 to unlimited times, as few times as possible
+        '$' anchors search to end of string*/
+        /*First expression checks syntax of head row, second expression checks syntax of divide row, third expression checks that number of columns in divide row are the same as head row*/
+        let syntaxChecker = new RegExp('^\\s*?\\|(?:\\s*?.+?\\s*?\\|)+\\s*?$');
+        let dividerChecker = new RegExp('^\\s*?\\|(?:\\s*?-+?\\s*?\\|)+\\s*?$');
+        
         /*Check if in the middle of processing table*/
         if (!tabling) {
             /*Current line is a head row, provided it has correct syntax*/
             
-            console.log("Start tabling");
-            
             /*Count number of columns in head row*/
-            /*Regex:
-            Parantheses with '?:' at the beginning specifies that this is a non-capturing group
-            '\|' matches '|'
-            '\s' matches whitespace characters
-            '+?' matches preceding target 1 to unlimited times, as few times as possible
-            '.' targets any character
-            '|' inside parantheses specify expression to the right of '|' OR to the left of '|'*/
-            let inputColumns = inputLines[i].match(/(?:\|\s+?.+?\s+?\||\s+?.+?\s+?\|)/g).length;
-            
-            console.log("Columns = " + inputColumns);
+            let inputColumns = inputLines[i].match(colCounter).length;
             
             /*Check if there are lines after head row*/
             if (i != inputLines.length - 1) {
-                
-                console.log("There are lines after header row")
             
                 /*Check if current line matches table head syntax and if next line matches table divide syntax*/
-                /*Regex:
-                '^' anchors search to start of string
-                '*?' matches preceding target 0 to unlimited times, as few times as possible
-                '$' anchors search to end of string*/
-                /*First expression checks syntax of head row, second expression checks syntax of divide row, third expression checks that number of columns in divide row are the same as head row*/
-                if (inputLines[i].match(/^\s*?\|(?:\s+?.+?\s+?\|)+\s*?$/) && 
-                    inputLines[i + 1].match(/^\s*?\|(?:\s+?-+?\s+?\|)+\s*?$/) && 
-                    inputLines[i + 1].match(/(?:\|\s+?.+?\s+?\||\s+?.+?\s+?\|)/g).length == inputColumns) {
-
-                    console.log("Header row and divide row both check out")
+                if (inputLines[i].match(syntaxChecker) && 
+                    inputLines[i + 1].match(dividerChecker) && 
+                    inputLines[i + 1].match(colCounter).length == inputColumns) {
                     
                     /*Replace LML syntax with HTML tags*/
                     /*Regex:
@@ -268,8 +265,6 @@ $(document).ready(function() {
                         return '<table><thead><tr><th>' + b.replace(/\s+\|\s+/g, '</th><th>') + '</th></tr></thead>';
                     });
                     
-                    console.log("After replacement, output is now: " + outputLines[i]);
-                    
                     /*Set table variables for rest of the table*/
                     tabling = true;
                     tablingColumns = inputColumns;
@@ -278,14 +273,22 @@ $(document).ready(function() {
                     if (i + 1 != inputLines.length - 1) {
                         
                         /*Check if line after table divide does not match table syntax*/
-                        if (inputLines[i + 2].match(/(?:\|\s+?.+?\s+?\||\s+?.+?\s+?\|)/g).length != tablingColumns || 
-                            !inputLines[i + 2].match(/^\s*?\|(?:\s+?.+?\s+?\|)+\s*?$/)) {
-
+                        if (!inputLines[i + 2].match(syntaxChecker)) {
+                            
                             /*If line is not another table row, end table now*/
                             outputLines[i] += '</table>'
                             tabling = false;
                             tablingColumns = 0;
-
+                            
+                        }
+                        /*Check if next line has different number of columns than current table*/
+                        else if (inputLines[i + 2].match(colCounter).length != tablingColumns) {
+                            
+                            /*If line is not another table row, end table now*/
+                            outputLines[i] += '</table>'
+                            tabling = false;
+                            tablingColumns = 0;
+                            
                         }
                         
                     } else {
@@ -294,21 +297,19 @@ $(document).ready(function() {
                         tabling = false;
                         tablingColumns = 0;
                     }
-
+                    
                 } else {
                     /*No proper table head present, return unmodified input*/
                     outputLines[i] = inputLines[i];
                 }
-            
+                
             } else {
                 /*No proper table head present, return unmodified input*/
                 outputLines[i] = inputLines[i];
             }
-
+            
         } else {
             /*Table is currently being processed*/
-            
-            console.log("Continue tabling")
             
             /*Check if previous line is table header*/
             if (outputLines[i - 1].match(/^<table><thead><tr><th>/)) {
@@ -323,30 +324,36 @@ $(document).ready(function() {
                 outputLines[i] = inputLines[i].replace(/\s*?\|\s+(.+)\s+\|\s*?/, function(a, b) {
                     return '<tr><td>' + b.replace(/\s+\|\s+/g, '</td><td>') + '</td></tr>';
                 });
-
-                console.log("After replacement, output is now: " + outputLines[i]);
-
+                
                 /*Check if there are lines after current row*/
                 if (i != inputLines.length - 1) {
-
+                    
                     /*Check if next line does not match table syntax*/
-                    if (inputLines[i + 1].match(/(?:\|\s+?.+?\s+?\||\s+?.+?\s+?\|)/g).length != tablingColumns || 
-                        !inputLines[i + 1].match(/^\s*?\|(?:\s+?.+?\s+?\|)+\s*?$/)) {
-
+                    if (!inputLines[i + 1].match(syntaxChecker)) {
+                        
                         /*If next line is not another table row, end table*/
                         outputLines[i] += '</table>'
                         tabling = false;
                         tablingColumns = 0;
-
+                        
+                    } 
+                    /*Check if next line has different number of columns than current table*/
+                    else if (inputLines[i + 1].match(colCounter).length != tablingColumns) {
+                        
+                        /*If next line is not another table row, end table*/
+                        outputLines[i] += '</table>'
+                        tabling = false;
+                        tablingColumns = 0;
+                        
                     }
-
+                    
                 } else {
                     /*Input ends after current row, so table ends as well*/
                     outputLines[i] += '</table>'
                     tabling = false;
                     tablingColumns = 0;
                 }
-            
+                
             }
             
         }
@@ -355,7 +362,7 @@ $(document).ready(function() {
         outputLines[i] += '\n';
         
     }
-
+    
     function List(i) {
         
         /*If at the first index of inputLines*/

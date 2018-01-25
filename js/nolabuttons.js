@@ -53,7 +53,7 @@ $(document).ready(function() {
     });
     
     $('#table').click(function(){
-        InsertSyntax('\n| Header 1 | Header 2 |\n| ------ | ------ |\n| Table data 1 | Table data 2|\n\n', '', ' ', true);
+        InsertSyntax('\n| Header 1 | Header 2 |\n| ------ | ------ |\n| Table data 1 | Table data 2 |\n\n', '', ' ', true);
     });
     
     $('#codeblock').click(function(){
