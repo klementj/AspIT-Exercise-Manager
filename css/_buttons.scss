@@ -1,0 +1,55 @@
+%button {
+    width: 100px;
+    height: 30px;
+    border: none;
+    background: none;
+    color: $textColor;
+    font-family: $font;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: color 0.2s, background-color 0.2s;
+}
+
+button {
+    @extend %button;
+}
+
+button:focus {
+    outline: 0;
+}
+
+.danger {
+    color: $red;
+}
+
+.danger:hover {
+    color: white;
+    background: $red;
+}
+
+.action {
+    color: $blue;
+}
+
+.action:hover {
+    color: white;
+    background: $blue;
+}
+
+.safe {
+    color: $green;
+}
+
+.safe:hover {
+    color: white;
+    background: $green;
+}
+
+.neutral:hover {
+    background: $neutralBg;
+}
+
+.confirm {
+    color: white;
+    background: $lightGreen;
+}

@@ -52,6 +52,10 @@ $(document).ready(function() {
         InsertSyntax('* ', '', '', true);
     });
     
+    $('#table').click(function(){
+        InsertSyntax('\n| Header 1 | Header 2 |\n| ------ | ------ |\n| Table data 1 | Table data 2|\n\n', '', ' ', true);
+    });
+    
     $('#codeblock').click(function(){
         InsertSyntax(';; csharp\n\n;;', '', '', true);
     });

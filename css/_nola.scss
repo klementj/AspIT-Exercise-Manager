@@ -19,7 +19,7 @@ main {
         }
         
         #mainContent {
-            width: 65%;
+            width: 50%;
             
             h2, h3, h4 {
                 margin: 1.414rem 0 0.5rem;
@@ -60,6 +60,14 @@ main {
                 @include textStyling(1rem);
                 margin-bottom: 20px;
                 margin-left: 2.3%;
+            }
+            
+            th {
+                padding: 5px;
+            }
+            
+            td {
+                padding: 5px;
             }
             
             i {

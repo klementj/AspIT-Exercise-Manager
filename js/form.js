@@ -106,6 +106,42 @@ function SyntaxModalFade(fadeIn) {
     
 }
 
+function DeleteModalFade(fadeIn) {
+    
+    const overlay = $('#overlay');
+    const modal = $('#deleteModal');
+    
+    if (fadeIn) {
+        
+        overlay.css('display', 'block');
+        modal.css('display', 'block');
+        
+        overlay.animate({
+            opacity: 1
+        }, 100);
+        
+        modal.animate({
+            opacity: 1
+        }, 100);
+        
+    } else {
+        
+        overlay.animate({
+            opacity: 0
+        }, 100, function() {
+            overlay.css('display', 'none');
+        });
+        
+        modal.animate({
+            opacity: 0
+        }, 100, function() {
+            modal.css('display', 'none');
+        });
+        
+    }
+    
+}
+
 function MessageAnimation(element) {
     
     $animTime = 250;
@@ -127,10 +163,23 @@ function MessageAnimation(element) {
 
 $(document).ready(function() {
     
+    // Exercise related variables
     var $title = '';
     var $content = '';
     var $subject = '';
     var $exerciseId = null;
+    
+    // Modals
+    var $openExercise = $('#openModal');
+    var $publish = $('#publishModal');
+    var $imgUpload = $('#imgUploadModal');
+    var $syntax = $('#syntaxModal');
+    var $delete = $('#deleteModal');
+    
+    // Overlay
+    var $overlay = $('#overlay');
+    
+    var $fadeSpeed = 100;
     
     $('#openNewExercise').click(function() {
         
@@ -230,6 +279,7 @@ $(document).ready(function() {
         OpenExerciseFade(false);
         VisibilityModalFade(false);
         SyntaxModalFade(false);
+        DeleteModalFade(false);
     });
     
     $('#saveBtn').click(function() {
@@ -290,25 +340,37 @@ $(document).ready(function() {
     
     $('#deleteBtn').click(function() {
         
-        const confirmation = confirm('Are you sure you want to delete "' + $('#titleInput').val() + '"?');
+        $('#deleteModal p').text('Are you sure you want to delete "' + $('#titleInput').val() + '"?');
+        DeleteModalFade(true);
         
-        if (confirmation && $exerciseId != null) {
+        $('#deleteModal .danger').click(function() {
             
-            $.ajax({
+            if ($exerciseId != null) {
                 
-                type: 'POST',
-                url: 'php/deleteExercise.php',
-                data: {
-                    'exerciseId' : $exerciseId,
-                },
-                success: function(response) {
-                    $('#createNewExercise').click();
-                    MessageAnimation($('#deleteBtn span'));
-                }
+                $.ajax({
+                    
+                    type: 'POST',
+                    url: 'php/deleteExercise.php',
+                    data: {
+                        'exerciseId' : $exerciseId,
+                    },
+                    success: function(response) {
+                        $('#createNewExercise').click();
+                        DeleteModalFade(false);
+                        MessageAnimation($('#deleteBtn span'));
+                    }
+                    
+                })
                 
-            })
+            }
             
-        }
+        });
+        
+        $('#deleteModal .safe').click(function() {
+            
+            DeleteModalFade(false);
+            
+        });
         
     });
     
@@ -334,7 +396,7 @@ $(document).ready(function() {
         if ($exerciseId != null) {
             
             $.ajax({
-
+                
                 type: 'POST',
                 url: 'php/getExerciseAccessLevel.php',
                 data: {
@@ -357,7 +419,8 @@ $(document).ready(function() {
             $('#publishModal input[value=0]').prop('checked', true);
         }
         
-        VisibilityModalFade(true);
+        $overlay.fadeIn();
+        $publish.fadeIn();
     });
     
     $('#publishModal button').click(function() {

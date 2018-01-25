@@ -47,21 +47,17 @@ if (!isset($_SESSION["userId"])) {
                     <?php 
                         if ($_SESSION['accessLevel'] < 2) {
                             echo 
-                                '<button id="createNewExercise">
-                                    <a href="#">New</a>
-                                </button>';
+                                '<button id="createNewExercise" class="safe">New</button>';
                         }
                             echo
-                                '<button id="openNewExercise">
-                                    <a href="#">Open</a>
-                                </button>';
+                                '<button id="openNewExercise" class="action">Open</button>';
                         if ($_SESSION['accessLevel'] < 2) {
                             echo
                                 '<form id="saveForm">
-                                    <button type="button" id="saveBtn">Save<span>Saved!</span></button>
+                                    <button type="button" id="saveBtn" class="neutral">Save<span>Saved!</span></button>
                                 </form>
-                                <button id="publishBtn">Visibility</button>
-                                <button id="deleteBtn">Delete<span>Deleted!</span></button>';
+                                <button id="publishBtn" class="neutral">Visibility</button>
+                                <button id="deleteBtn" class="danger">Delete<span>Deleted!</span></button>';
                         }
                     ?>
                 </div>
@@ -104,6 +100,10 @@ if (!isset($_SESSION["userId"])) {
                                 <i class="fa fa-list" aria-hidden="true"></i>
                                 <span class="tooltiptext disable-select">List</span>
                         </button>
+                        <button id="table" class="editor-button" tabindex="-1">
+                                <i class="fa fa-table" aria-hidden="true"></i>
+                                <span class="tooltiptext disable-select">Table</span>
+                        </button>
                         <button id="footnote" class="editor-button" tabindex="-1">
                                 <i class="fa fa-sticky-note" aria-hidden="true"></i>
                                 <span class="tooltiptext disable-select">Footnote</span>
@@ -142,148 +142,153 @@ if (!isset($_SESSION["userId"])) {
     </main>
     <footer>
         <p>Created by Lasse Hels and Noah Bro-Jørgensen - 2018</p>
+        <div id="overlay"></div>
+        <div id="openModal">
+            <div id="inputContainer">
+                <input type="text" name="search" placeholder="Search...">
+                <i class="fa fa-search" aria-hidden="true"></i>
+            </div>
+            <div id="tableContainer">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="tTitle">Title <i class="fa fa-sort" aria-hidden="true"></i></th>
+                            <th class="tAuthor">Author <i class="fa fa-sort" aria-hidden="true"></i></th>
+                            <th class="tSubject">Subject <i class="fa fa-sort" aria-hidden="true"></i></th>
+                            <th class="tDate">Last updated <i class="fa fa-sort" aria-hidden="true"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="publishModal">
+            <h1>Select who can view your exercise:</h1>
+            <div>
+                <input type="radio" name="visibility" value="0"><b>Private</b><br> Only you can view and edit your exercise.
+            </div>
+            <div>
+                <input type="radio" name="visibility" value="1"><b>Protected</b><br> All teachers can view and edit your exercise.
+            </div>
+            <div>
+                <input type="radio" name="visibility" value="2"><b>Public</b><br> All students can view but not edit your exercise. All teachers can view and edit your exercise.
+            </div>
+            <button class="confirm">Ok</button>
+        </div>
+        <div id="imgUploadModal">
+            <input type="file" name="fileToUpload">
+            <button id="imgUploadBtn" class="confirm">Ok</button>
+        </div>
+        <div id="syntaxModal">
+            <table>
+                <thead>
+                    <tr>
+                        <th>You type</th>
+                        <th>You get</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="youType"># Big header</td>
+                        <td class="youSee"><h2>Big header</h2></td>
+                    </tr>
+                    <tr>
+                        <td class="youType">## Medium header</td>
+                        <td class="youSee"><h3>Medium header</h3></td>
+                    </tr>
+                    <tr>
+                        <td class="youType">### Small header</td>
+                        <td class="youSee"><h4>Small header</h4></td>
+                    </tr>
+                    <tr>
+                        <td class="youType">**bold**</td>
+                        <td class="youSee"><b>bold</b></td>
+                    </tr>
+                    <tr>
+                        <td class="youType">||italic||</td>
+                        <td class="youSee"><em>italic</em></td>
+                    </tr>
+                    <tr>
+                        <td class="youType">[[code]]</td>
+                        <td class="youSee code">code</td>
+                    </tr>
+                    <tr>
+                        <td class="youType">#{Blue{colored text}}</td>
+                        <td class="youSee blue">colored text</td>
+                    </tr>
+                    <tr>
+                        <td class="youType">
+                            * List item<br>
+                            * List item<br>
+                            * List item
+                       </td>
+                        <td class="youSee">
+                            <ul>
+                                <li>List item</li>
+                                <li>List item</li>
+                                <li>List item</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="youType">
+                            1. List item<br>
+                            2. List item<br>
+                            3. List item
+                       </td>
+                        <td class="youSee">
+                            <ol>
+                                <li>List item</li>
+                                <li>List item</li>
+                                <li>List item</li>
+                            </ol>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="youType">Sidenote $$text text$$</td>
+                        <td class="youSee"><span class="sidenote">Sidenote</span><span class="sidenoteText">text text</span></td>
+                    </tr>
+                    <tr>
+                        <td class="youType">
+                            ;; html <br>
+                            &lt;div&gt;&lt;/div&gt;<br>
+                            ;;
+                        </td>
+                        <td class="youSee">
+                            <pre class="language-html">
+                                <code class="language-html">
+        &lt;div&gt;&lt;/div&gt;
+                                </code>
+                            </pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="youType">[Link text](www.google.dk/)</td>
+                        <td class="youSee"><a href="https://www.google.dk/">Link text</a></td>
+                    </tr>
+                    <tr>
+                        <td class="youType">
+                            !! https://i.imgur.com/eOSai4B.png left
+                            <br>
+                            <br>
+                            <b>Left</b> positions the image to the left.
+                            <br>
+                            <b>Right</b> positions the image to the right.
+                        </td>
+                        <td class="youSee">
+                            <img src="https://i.imgur.com/eOSai4B.png" alt="example image">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="confirm">Ok</button>
+        </div>
+        <div id="deleteModal">
+            <b><p>Are you sure you want to delete</p></b>
+            <button class="danger">Delete</button>
+            <button class="safe">Cancel</button>
+        </div>
     </footer>
-<div id="overlay"></div>
-<div id="openModal">
-    <div id="inputContainer">
-        <input type="text" name="search" placeholder="Search...">
-        <i class="fa fa-search" aria-hidden="true"></i>
-    </div>
-    <div id="tableContainer">
-        <table>
-            <thead>
-                <tr>
-                    <th class="tTitle">Title <i class="fa fa-sort" aria-hidden="true"></i></th>
-                    <th class="tAuthor">Author <i class="fa fa-sort" aria-hidden="true"></i></th>
-                    <th class="tSubject">Subject <i class="fa fa-sort" aria-hidden="true"></i></th>
-                    <th class="tDate">Last updated <i class="fa fa-sort" aria-hidden="true"></i></th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-    </div>
-</div>
-<div id="publishModal">
-    <h1>Select who can view your exercise:</h1>
-    <div>
-        <input type="radio" name="visibility" value="0"><b>Private</b><br> Only you can view and edit your exercise.
-    </div>
-    <div>
-        <input type="radio" name="visibility" value="1"><b>Protected</b><br> All teachers can view and edit your exercise.
-    </div>
-    <div>
-        <input type="radio" name="visibility" value="2"><b>Public</b><br> All students can view but not edit your exercise. All teachers can view and edit your exercise.
-    </div>
-    <button>Ok</button>
-</div>
-<div id="imgUploadModal">
-    <input type="file" name="fileToUpload">
-    <button id="imgUploadBtn">Ok</button>
-</div>
-<div id="syntaxModal">
-    <table>
-        <thead>
-            <tr>
-                <th>You type</th>
-                <th>You get</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td class="youType"># Big header</td>
-                <td class="youSee"><h2>Big header</h2></td>
-            </tr>
-            <tr>
-                <td class="youType">## Medium header</td>
-                <td class="youSee"><h3>Medium header</h3></td>
-            </tr>
-            <tr>
-                <td class="youType">### Small header</td>
-                <td class="youSee"><h4>Small header</h4></td>
-            </tr>
-            <tr>
-                <td class="youType">**bold**</td>
-                <td class="youSee"><b>bold</b></td>
-            </tr>
-            <tr>
-                <td class="youType">||italic||</td>
-                <td class="youSee"><em>italic</em></td>
-            </tr>
-            <tr>
-                <td class="youType">[[code]]</td>
-                <td class="youSee code">code</td>
-            </tr>
-            <tr>
-                <td class="youType">#{Blue{colored text}}</td>
-                <td class="youSee blue">colored text</td>
-            </tr>
-            <tr>
-                <td class="youType">
-                    * List item<br>
-                    * List item<br>
-                    * List item
-               </td>
-                <td class="youSee">
-                    <ul>
-                        <li>List item</li>
-                        <li>List item</li>
-                        <li>List item</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <td class="youType">
-                    1. List item<br>
-                    2. List item<br>
-                    3. List item
-               </td>
-                <td class="youSee">
-                    <ol>
-                        <li>List item</li>
-                        <li>List item</li>
-                        <li>List item</li>
-                    </ol>
-                </td>
-            </tr>
-            <tr>
-                <td class="youType">Sidenote $$text text$$</td>
-                <td class="youSee"><span class="sidenote">Sidenote</span><span class="sidenoteText">text text</span></td>
-            </tr>
-            <tr>
-                <td class="youType">
-                    ;; html <br>
-                    &lt;div&gt;&lt;/div&gt;<br>
-                    ;;
-                </td>
-                <td class="youSee">
-                    <pre class="language-html">
-                        <code class="language-html">
-&lt;div&gt;&lt;/div&gt;
-                        </code>
-                    </pre>
-                </td>
-            </tr>
-            <tr>
-                <td class="youType">[Link text](www.google.dk/)</td>
-                <td class="youSee"><a href="https://www.google.dk/">Link text</a></td>
-            </tr>
-            <tr>
-                <td class="youType">
-                    !! https://i.imgur.com/eOSai4B.png left
-                    <br>
-                    <br>
-                    <b>Left</b> positions the image to the left.
-                    <br>
-                    <b>Right</b> positions the image to the right.
-                </td>
-                <td class="youSee">
-                    <img src="https://i.imgur.com/eOSai4B.png" alt="example image">
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <button>Ok</button>
-</div>
 </body>
 </html>
