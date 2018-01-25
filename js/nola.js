@@ -15,12 +15,15 @@ $(document).ready(function() {
     const header3Syntax = '###';
     const codeblockSyntax = ';;';
     const imageSyntax = '!!';
+    const tableSyntax = '|';
     const listSyntax = '*';
     const orderedListSyntax = /\d\./;
     
-    /*Declare booleans that allow for special processing of codeblocks with and without html*/
+    /*Declare booleans that allow for special processing of codeblocks and tables*/
     var codeblocking = false;
     var htmlCodeBlocking = false;
+    var tabling = false;
+    var tablingColumns = 0;
 
     /*Begin translation*/
     function LMLTranslate() {
@@ -64,12 +67,15 @@ $(document).ready(function() {
                         Image(i);
                         break;
 
+                    case tableSyntax:
+                        Table(i);
+                        break;
+                        
                     case listSyntax:
                         List(i);
                         break;
                         
                     case orderedListSyntax:
-                        console.log("Neh");
                         OrderedList(i);
                         break;
                         
@@ -215,6 +221,139 @@ $(document).ready(function() {
         
         /*Return finished img element as output*/
         outputLines[i] = '<img class="' + size + '-img" src="' + link + '" alt="' + text + '">\n';
+    }
+    
+    function Table(i) {
+        
+        /*Check if in the middle of processing table*/
+        if (!tabling) {
+            /*Current line is a head row, provided it has correct syntax*/
+            
+            console.log("Start tabling");
+            
+            /*Count number of columns in head row*/
+            /*Regex:
+            Parantheses with '?:' at the beginning specifies that this is a non-capturing group
+            '\|' matches '|'
+            '\s' matches whitespace characters
+            '+?' matches preceding target 1 to unlimited times, as few times as possible
+            '.' targets any character
+            '|' inside parantheses specify expression to the right of '|' OR to the left of '|'*/
+            let inputColumns = inputLines[i].match(/(?:\|\s+?.+?\s+?\||\s+?.+?\s+?\|)/g).length;
+            
+            console.log("Columns = " + inputColumns);
+            
+            /*Check if there are lines after head row*/
+            if (i != inputLines.length - 1) {
+                
+                console.log("There are lines after header row")
+            
+                /*Check if current line matches table head syntax and if next line matches table divide syntax*/
+                /*Regex:
+                '^' anchors search to start of string
+                '*?' matches preceding target 0 to unlimited times, as few times as possible
+                '$' anchors search to end of string*/
+                /*First expression checks syntax of head row, second expression checks syntax of divide row, third expression checks that number of columns in divide row are the same as head row*/
+                if (inputLines[i].match(/^\s*?\|(?:\s+?.+?\s+?\|)+\s*?$/) && 
+                    inputLines[i + 1].match(/^\s*?\|(?:\s+?-+?\s+?\|)+\s*?$/) && 
+                    inputLines[i + 1].match(/(?:\|\s+?.+?\s+?\||\s+?.+?\s+?\|)/g).length == inputColumns) {
+
+                    console.log("Header row and divide row both check out")
+                    
+                    /*Replace LML syntax with HTML tags*/
+                    /*Regex:
+                    Parantheses specify a capturing group, to be targeted by replace function with variable 'b'
+                    '+' matches preceding target 1 to unlimited times*/
+                    outputLines[i] = inputLines[i].replace(/\s*?\|\s+(.+)\s+\|\s*?/, function(a, b) {
+                        return '<table><thead><tr><th>' + b.replace(/\s+\|\s+/g, '</th><th>') + '</th></tr></thead>';
+                    });
+                    
+                    console.log("After replacement, output is now: " + outputLines[i]);
+                    
+                    /*Set table variables for rest of the table*/
+                    tabling = true;
+                    tablingColumns = inputColumns;
+                    
+                    /*Check if there are lines after table divide row*/
+                    if (i + 1 != inputLines.length - 1) {
+                        
+                        /*Check if line after table divide does not match table syntax*/
+                        if (inputLines[i + 2].match(/(?:\|\s+?.+?\s+?\||\s+?.+?\s+?\|)/g).length != tablingColumns || 
+                            !inputLines[i + 2].match(/^\s*?\|(?:\s+?.+?\s+?\|)+\s*?$/)) {
+
+                            /*If line is not another table row, end table now*/
+                            outputLines[i] += '</table>'
+                            tabling = false;
+                            tablingColumns = 0;
+
+                        }
+                        
+                    } else {
+                        /*Input ends after divide row, so table ends as well*/
+                        outputLines[i] += '</table>'
+                        tabling = false;
+                        tablingColumns = 0;
+                    }
+
+                } else {
+                    /*No proper table head present, return unmodified input*/
+                    outputLines[i] = inputLines[i];
+                }
+            
+            } else {
+                /*No proper table head present, return unmodified input*/
+                outputLines[i] = inputLines[i];
+            }
+
+        } else {
+            /*Table is currently being processed*/
+            
+            console.log("Continue tabling")
+            
+            /*Check if previous line is table header*/
+            if (outputLines[i - 1].match(/^<table><thead><tr><th>/)) {
+                /*Current line is the divide row, and should be ignored*/
+                
+                outputLines[i] = '';
+            
+            } else {
+                /*Current line is a normal table row, and syntax has already been checked*/
+                
+                /*Replace LML syntax with HTML syntax*/
+                outputLines[i] = inputLines[i].replace(/\s*?\|\s+(.+)\s+\|\s*?/, function(a, b) {
+                    return '<tr><td>' + b.replace(/\s+\|\s+/g, '</td><td>') + '</td></tr>';
+                });
+
+                console.log("After replacement, output is now: " + outputLines[i]);
+
+                /*Check if there are lines after current row*/
+                if (i != inputLines.length - 1) {
+
+                    /*Check if next line does not match table syntax*/
+                    if (inputLines[i + 1].match(/(?:\|\s+?.+?\s+?\||\s+?.+?\s+?\|)/g).length != tablingColumns || 
+                        !inputLines[i + 1].match(/^\s*?\|(?:\s+?.+?\s+?\|)+\s*?$/)) {
+
+                        /*If next line is not another table row, end table*/
+                        outputLines[i] += '</table>'
+                        tabling = false;
+                        tablingColumns = 0;
+
+                    }
+
+                } else {
+                    /*Input ends after current row, so table ends as well*/
+                    outputLines[i] += '</table>'
+                    tabling = false;
+                    tablingColumns = 0;
+                }
+            
+            }
+            
+        }
+        
+        /*Add linebreak no matter what*/
+        outputLines[i] += '\n';
+        
     }
 
     function List(i) {
