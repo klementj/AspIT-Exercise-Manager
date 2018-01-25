@@ -231,6 +231,8 @@ $(document).ready(function() {
                                     authorString += ', ' + responseArr[2][i]['FirstName'] + ' ' + responseArr[2][i]['LastName'];
                                 }
                                 
+                                $exerciseId = responseArr[0]['ExerciseId'];
+                                
                                 $('#mainContent').text('');
                                 
                                 $('#titleInput').val( responseArr[0]['Title'] );
@@ -240,7 +242,6 @@ $(document).ready(function() {
                                 $('#lastUpdated').css('display', 'block');
                                 $('#lastUpdated').text( 'Last updated: ' + responseArr[0]['LastUpdated'] );
                                 $('#LMLeditor').val( responseArr[0]['Content'] );
-                                $exerciseId = responseArr[0]['ExerciseId'];
                                 
                                 // Ajax call to check whether user is latest author on the opened exercise
                                 // Show visibility button if they are, and hide it if they are not
@@ -252,8 +253,10 @@ $(document).ready(function() {
                                     success: function(response) {
                                         if (userId == response) {
                                             $('#publishBtn').css('display', 'inline-block');
+                                            $('#deleteBtn').css('display', 'inline-block');
                                         } else {
                                             $('#publishBtn').css('display', 'none');
+                                            $('#deleteBtn').css('display', 'none');
                                         }
                                     }
                                     
@@ -324,6 +327,7 @@ $(document).ready(function() {
                     const minutes = ( '0' + now.getMinutes() ).slice(-2);
                     
                     $('#publishBtn').css('display', 'inline-block');
+                    $('#deleteBtn').show();
                     $('#lastUpdated').css('display', 'block');
                     $('#lastUpdated').text( 'Last updated: ' + now.getFullYear() + '-' + now.getMonth() + 1 + '-' + now.getDate() + ' ' + hour + ':' + minutes );
                     
@@ -381,6 +385,7 @@ $(document).ready(function() {
         }
         
         $('#publishBtn').css('display', 'none');
+        $('#deleteBtn').hide();
         $('#titleInput').val('Untitled');
         $('#subjectSelect')[0].selectedIndex = 0;
         $('#author').text(userName);

@@ -408,6 +408,7 @@ body {
                     font-size: 30px;
                     color: $textColor;
                     float: left;
+                    margin-right: 10px;
                     
                     .faTooltip {
                         @include hoverText(115%, -65px, 120px);
@@ -436,10 +437,6 @@ body {
                         position: relative;
                     }
                     
-                    button:nth-child(1) {
-                        margin-left: 10px;
-                    }
-                    
                     a { 
                         text-decoration: none;
                     }  
@@ -451,7 +448,7 @@ body {
                         left: 28px;
                     }
                     
-                    #publishBtn {
+                    #publishBtn, #deleteBtn {
                         display: none;  
                     }
                     
