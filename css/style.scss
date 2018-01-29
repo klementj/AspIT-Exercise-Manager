@@ -134,7 +134,7 @@ body {
             margin-top: 20px;
         }
         
-        table {
+        #primaryTable {
             width: 100%;
             display: flex;
             flex-direction: column;
@@ -214,6 +214,35 @@ body {
                     max-height: 100%;
                     max-width: 100%;
                 }
+            }
+        }
+        
+        #exampleTable {
+            width: 100%;
+            
+            thead {
+                
+                tr {
+                    padding: 0px;
+                    padding-bottom: 10px;
+                }
+            }
+            
+            tr {
+                background-color: $lightGray !important;
+                width: 100%;
+                display: table-row;
+            }
+            
+            th {
+                color: $textColor;
+                width: 50%;
+                text-align: left;
+            }
+            
+            td {
+                padding: 0px !important;
+                max-width: 100% !important;
             }
         }
     }

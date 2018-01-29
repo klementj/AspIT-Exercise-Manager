@@ -70,14 +70,27 @@ main {
             
             table {
                 margin-bottom: 20px;
+                border-bottom: 2px solid black;
+            }
+            
+            thead {
+                text-align: left;
             }
             
             th {
                 padding: 5px;
+                border-bottom: 2px solid black;
             }
             
             td {
                 padding: 5px;
+            }
+            
+            tr:not(:last-child) {
+                
+                td {
+                    border-bottom: 1px solid black;
+                }
             }
             
             i {

@@ -181,7 +181,7 @@ if (!isset($_SESSION["userId"])) {
             <button id="imgUploadBtn" class="confirm">Ok</button>
         </div>
         <div id="syntaxModal">
-            <table>
+            <table id="primaryTable">
                 <thead>
                     <tr>
                         <th>You type</th>
@@ -246,8 +246,31 @@ if (!isset($_SESSION["userId"])) {
                         </td>
                     </tr>
                     <tr>
-                        <td class="youType">Sidenote $$text text$$</td>
-                        <td class="youSee"><span class="sidenote">Sidenote</span><span class="sidenoteText">text text</span></td>
+                        <td class="youType">
+                            | Title 1 | Title 2 |<br>
+                            | ------ | ------ |<br>
+                            | data 1 | data 2 |
+                        </td>
+                        <td class="youSee">
+                            <table id="exampleTable">
+                                <thead>
+                                    <tr>
+                                        <th>Title 1</th>
+                                        <th>Title 2</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Data 1</td>
+                                        <td>Data 2</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="youType">Sidenote $$text$$</td>
+                        <td class="youSee"><span class="sidenote">Sidenote</span><span class="sidenoteText">text</span></td>
                     </tr>
                     <tr>
                         <td class="youType">
@@ -258,7 +281,7 @@ if (!isset($_SESSION["userId"])) {
                         <td class="youSee">
                             <pre class="language-html">
                                 <code class="language-html">
-        &lt;div&gt;&lt;/div&gt;
+&lt;div&gt;&lt;/div&gt;
                                 </code>
                             </pre>
                         </td>

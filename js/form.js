@@ -101,184 +101,6 @@ function NewExercise() {
     
 }
 
-// Gets exercise accesslevel and ticks the appropriate radiobutton
-// This function uses ajax and communicates with the database
-function GetExerciseAccessLevel() {
-    
-    if ($exerciseId != null) {
-        
-        // Ajax call to retrieve the exercise accesslevel
-        $.ajax({
-            
-            type: 'POST',
-            url: 'php/getExerciseAccessLevel.php',
-            data: {
-                'exerciseId' : $exerciseId,
-            },
-            success: function(response) {
-                
-                const exerciseAccessLevel = response;
-                
-                // Check the corresponding radio button
-                $publishModal.find('input[value=' + exerciseAccessLevel + ']').prop('checked', 'true');
-                
-            },
-            error: function(response) {
-                alert(response);
-            }
-            
-        });
-        
-    } else {
-        $publishModal.find('input[value=0]').prop('checked', 'true');
-    }
-    
-}
-
-// Updates exercise accesslevel
-// This function uses ajax and communicates with the database
-function UpdateExerciseAccesslevel() {
-    
-    if ($exerciseId != null) {
-    
-    // Read the desired new accesslevel based on what radio button is checked
-    const exerciseAccessLevel = $('#publishModal input:checked').val();
-    
-    // Ajax call to update the exercises accesslevel
-    $.ajax({
-        
-        type: 'POST',
-        url: 'php/publish.php',
-        data: {
-            'accessLevel' : exerciseAccessLevel,
-            'exerciseId' : $exerciseId,
-        },
-        success: function(response) {
-            if (response === 'You do not have permission to publish this exercise. You must be the latest author to change visibility state.' || response === 'Invalid access level' || response === 'You must be logged in to publish an exercise') {
-                alert(response);
-            }
-            ModalFade(false, $publishModal);
-        },
-        error: function(response) {
-            alert(response);
-        }
-    
-    });
-    
-    } else {
-        alert('You must save an exercise before changing its visibility state.');
-    }
-    
-}
-
-// Deletes exercise
-// This function uses ajax and communicates with the database
-function DeleteExercise() {
-    
-    // Updating the message in the modal to dynamically show title for the exercise that is open
-    $deleteModal.find('p').text('Are you sure you want to delete "' + $('#titleInput').val() + '"?');
-    
-    ModalFade(true, $deleteModal);
-    
-    // Click event for the actual deletion of the exercise
-    $deleteModal.find('.danger').click(function() {
-        
-        if ($exerciseId != null) {
-            
-            // Ajax call to delete the exercise
-            $.ajax({
-                
-                type: 'POST',
-                url: 'php/deleteExercise.php',
-                data: {
-                    'exerciseId' : $exerciseId,
-                },
-                success: function(response) {
-                    
-                    // Artificially clicking new exercise button to update the interface
-                    $newBtn.click();
-                    ModalFade(false, $deleteModal);
-                }
-                
-            })
-            
-        }
-        
-    });
-    
-    // Click event for the cancel button
-    $deleteModal.find('.safe').click(function() {
-        ModalFade(false, $deleteModal);
-    });
-    
-}
-
-// Saves exercise
-// This function uses ajax and communicates with the database
-function SaveExercise() {
-    
-    // Set title based on text in the title input field, or as 'Untitled' if the title input field is empty
-    if ( $.trim($('#titleInput').val()) == '' ) {
-        $title = 'Untitled';
-    } else {
-        $title = $('#titleInput').val();
-    }
-    
-    // Get values from HTML
-    $content = $('#LMLeditor').val();
-    $subject = $('#subjectSelect').val();
-    let $form = $('#saveForm');
-    
-    // Create our input fields to be inserted into our form
-    let exerciseId = $('<input>').attr('type', 'hidden').attr('name', 'exerciseId').val($exerciseId);
-    let subjectInput = $('<input>').attr('type', 'hidden').attr('name', 'subjectId').val($subject);
-    let titleInput = $('<input>').attr('type', 'hidden').attr('name', 'title').val($title);
-    let contentInput = $('<input>').attr('type', 'hidden').attr('name', 'content').val($content);
-    
-    // Insert input fields into form
-    $form.append($(exerciseId));
-    $form.append($(subjectInput));
-    $form.append($(titleInput));
-    $form.append($(contentInput));
-    
-    // Ajax call to send the exercise information to a PHP file that then saves it in the database
-    $.ajax({
-        
-        type: 'POST',
-        url: 'php/submitExercise.php',
-        data: $form.serialize(),
-        processData: true,
-        success: function(response) {
-            // Regex to check if response is a number
-            if (/^\d+$/.test(response)) {
-                $exerciseId = response;
-                
-                const now = new Date();
-                
-                // Slicing seconds off our date
-                const hour = ( '0' + now.getHours() ).slice(-2);
-                const minutes = ( '0' + now.getMinutes() ).slice(-2);
-                
-                // Unhiding the relevant buttons and labels
-                $publishBtn.show();
-                $deleteBtn.show();
-                $('#lastUpdated').show();
-                
-                // Updating the lastUpdated label with the current time
-                $('#lastUpdated').text( 'Last updated: ' + now.getFullYear() + '-' + now.getMonth() + 1 + '-' + now.getDate() + ' ' + hour + ':' + minutes );
-                
-                // Message to show the user that their exercise was saved
-                MessageAnimation($saveBtn.find('span'));
-                
-            } else {
-                alert(response);
-            }
-        }
-        
-    });
-    
-}
-
 // Opens exercise
 // This function uses ajax and communicates with the database
 function OpenExercise() {
@@ -397,6 +219,184 @@ function OpenExercise() {
     
 }
 
+// Saves exercise
+// This function uses ajax and communicates with the database
+function SaveExercise() {
+    
+    // Set title based on text in the title input field, or as 'Untitled' if the title input field is empty
+    if ( $.trim($('#titleInput').val()) == '' ) {
+        $title = 'Untitled';
+    } else {
+        $title = $('#titleInput').val();
+    }
+    
+    // Get values from HTML
+    $content = $('#LMLeditor').val();
+    $subject = $('#subjectSelect').val();
+    let $form = $('#saveForm');
+    
+    // Create our input fields to be inserted into our form
+    let exerciseId = $('<input>').attr('type', 'hidden').attr('name', 'exerciseId').val($exerciseId);
+    let subjectInput = $('<input>').attr('type', 'hidden').attr('name', 'subjectId').val($subject);
+    let titleInput = $('<input>').attr('type', 'hidden').attr('name', 'title').val($title);
+    let contentInput = $('<input>').attr('type', 'hidden').attr('name', 'content').val($content);
+    
+    // Insert input fields into form
+    $form.append($(exerciseId));
+    $form.append($(subjectInput));
+    $form.append($(titleInput));
+    $form.append($(contentInput));
+    
+    // Ajax call to send the exercise information to a PHP file that then saves it in the database
+    $.ajax({
+        
+        type: 'POST',
+        url: 'php/submitExercise.php',
+        data: $form.serialize(),
+        processData: true,
+        success: function(response) {
+            // Regex to check if response is a number
+            if (/^\d+$/.test(response)) {
+                $exerciseId = response;
+                
+                const now = new Date();
+                
+                // Slicing seconds off our date
+                const hour = ( '0' + now.getHours() ).slice(-2);
+                const minutes = ( '0' + now.getMinutes() ).slice(-2);
+                
+                // Unhiding the relevant buttons and labels
+                $publishBtn.show();
+                $deleteBtn.show();
+                $('#lastUpdated').show();
+                
+                // Updating the lastUpdated label with the current time
+                $('#lastUpdated').text( 'Last updated: ' + now.getFullYear() + '-' + now.getMonth() + 1 + '-' + now.getDate() + ' ' + hour + ':' + minutes );
+                
+                // Message to show the user that their exercise was saved
+                MessageAnimation($saveBtn.find('span'));
+                
+            } else {
+                alert(response);
+            }
+        }
+        
+    });
+    
+}
+
+// Gets exercise accesslevel and ticks the appropriate radiobutton
+// This function uses ajax and communicates with the database
+function GetExerciseAccessLevel() {
+    
+    if ($exerciseId != null) {
+        
+        // Ajax call to retrieve the exercise accesslevel
+        $.ajax({
+            
+            type: 'POST',
+            url: 'php/getExerciseAccessLevel.php',
+            data: {
+                'exerciseId' : $exerciseId,
+            },
+            success: function(response) {
+                
+                const exerciseAccessLevel = response;
+                
+                // Check the corresponding radio button
+                $publishModal.find('input[value=' + exerciseAccessLevel + ']').prop('checked', 'true');
+                
+            },
+            error: function(response) {
+                alert(response);
+            }
+            
+        });
+        
+    } else {
+        $publishModal.find('input[value=0]').prop('checked', 'true');
+    }
+    
+}
+
+// Updates exercise accesslevel
+// This function uses ajax and communicates with the database
+function UpdateExerciseAccesslevel() {
+    
+    if ($exerciseId != null) {
+    
+    // Read the desired new accesslevel based on what radio button is checked
+    const exerciseAccessLevel = $('#publishModal input:checked').val();
+    
+    // Ajax call to update the exercises accesslevel
+    $.ajax({
+        
+        type: 'POST',
+        url: 'php/publish.php',
+        data: {
+            'accessLevel' : exerciseAccessLevel,
+            'exerciseId' : $exerciseId,
+        },
+        success: function(response) {
+            if (response === 'You do not have permission to publish this exercise. You must be the latest author to change visibility state.' || response === 'Invalid access level' || response === 'You must be logged in to publish an exercise') {
+                alert(response);
+            }
+            ModalFade(false, $publishModal);
+        },
+        error: function(response) {
+            alert(response);
+        }
+    
+    });
+    
+    } else {
+        alert('You must save an exercise before changing its visibility state.');
+    }
+    
+}
+
+// Deletes exercise
+// This function uses ajax and communicates with the database
+function DeleteExercise() {
+    
+    // Updating the message in the modal to dynamically show title for the exercise that is open
+    $deleteModal.find('p').text('Are you sure you want to delete "' + $('#titleInput').val() + '"?');
+    
+    ModalFade(true, $deleteModal);
+    
+    // Click event for the actual deletion of the exercise
+    $deleteModal.find('.danger').click(function() {
+        
+        if ($exerciseId != null) {
+            
+            // Ajax call to delete the exercise
+            $.ajax({
+                
+                type: 'POST',
+                url: 'php/deleteExercise.php',
+                data: {
+                    'exerciseId' : $exerciseId,
+                },
+                success: function(response) {
+                    
+                    // Artificially clicking new exercise button to update the interface
+                    $newBtn.click();
+                    ModalFade(false, $deleteModal);
+                }
+                
+            })
+            
+        }
+        
+    });
+    
+    // Click event for the cancel button
+    $deleteModal.find('.safe').click(function() {
+        ModalFade(false, $deleteModal);
+    });
+    
+}
+
 $(document).ready(function() {
     
     // Exercise related variables
@@ -420,33 +420,22 @@ $(document).ready(function() {
     $deleteBtn = $('#deleteBtn');
     $syntaxBtn = $('#syntaxHelp');
     
-    // Confirm is not a button per se, but it is the default button class used by most modals to either confirm changes or exit out of the modal
+    // Confirm is not a button per se, but it is the default button class used by most modals confirm changes
     $confirm = '.confirm';
     
     // Overlay
     $overlay = $('#overlay');
     
+    $newBtn.click(function() {
+        NewExercise();
+    });
+    
     $openBtn.click(function() {
         OpenExercise();
     });
     
-    $overlay.click(function() {
-        ModalFade(false, $openModal);
-        ModalFade(false, $publishModal);
-        ModalFade(false, $syntaxModal);
-        ModalFade(false, $deleteModal);
-    });
-    
     $saveBtn.click(function() {
         SaveExercise();
-    });
-    
-    $deleteBtn.click(function() {
-        DeleteExercise();
-    });
-    
-    $newBtn.click(function() {
-        NewExercise();
     });
     
     $publishBtn.click(function() {
@@ -456,6 +445,17 @@ $(document).ready(function() {
     
     $publishModal.find($confirm).click(function() {
         UpdateExerciseAccesslevel();
+    });
+    
+    $deleteBtn.click(function() {
+        DeleteExercise();
+    });
+    
+    $overlay.click(function() {
+        ModalFade(false, $openModal);
+        ModalFade(false, $publishModal);
+        ModalFade(false, $syntaxModal);
+        ModalFade(false, $deleteModal);
     });
     
     $syntaxBtn.click(function() {
