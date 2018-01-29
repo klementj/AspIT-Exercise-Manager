@@ -47,17 +47,17 @@ if (!isset($_SESSION["userId"])) {
                     <?php 
                         if ($_SESSION['accessLevel'] < 2) {
                             echo 
-                                '<button id="createNewExercise" class="safe">New</button>';
+                                '<button id="createNewExerciseBtn" class="safe">New</button>';
                         }
                             echo
-                                '<button id="openNewExercise" class="action">Open</button>';
+                                '<button id="openNewExerciseBtn" class="action">Open</button>';
                         if ($_SESSION['accessLevel'] < 2) {
                             echo
                                 '<form id="saveForm">
                                     <button type="button" id="saveBtn" class="neutral">Save<span>Saved!</span></button>
                                 </form>
                                 <button id="publishBtn" class="neutral">Visibility</button>
-                                <button id="deleteBtn" class="danger">Delete<span>Deleted!</span></button>';
+                                <button id="deleteBtn" class="danger">Delete</button>';
                         }
                     ?>
                 </div>
