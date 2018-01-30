@@ -233,26 +233,18 @@ function SaveExercise() {
     // Get values from HTML
     $content = $('#LMLeditor').val();
     $subject = $('#subjectSelect').val();
-    let $form = $('#saveForm');
-    
-    // Create our input fields to be inserted into our form
-    let exerciseId = $('<input>').attr('type', 'hidden').attr('name', 'exerciseId').val($exerciseId);
-    let subjectInput = $('<input>').attr('type', 'hidden').attr('name', 'subjectId').val($subject);
-    let titleInput = $('<input>').attr('type', 'hidden').attr('name', 'title').val($title);
-    let contentInput = $('<input>').attr('type', 'hidden').attr('name', 'content').val($content);
-    
-    // Insert input fields into form
-    $form.append($(exerciseId));
-    $form.append($(subjectInput));
-    $form.append($(titleInput));
-    $form.append($(contentInput));
     
     // Ajax call to send the exercise information to a PHP file that then saves it in the database
     $.ajax({
         
         type: 'POST',
         url: 'php/submitExercise.php',
-        data: $form.serialize(),
+        data: {
+            'exerciseId' : $exerciseId,
+            'subjectId' : $subject,
+            'content' : $content,
+            'title' : $title
+        },
         processData: true,
         success: function(response) {
             // Regex to check if response is a number

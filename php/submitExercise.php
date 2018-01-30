@@ -17,6 +17,7 @@ if ($_SESSION['accessLevel'] > 1) {
     $exerciseId = $_POST['exerciseId'];
     $subjectId = $_POST['subjectId'];
     $content = $_POST['content'];
+    
     /*Trim whitespace from both ends of title string*/
     $title = preg_replace('/^\s*(.*?)\s*$/', '$1', $_POST['title']);
     

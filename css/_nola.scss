@@ -70,7 +70,7 @@ main {
             
             table {
                 margin-bottom: 20px;
-                border-bottom: 2px solid black;
+                border-bottom: 2px solid $tableBorder;
             }
             
             thead {
@@ -79,7 +79,7 @@ main {
             
             th {
                 padding: 5px;
-                border-bottom: 2px solid black;
+                border-bottom: 2px solid $tableBorder;
             }
             
             td {
@@ -89,7 +89,7 @@ main {
             tr:not(:last-child) {
                 
                 td {
-                    border-bottom: 1px solid black;
+                    border-bottom: 1px solid $tableBorder;
                 }
             }
             
