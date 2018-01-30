@@ -116,11 +116,11 @@ if (!isset($_SESSION["userId"])) {
                                 <i class="fa fa-external-link" aria-hidden="true"></i>
                                 <span class="tooltiptext disable-select">Link</span>
                         </button>
-                        <button id="image" class="editor-button" tabindex="-1">
+                        <button id="img" class="editor-button" tabindex="-1">
                                 <i class="fa fa-file-image-o" aria-hidden="true"></i>
                                 <span class="tooltiptext disable-select">Image url</span>
                         </button>
-                        <button id="imageUpload" class="editor-button" tabindex="-1">
+                        <button id="imgUpload" class="editor-button" tabindex="-1">
                                 <i class="fa fa-upload" aria-hidden="true"></i>
                                 <span class="tooltiptext disable-select">Upload image</span>
                         </button>

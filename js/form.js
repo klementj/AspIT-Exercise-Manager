@@ -34,7 +34,7 @@ let $overlay;
 // Fades specified modal in or out
 function ModalFade(fadeIn, modal) {
     
-    const $fadeSpeed = 200;
+    const $fadeSpeed = 150;
     
     if (fadeIn) {
         
