@@ -1,106 +1,83 @@
-function ImgUploadFade(fadeIn) {
-    
-    const overlay = $('#overlay');
-    const modal = $('#imgUploadModal');
-    
-    if (fadeIn) {
-        
-        overlay.css('display', 'block');
-        modal.css('display', 'block');
-        
-        overlay.animate({
-            opacity: 1
-        }, 100);
-        
-        modal.animate({
-            opacity: 1
-        }, 100);
-        
-    } else {
-        
-        overlay.animate({
-            opacity: 0
-        }, 100, function() {
-            overlay.css('display', 'none');
-        });
-        
-        modal.animate({
-            opacity: 0
-        }, 100, function() {
-            modal.css('display', 'none');
-        });
-        
-    }
-    
-}
-
 $(document).ready(function() {
     
-    $('#headerBig').click(function(){
+    // Editor buttons
+    const $headerBig = $('#headerBig');
+    const $headerMedium = $('#headerMedium');
+    const $headerSmall = $('#headerSmall');
+    const $list = $('#list');
+    const $table = $('#table');
+    const $codeblock = $('#codeblock');
+    const $footnote = $('#footnote');
+    const $italic = $('#italic');
+    const $bold = $('#bold');
+    const $textColor = $('#textColor');
+    const $inlineCode = $('#inlineCode');
+    const $link = $('#link');
+    const $img = $('#img');
+    const $imgUpload = $('#imgUpload');
+    const $imgUploadBtn = $('#imgUploadBtn');
+    
+    $headerBig.click(function(){
         InsertSyntax('# ', '', '', true);
     });
     
-    $('#headerMedium').click(function(){
+    $headerMedium.click(function(){
         InsertSyntax('## ', '', '', true);
     });
     
-    $('#headerSmall').click(function(){
+    $headerSmall.click(function(){
         InsertSyntax('### ', '', '', true);
     });
     
-    $('#list').click(function(){
+    $list.click(function(){
         InsertSyntax('* ', '', '', true);
     });
     
-    $('#table').click(function(){
+    $table.click(function(){
         InsertSyntax('\n| Header 1 | Header 2 |\n| ------ | ------ |\n| Table data 1 | Table data 2 |\n\n', '', ' ', true);
     });
     
-    $('#codeblock').click(function(){
+    $codeblock.click(function(){
         InsertSyntax(';; csharp\n\n;;', '', '', true);
     });
     
-    $('#footnote').click(function(){
+    $footnote.click(function(){
         InsertSyntax('', '$$', '$$', false, 2);
     });
     
-    $('#italic').click(function(){
+    $italic.click(function(){
         InsertSyntax('', '||', '||', false, 2);
     });
     
-    $('#bold').click(function(){
+    $bold.click(function(){
         InsertSyntax('', '**', '**', false, 2);
     });
     
-    $('#textColor').click(function() {
+    $textColor.click(function() {
         InsertSyntax('#{Black', '{', '}}', false, 8);
     });
     
-    $('#inlineCode').click(function(){
+    $inlineCode.click(function(){
         InsertSyntax('', '[[', ']]', false, 2);
     });
     
-    $('#link').click(function(){
+    $link.click(function(){
         InsertSyntax('', '[](', ')', false, 1);
     });
     
-    $('#image').click(function(){
+    $img.click(function(){
         InsertSyntax('!! https://source.unsplash.com/random/400x400 left\n\n', '', '', true);
     });
     
-    $('#imageUpload').click(function() {
-        ImgUploadFade(true);
+    $imgUpload.click(function() {
+        ModalFade(true, $imgUploadModal);
     });
     
-    $('#overlay').click(function() {
-        ImgUploadFade(false);
-    });
-    
-    $('#imgUploadBtn').click(function() {
+    $imgUploadBtn.click(function() {
         /*Validate that file input has a value*/
-        if ($('#imgUploadModal input').val().length) {
+        if ($imgUploadModal.find('input').val().length) {
             
-            var file_data = $('#imgUploadModal input').prop('files')[0];
+            var file_data = $imgUploadModal.find('input').prop('files')[0];
             var form_data = new FormData();
             form_data.append('fileToUpload', file_data);
             
@@ -120,7 +97,7 @@ $(document).ready(function() {
                     } else {
                         /*On success, insert image in editor*/
                         InsertSyntax('!! ' + response + ' left\n\n', '', '', true);
-                        ImgUploadFade(false);
+                        ModalFade(false, $imgUploadModal);
                     }
                 },
                 error: function(response) {
@@ -242,11 +219,9 @@ $(document).ready(function() {
     }
     
     // Gets line number for the line that caret is on currently
-    function GetLine()
-    {
+    function GetLine() {
         var $element = $("textarea")[0];
         
         return $element.value.substr(0, $element.selectionStart).split("\n").length;
     }
-    
 });

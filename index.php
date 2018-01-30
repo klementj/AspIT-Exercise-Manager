@@ -9,6 +9,9 @@ if (!isset($_SESSION["userId"])) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="author" content="Lasse Hels, Noah Bro-Jørgensen">
+    <meta name="description" content="Online tool for content and exercise development for AspIT.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AspIT Exercise Manager</title>
     <link rel="icon" href="img/aspitlogo.png">
     <link rel="stylesheet" href="css/style.css">
@@ -22,8 +25,8 @@ if (!isset($_SESSION["userId"])) {
     <script src="js/prism.js"></script>
     <script src="js/nola.js"></script>
     <script src="js/script.js"></script>
-    <script src="js/nolabuttons.js"></script>
     <script src="js/form.js"></script>
+    <script src="js/nolabuttons.js"></script>
 </head>
 <body>
     <header>
@@ -116,11 +119,11 @@ if (!isset($_SESSION["userId"])) {
                                 <i class="fa fa-external-link" aria-hidden="true"></i>
                                 <span class="tooltiptext disable-select">Link</span>
                         </button>
-                        <button id="image" class="editor-button" tabindex="-1">
+                        <button id="img" class="editor-button" tabindex="-1">
                                 <i class="fa fa-file-image-o" aria-hidden="true"></i>
                                 <span class="tooltiptext disable-select">Image url</span>
                         </button>
-                        <button id="imageUpload" class="editor-button" tabindex="-1">
+                        <button id="imgUpload" class="editor-button" tabindex="-1">
                                 <i class="fa fa-upload" aria-hidden="true"></i>
                                 <span class="tooltiptext disable-select">Upload image</span>
                         </button>
@@ -311,6 +314,11 @@ if (!isset($_SESSION["userId"])) {
             <b><p>Are you sure you want to delete</p></b>
             <button class="danger">Delete</button>
             <button class="safe">Cancel</button>
+        </div>
+        <div id="newExerciseConfirmationModal">
+            <b><p>Do you want to save before creating a new exercise?</p></b>
+            <button class="danger">Don't save</button>
+            <button class="safe">Save</button>
         </div>
     </footer>
 </body>
