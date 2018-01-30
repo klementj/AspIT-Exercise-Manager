@@ -1,7 +1,7 @@
 <?php
 /*Declare target directory, file, and file extension*/
 $target_dir = ((dirname(__FILE__)) . "/../img/");
-$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+$target_file = basename($_FILES["fileToUpload"]["name"]);
 $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
 /*Check if file is an image*/
@@ -12,14 +12,14 @@ if ($check != false) {
     if ($imageFileType == "jpg" || $imageFileType == "jpeg" || $imageFileType == "png" || $imageFileType == "gif" ) {
         
         /*Check if file already exists*/
-        if (!file_exists($target_file)) {
+        if (!file_exists($target_dir . $target_file)) {
             
             /*Check if filesize is greater than 5Mb*/
             if ($_FILES["fileToUpload"]["size"] <= 5000000) {
                 
-                if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $target_file)) {
                     /*Successful upload*/
-                    echo $target_file;
+                    echo 'img/' . $target_file;
                 } else {
                     /*Error file transfer failed*/
                     echo 'Error: File transfer failed';
