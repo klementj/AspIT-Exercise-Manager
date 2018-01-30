@@ -3503,7 +3503,7 @@ body {
     z-index: 99;
     display: none;
     opacity: 0; }
-  /* line 81, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+  /* line 79, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
   body header {
     width: 100%;
     margin: 0 auto;
@@ -3513,7 +3513,7 @@ body {
     box-shadow: 0 0px 1px rgba(0, 0, 0, 0.2);
     margin-bottom: 20px;
     background-color: #4CAF50; }
-    /* line 91, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+    /* line 89, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
     body header nav {
       width: 70%;
       min-width: 200px;
@@ -3521,12 +3521,12 @@ body {
       margin: 0 auto;
       display: flex;
       line-height: 50px; }
-      /* line 99, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+      /* line 97, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
       body header nav a {
         color: #424242;
         text-decoration: none;
         margin-left: 10px; }
-  /* line 107, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+  /* line 105, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
   body main {
     width: 70%;
     min-height: 100vh;
@@ -3534,36 +3534,36 @@ body {
     margin-bottom: 20px;
     display: flex;
     flex-direction: row; }
-    /* line 115, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+    /* line 113, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
     body main #left {
       flex-basis: 100%;
       max-width: 100%;
       display: flex;
       flex-direction: column; }
-      /* line 121, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+      /* line 119, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
       body main #left #lastUpdated {
         display: none; }
-      /* line 125, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+      /* line 123, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
       body main #left h5 {
         font-size: 1.4rem;
         font-weight: bold; }
-      /* line 130, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+      /* line 128, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
       body main #left h6 {
         font-style: italic;
         margin-bottom: 25px;
         font-size: 0.9rem; }
-      /* line 136, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+      /* line 134, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
       body main #left #subjectSelect {
         margin-bottom: 10px;
         width: auto;
         max-width: 150px;
         border: 1px solid rgba(169, 169, 169, 0.2);
         box-shadow: 0 0px 1px rgba(0, 0, 0, 0.1); }
-      /* line 144, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+      /* line 142, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
       body main #left #subject {
         font-weight: bold;
         display: none; }
-      /* line 149, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+      /* line 147, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
       body main #left input {
         width: calc(65% - 20px);
         display: inline-block;
@@ -3574,15 +3574,15 @@ body {
         border: 1px solid #eee;
         color: #424242;
         padding: 5px 10px; }
-      /* line 161, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+      /* line 159, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
       body main #left #exerciseCreationContainer {
         display: none;
         opacity: 0;
         margin-bottom: 10px; }
-      /* line 167, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+      /* line 165, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
       body main #left nav {
         margin-bottom: 20px; }
-        /* line 170, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+        /* line 168, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
         body main #left nav i {
           display: none;
           cursor: pointer;
@@ -3591,7 +3591,7 @@ body {
           color: #424242;
           float: left;
           margin-right: 10px; }
-          /* line 179, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+          /* line 177, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
           body main #left nav i .faTooltip {
             left: 50%;
             width: 120px;
@@ -3609,14 +3609,14 @@ body {
             bottom: 115%;
             margin-left: -65px;
             transition: 0.2s; }
-        /* line 184, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+        /* line 182, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
         body main #left nav #preview {
           opacity: 0; }
-        /* line 188, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+        /* line 186, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
         body main #left nav i:hover .faTooltip {
           visibility: visible;
           opacity: 1; }
-        /* line 193, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+        /* line 191, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
         body main #left nav i .faTooltip::after {
           content: " ";
           position: absolute;
@@ -3627,31 +3627,31 @@ body {
           border-width: 5px;
           border-style: solid;
           border-color: #555 transparent transparent transparent; }
-        /* line 197, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+        /* line 195, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
         body main #left nav .buttonContainer {
           display: flex;
           flex-direction: row; }
-          /* line 201, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+          /* line 199, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
           body main #left nav .buttonContainer button {
             margin-right: 10px;
             position: relative; }
-          /* line 206, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+          /* line 204, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
           body main #left nav .buttonContainer a {
             text-decoration: none; }
-          /* line 210, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+          /* line 208, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
           body main #left nav .buttonContainer #saveBtn span {
             position: absolute;
             opacity: 0;
             top: 17px;
             left: 28px; }
-          /* line 217, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+          /* line 215, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
           body main #left nav .buttonContainer #publishBtn, body main #left nav .buttonContainer #deleteBtn {
             display: none; }
-      /* line 223, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+      /* line 221, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
       body main #left .editor-wrapper {
         width: 65%;
         margin-bottom: 10px; }
-        /* line 227, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+        /* line 225, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
         body main #left .editor-wrapper .toolbar {
           border: 1px solid rgba(169, 169, 169, 0.2);
           border-bottom: none;
@@ -3661,7 +3661,7 @@ body {
           box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
           display: flex;
           flex-wrap: wrap; }
-          /* line 237, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+          /* line 235, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
           body main #left .editor-wrapper .toolbar .editor-button {
             height: 30px;
             width: 40px;
@@ -3670,7 +3670,7 @@ body {
             border: none;
             cursor: pointer;
             flex: 1 0 40px; }
-            /* line 246, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+            /* line 244, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
             body main #left .editor-wrapper .toolbar .editor-button .tooltiptext {
               left: 50%;
               width: 120px;
@@ -3688,11 +3688,11 @@ body {
               bottom: 100%;
               margin-left: -65px;
               transition: 0.2s; }
-            /* line 250, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+            /* line 248, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
             body main #left .editor-wrapper .toolbar .editor-button #code {
               font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
               font-weight: bold; }
-          /* line 256, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+          /* line 254, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
           body main #left .editor-wrapper .toolbar .editor-button .tooltiptext::after {
             content: " ";
             position: absolute;
@@ -3703,11 +3703,11 @@ body {
             border-width: 5px;
             border-style: solid;
             border-color: #555 transparent transparent transparent; }
-          /* line 260, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+          /* line 258, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
           body main #left .editor-wrapper .toolbar .editor-button:hover .tooltiptext {
             visibility: visible;
             opacity: 1; }
-        /* line 266, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+        /* line 264, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
         body main #left .editor-wrapper .editor {
           width: calc(100% - 20px);
           height: 600px;
@@ -3719,7 +3719,7 @@ body {
           font-family: "Oxygen", sans-serif;
           letter-spacing: 0.5px;
           border: 1px solid rgba(169, 169, 169, 0.2); }
-  /* line 282, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+  /* line 280, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
   body footer {
     height: auto;
     padding: 15px 0px;
@@ -3728,38 +3728,38 @@ body {
     border-top: 1px solid rgba(0, 0, 0, 0.1); }
 
 @media print {
-  /* line 293, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+  /* line 291, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
   html {
     font-size: 12px; }
-    /* line 296, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+    /* line 294, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
     html body {
       margin: 2mm !important; }
-      /* line 299, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+      /* line 297, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
       html body header {
         display: none; }
-      /* line 303, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+      /* line 301, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
       html body main {
         width: 80%;
         margin-left: 10%; }
-        /* line 309, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+        /* line 307, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
         html body main #left nav {
           display: none; }
-        /* line 313, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+        /* line 311, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
         html body main #left #exerciseCreationContainer {
           color: black; }
-          /* line 316, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+          /* line 314, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
           html body main #left #exerciseCreationContainer #title {
             margin-top: 50px; }
-          /* line 320, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+          /* line 318, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
           html body main #left #exerciseCreationContainer #lastUpdated, html body main #left #exerciseCreationContainer #author, html body main #left #exerciseCreationContainer #subject {
             display: none !important; }
-        /* line 325, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+        /* line 323, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
         html body main #left #mainContent {
           color: black; }
-          /* line 328, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+          /* line 326, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
           html body main #left #mainContent h2, html body main #left #mainContent h3, html body main #left #mainContent h4 {
             page-break-after: avoid; }
-          /* line 332, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
+          /* line 330, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
           html body main #left #mainContent .sidenote, html body main #left #mainContent p, html body main #left #mainContent h2, html body main #left #mainContent h3, html body main #left #mainContent h4 {
             orphans: 3;
             widow: 3;
