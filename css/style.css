@@ -3480,7 +3480,7 @@ body {
           body #openModal #tableContainer table td i {
             margin-left: 5px; }
   /* line 332, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
-  body #deleteModal {
+  body #deleteModal, body #newExerciseConfirmationModal {
     height: auto;
     width: auto;
     padding: 25px;
@@ -3493,10 +3493,10 @@ body {
     display: none;
     opacity: 0; }
     /* line 335, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
-    body #deleteModal p {
+    body #deleteModal p, body #newExerciseConfirmationModal p {
       margin-bottom: 20px; }
     /* line 339, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
-    body #deleteModal .safe {
+    body #deleteModal .safe, body #newExerciseConfirmationModal .safe {
       float: right; }
   /* line 344, C:/xampp/htdocs/AspIT-Exercise-Manager/css/style.scss */
   body header {

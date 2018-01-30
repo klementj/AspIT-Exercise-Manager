@@ -312,6 +312,11 @@ if (!isset($_SESSION["userId"])) {
             <button class="danger">Delete</button>
             <button class="safe">Cancel</button>
         </div>
+        <div id="newExerciseConfirmationModal">
+            <b><p>Do you want to save before creating a new exercise?</p></b>
+            <button class="danger">Don't save</button>
+            <button class="safe">Save</button>
+        </div>
     </footer>
 </body>
 </html>

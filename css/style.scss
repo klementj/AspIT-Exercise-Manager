@@ -329,7 +329,7 @@ body {
         }
     }
     
-    #deleteModal {
+    #deleteModal, #newExerciseConfirmationModal {
         @include modalStyle(auto, auto, 30%);
         
         p {

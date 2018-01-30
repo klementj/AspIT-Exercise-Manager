@@ -10,6 +10,7 @@ let $imgUploadModal;
 let $publishModal;
 let $deleteModal;
 let $syntaxModal;
+let $newExerciseConfirmationModal;
 
 // Buttons
 let $newBtn;
@@ -19,8 +20,10 @@ let $publishBtn;
 let $deleteBtn;
 let $syntaxBtn;
 
-// Confirm is not a button per se, but it is the default button class used by most modals to either confirm changes or exit out of the modal
+// Classes used on the buttons
 let $confirm;
+let $danger;
+let $safe;
 
 // Overlay
 let $overlay;
@@ -221,7 +224,7 @@ function OpenExercise() {
 
 // Saves exercise
 // This function uses ajax and communicates with the database
-function SaveExercise() {
+function SaveExercise(newExercisePath) {
     
     // Set title based on text in the title input field, or as 'Untitled' if the title input field is empty
     if ( $.trim($('#titleInput').val()) == '' ) {
@@ -264,6 +267,12 @@ function SaveExercise() {
                 
                 // Updating the lastUpdated label with the current time
                 $('#lastUpdated').text( 'Last updated: ' + now.getFullYear() + '-' + now.getMonth() + 1 + '-' + now.getDate() + ' ' + hour + ':' + minutes );
+                
+                // NewExercisePath is used to see whether the new exercise interface should show after saving
+                if (newExercisePath) {
+                    NewExercise();
+                    ModalFade(false, $newExerciseConfirmationModal);
+                }
                 
                 // Message to show the user that their exercise was saved
                 MessageAnimation($saveBtn.find('span'));
@@ -371,8 +380,8 @@ function DeleteExercise() {
                 },
                 success: function(response) {
                     
-                    // Artificially clicking new exercise button to update the interface
-                    $newBtn.click();
+                    // Preparing interface for new exercise
+                    NewExercise();
                     ModalFade(false, $deleteModal);
                 }
                 
@@ -403,6 +412,7 @@ $(document).ready(function() {
     $imgUploadModal = $('#imgUploadModal');
     $syntaxModal = $('#syntaxModal');
     $deleteModal = $('#deleteModal');
+    $newExerciseConfirmationModal = $('#newExerciseConfirmationModal');
     
     // Buttons
     $newBtn = $('#createNewExerciseBtn');
@@ -414,12 +424,32 @@ $(document).ready(function() {
     
     // Confirm is not a button per se, but it is the default button class used by most modals confirm changes
     $confirm = '.confirm';
+    $danger = '.danger';
+    $safe = '.safe';
     
     // Overlay
     $overlay = $('#overlay');
     
     $newBtn.click(function() {
+        
+        const $editor = $('#LMLeditor');
+        
+        if ($editor.val()) {
+            // Fade in the confirmation modal if there is text in the textarea
+            ModalFade(true, $newExerciseConfirmationModal);
+        } else {
+            // Prepare interface for new exercise if there is no text in the textarea
+            NewExercise();
+        }
+    });
+    
+    $newExerciseConfirmationModal.find($safe).click(function() {
+        SaveExercise(true);
+    });
+    
+    $newExerciseConfirmationModal.find($danger).click(function() {
         NewExercise();
+        ModalFade(false, $newExerciseConfirmationModal);
     });
     
     $openBtn.click(function() {
@@ -448,6 +478,7 @@ $(document).ready(function() {
         ModalFade(false, $publishModal);
         ModalFade(false, $syntaxModal);
         ModalFade(false, $deleteModal);
+        ModalFade(false, $newExerciseConfirmationModal);
     });
     
     $syntaxBtn.click(function() {
