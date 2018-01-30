@@ -26,7 +26,7 @@ if (!empty($_GET['email'])) {
     <title>Log in | AspIT Exercise Manager</title>
     <link rel="icon" href="img/aspitlogo.png">
     <link rel="stylesheet" href="css/login.css">
-    <link rel="stylesheet" href="frontend/fa/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/font-awesome/font-awesome.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="js/login.js"></script>
 </head>

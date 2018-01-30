@@ -2,11 +2,12 @@
 $font: 'Oxygen', sans-serif;
 
 //@import "reset";
-@import "font-awesome/font-awesome";
+@import "font-awesome/font-awesome.css";
 // @import "typography";
 @import "colors";
 @import "buttons";
 @import "nola";
+@import "browser-compatibility";
 // @import "login";
 
 @mixin modalStyle($height, $width, $top, $padding: 25px) {
@@ -57,13 +58,6 @@ $font: 'Oxygen', sans-serif;
 * {
     padding: 0px;
     margin: 0px;
-}
-
-.disable-select {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 html {
