@@ -12,6 +12,9 @@ let $deleteModal;
 let $syntaxModal;
 let $newExerciseConfirmationModal;
 
+// Modal array
+let $modalArr;
+
 // Buttons
 let $newBtn;
 let $openBtn;
@@ -31,7 +34,7 @@ let $overlay;
 // Fades specified modal in or out
 function ModalFade(fadeIn, modal) {
     
-    const $fadeSpeed = 100;
+    const $fadeSpeed = 200;
     
     if (fadeIn) {
         
@@ -414,6 +417,9 @@ $(document).ready(function() {
     $deleteModal = $('#deleteModal');
     $newExerciseConfirmationModal = $('#newExerciseConfirmationModal');
     
+    // Modal array
+    $modalArr = [$openModal, $publishModal, $imgUploadModal, $syntaxModal, $deleteModal, $newExerciseConfirmationModal];
+    
     // Buttons
     $newBtn = $('#createNewExerciseBtn');
     $openBtn = $('#openNewExerciseBtn');
@@ -474,11 +480,12 @@ $(document).ready(function() {
     });
     
     $overlay.click(function() {
-        ModalFade(false, $openModal);
-        ModalFade(false, $publishModal);
-        ModalFade(false, $syntaxModal);
-        ModalFade(false, $deleteModal);
-        ModalFade(false, $newExerciseConfirmationModal);
+        //Loop through the modal array to fade out all the modals that are being displayed
+        for (i = 0; i < $modalArr.length; i++) {
+            if ($modalArr[i].css('display') == 'block') {
+                ModalFade(false, $modalArr[i]);
+            }
+        }
     });
     
     $syntaxBtn.click(function() {

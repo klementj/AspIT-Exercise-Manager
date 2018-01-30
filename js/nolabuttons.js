@@ -1,39 +1,3 @@
-function ImgUploadFade(fadeIn) {
-    
-    const overlay = $('#overlay');
-    const modal = $('#imgUploadModal');
-    
-    if (fadeIn) {
-        
-        overlay.css('display', 'block');
-        modal.css('display', 'block');
-        
-        overlay.animate({
-            opacity: 1
-        }, 100);
-        
-        modal.animate({
-            opacity: 1
-        }, 100);
-        
-    } else {
-        
-        overlay.animate({
-            opacity: 0
-        }, 100, function() {
-            overlay.css('display', 'none');
-        });
-        
-        modal.animate({
-            opacity: 0
-        }, 100, function() {
-            modal.css('display', 'none');
-        });
-        
-    }
-    
-}
-
 $(document).ready(function() {
     
     $('#headerBig').click(function(){
@@ -89,11 +53,7 @@ $(document).ready(function() {
     });
     
     $('#imageUpload').click(function() {
-        ImgUploadFade(true);
-    });
-    
-    $('#overlay').click(function() {
-        ImgUploadFade(false);
+        ModalFade(true, $imgUploadModal);
     });
     
     $('#imgUploadBtn').click(function() {
@@ -120,7 +80,7 @@ $(document).ready(function() {
                     } else {
                         /*On success, insert image in editor*/
                         InsertSyntax('!! ' + response + ' left\n\n', '', '', true);
-                        ImgUploadFade(false);
+                        ModalFade(false, $imgUploadModal);
                     }
                 },
                 error: function(response) {

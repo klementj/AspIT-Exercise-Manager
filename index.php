@@ -22,8 +22,8 @@ if (!isset($_SESSION["userId"])) {
     <script src="js/prism.js"></script>
     <script src="js/nola.js"></script>
     <script src="js/script.js"></script>
-    <script src="js/nolabuttons.js"></script>
     <script src="js/form.js"></script>
+    <script src="js/nolabuttons.js"></script>
 </head>
 <body>
     <header>
