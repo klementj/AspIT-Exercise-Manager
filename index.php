@@ -9,6 +9,9 @@ if (!isset($_SESSION["userId"])) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="author" content="Lasse Hels, Noah Bro-Jørgensen">
+    <meta name="description" content="Online tool for content and exercise development for AspIT.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AspIT Exercise Manager</title>
     <link rel="icon" href="img/aspitlogo.png">
     <link rel="stylesheet" href="css/style.css">
