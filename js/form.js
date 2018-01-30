@@ -454,6 +454,15 @@ $(document).ready(function() {
         ModalFade(true, $syntaxModal);
     });
     
+    // Ctrl + S keybind functionality
+    $(document).keydown(function(event) {
+        // Keycode for S is 83
+        if ((event.ctrlKey || event.metaKey) && event.which == 83) {
+            SaveExercise();
+            event.preventDefault();
+        }
+    });
+    
     // Making sure the right elements are displayed based on user accesslevel
     if (parseInt(accessLevel) < 2) {
         
