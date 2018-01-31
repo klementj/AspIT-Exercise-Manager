@@ -32,7 +32,8 @@ $(document).ready(function() {
         textarea = document.getElementById("LMLeditor");
         input = textarea.value;
         /*To prevent weird html behavior, replace '<' with the equivalent '&lt' (may cause issues inside codeblocks that rely on '<'. Dunno)*/
-        input = input.replace(/\</g, '&lt');
+        /*(!?) is a negative look-ahead, i.e. if anything inside the parantheses follows the '<', exclude that match*/
+        input = input.replace(/\<(?!iframe|\/iframe)/g, '&lt');
         
         /*Assign values to inputLines, declare length of outputLines, and assign output*/
         inputLines = input.split(/\n/g);
