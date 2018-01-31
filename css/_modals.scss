@@ -59,14 +59,10 @@
     
     #primaryTable {
         width: 100%;
-        display: flex;
-        flex-direction: column;
         
         thead {
         
             tr {
-                display: flex;
-                justify-content: space-around;
                 background-color: $lightGreen;
                 color: white;
                 padding: 10px 0px;
@@ -76,10 +72,8 @@
         tbody {
             
             tr {
-                display: flex;
                 
                 td {
-                    flex: 1;
                     padding: 10px 5px;
                     max-width: calc(50% - 10px);
                     word-wrap: break-word;
