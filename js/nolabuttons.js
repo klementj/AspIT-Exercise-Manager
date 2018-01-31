@@ -46,7 +46,7 @@ $(document).ready(function() {
     });
     
     $italic.click(function(){
-        InsertSyntax('', '||', '||', false, 2);
+        InsertSyntax('', '*', '*', false, 1);
     });
     
     $bold.click(function(){

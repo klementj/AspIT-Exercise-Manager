@@ -37,7 +37,7 @@
 }
 
 #imgUploadModal {
-    @include modalStyle(auto, 300px, 40%, 30px);
+    @include modalStyle(auto, calc(300px - 60px), 40%, 30px);
     
     input {
         margin-bottom: 20px;
