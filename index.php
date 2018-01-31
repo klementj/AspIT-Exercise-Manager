@@ -293,7 +293,7 @@ if (!isset($_SESSION["userId"])) {
                     </tr>
                     <tr>
                         <td class="youType">
-                            !! https://i.imgur.com/eOSai4B.png left
+                            !! https://i.imgur.com/ eOSai4B.png left
                             <br>
                             <br>
                             <b>Left</b> positions the image to the left.

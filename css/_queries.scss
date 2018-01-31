@@ -78,6 +78,10 @@
     .tDate {
         display: none;
     }
+    
+    #syntaxModal {
+        width: 300px;
+    }
 }
 
 @media screen and (max-width: 500px) {
@@ -97,5 +101,15 @@
     
     #openModal {
         width: 80%;
+    }
+    
+    #syntaxModal {
+        padding: 0px;
+    }
+}
+
+@media screen and (max-width: 330px) {
+    #openModal #inputContainer i {
+        left: 87%;
     }
 }

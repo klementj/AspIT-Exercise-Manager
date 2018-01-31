@@ -232,8 +232,8 @@ body {
                         position: relative;
                         background: none;
                         border: none;
-                        cursor: pointer;
-                        flex: 1 0 40px;
+                        cursor: pointer;  
+                        flex: 1 0 40px;  
                         
                         .tooltiptext {
                             @include hoverText(100%, -60px, 120px);

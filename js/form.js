@@ -492,6 +492,10 @@ $(document).ready(function() {
         ModalFade(true, $syntaxModal);
     });
     
+    $syntaxModal.find($confirm).click(function() {
+        ModalFade(false, $syntaxModal); 
+    });
+    
     // Ctrl + S keybind functionality
     $(document).keydown(function(event) {
         // Keycode for S is 83
