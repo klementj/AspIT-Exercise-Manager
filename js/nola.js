@@ -529,7 +529,7 @@ $(document).ready(function() {
         /*Italics translation*/
         /*Regex:
         '\|' targets '|'*/
-        output = output.replace(/\|\|(.*?)\|\|/g, function(a, b) {
+        output = output.replace(/\*(.*?)\*/g, function(a, b) {
             return '<em>' + b + '</em>';
         });
 
