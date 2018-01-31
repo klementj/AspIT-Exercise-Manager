@@ -1,0 +1,101 @@
+@media screen and (max-width: 1360px) {
+    .toolbar {
+        justify-content: flex-start;
+    }
+    
+    body main #left .editor-wrapper .toolbar .editor-button {
+        flex: unset;
+    }
+    
+    body main #left .editor-wrapper {
+        width: 100%;
+    }
+    
+    body main #left input {
+        width: calc(100% - 20px);
+    }
+    
+    main #left #mainContent {
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    body main {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    #openModal {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .sidenote {
+        display: none;
+    }
+    
+    .sidenoteCounter {
+        display: none;
+    }
+    
+    main #left #mainContent .right-img {
+        float: unset;
+        clear: unset;
+        margin-right: unset;
+        max-width: 100%;
+        min-width: unset;
+    }
+    
+    main #left #mainContent {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 620px) {
+    body main #left nav {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    body main #left nav i {
+        align-self: center;
+        margin-bottom: 15px;
+        margin-right: 0px;
+    }
+    
+    body main #left nav .buttonContainer button {
+        margin: 5px;
+    }
+    
+    footer p {
+        width: 90%;
+        text-align: center;
+    }
+    
+    .tDate {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .tSubject {
+        display: none;
+    }
+    
+    #openModal {
+        width: 87%;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .tAuthor {
+        display: none;
+    }
+    
+    #openModal {
+        width: 80%;
+    }
+}

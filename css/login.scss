@@ -93,3 +93,19 @@ body {
         }
     }
 }
+
+@media screen and (max-width: 380px) {
+    body main {
+        min-width: 200px;
+        width: 200px;
+        
+        input {
+            min-width: 100%;
+            width: 100%;
+        }
+        
+        .inputContainer i {
+            left: 88%;
+        }
+    }
+}

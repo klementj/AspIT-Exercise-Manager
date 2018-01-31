@@ -9,7 +9,6 @@ $font: 'Oxygen', sans-serif;
 @import "nola";
 @import "browser-compatibility";
 @import "modals";
-@import "queries";
 // @import "login";
 
 @mixin hoverText($bottom, $margin-left, $width: 120px, $font-size: 1rem) {
@@ -49,7 +48,7 @@ $font: 'Oxygen', sans-serif;
 }
 
 html {
-    font-size: 16px;
+    font-size: 16px;  
 }
 
 body {
@@ -190,9 +189,9 @@ body {
                 .buttonContainer {
                 display: flex;
                 flex-direction: row;
+                    flex-wrap: wrap;
                     
                     button {
-                        margin-right: 10px;
                         position: relative;
                     }
                     
@@ -238,6 +237,7 @@ body {
                         
                         .tooltiptext {
                             @include hoverText(100%, -60px, 120px);
+                            display: none;
                         }
                         
                         #code {
@@ -253,6 +253,7 @@ body {
                     .editor-button:hover .tooltiptext {
                         visibility: visible;
                         opacity: 1;
+                        display: block;     
                     }
                 }
                 
@@ -334,3 +335,5 @@ body {
         }
     }
 }
+
+@import "queries";

@@ -56,9 +56,7 @@ if (!isset($_SESSION["userId"])) {
                                 '<button id="openNewExerciseBtn" class="action">Open</button>';
                         if ($_SESSION['accessLevel'] < 2) {
                             echo
-                                '<form id="saveForm">
-                                    <button type="button" id="saveBtn" class="neutral">Save<span>Saved!</span></button>
-                                </form>
+                                '<button id="saveBtn" class="neutral">Save<span>Saved!</span></button>
                                 <button id="publishBtn" class="neutral">Visibility</button>
                                 <button id="deleteBtn" class="danger">Delete</button>';
                         }

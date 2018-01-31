@@ -1,11 +1,11 @@
 @import url("https://fonts.googleapis.com/css?family=Oxygen:300,400,700");
-/* line 7, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/login.scss */
+/* line 7, C:/xampp/htdocs/AspIT-Exercise-Manager/css/login.scss */
 body {
   background-color: #4CAF50;
   font-family: "Oxygen", sans-serif;
   margin: 0px;
   padding: 0px; }
-  /* line 13, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/login.scss */
+  /* line 13, C:/xampp/htdocs/AspIT-Exercise-Manager/css/login.scss */
   body main {
     position: absolute;
     top: 30%;
@@ -16,10 +16,10 @@ body {
     background-color: #d3d3d3;
     border-radius: 7px;
     padding: 20px; }
-    /* line 24, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/login.scss */
+    /* line 24, C:/xampp/htdocs/AspIT-Exercise-Manager/css/login.scss */
     body main form {
       margin: 0px; }
-    /* line 28, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/login.scss */
+    /* line 28, C:/xampp/htdocs/AspIT-Exercise-Manager/css/login.scss */
     body main input {
       border: none;
       outline: none;
@@ -27,24 +27,24 @@ body {
       font-family: "Oxygen", sans-serif;
       width: 280px;
       min-width: 280px; }
-    /* line 37, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/login.scss */
+    /* line 37, C:/xampp/htdocs/AspIT-Exercise-Manager/css/login.scss */
     body main .inputContainer {
       padding: 7px 28px 7px 10px;
       background-color: white;
       position: relative;
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
       border-radius: 7px; }
-      /* line 44, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/login.scss */
+      /* line 44, C:/xampp/htdocs/AspIT-Exercise-Manager/css/login.scss */
       body main .inputContainer i {
         position: absolute;
         top: 10px;
         left: 92%;
         font-size: 25px;
         color: #d3d3d3; }
-    /* line 53, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/login.scss */
+    /* line 53, C:/xampp/htdocs/AspIT-Exercise-Manager/css/login.scss */
     body main .inputContainer:not(:last-of-type) {
       margin-bottom: 10px; }
-    /* line 57, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/login.scss */
+    /* line 57, C:/xampp/htdocs/AspIT-Exercise-Manager/css/login.scss */
     body main .proceedBtn {
       height: 30px;
       width: 50%;
@@ -59,22 +59,35 @@ body {
       margin-bottom: 10px;
       outline: none;
       cursor: pointer; }
-    /* line 73, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/login.scss */
+    /* line 73, C:/xampp/htdocs/AspIT-Exercise-Manager/css/login.scss */
     body main .proceedBtn:hover:enabled {
       background: linear-gradient(#449d48, #317c34); }
-    /* line 77, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/login.scss */
+    /* line 77, C:/xampp/htdocs/AspIT-Exercise-Manager/css/login.scss */
     body main .errorMsg {
       margin: 10px 0px;
       color: red;
       font-family: "Oxygen", sans-serif;
       font-size: 18px;
       text-shadow: 0px 0px 0px black; }
-    /* line 85, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/login.scss */
+    /* line 85, C:/xampp/htdocs/AspIT-Exercise-Manager/css/login.scss */
     body main #login {
       overflow: hidden; }
-    /* line 90, C:/xampp/htdocs/AspIT-Exercise-Manager/frontend/css/login.scss */
+    /* line 90, C:/xampp/htdocs/AspIT-Exercise-Manager/css/login.scss */
     body main #register {
       overflow: hidden;
       display: none; }
+
+@media screen and (max-width: 380px) {
+  /* line 98, C:/xampp/htdocs/AspIT-Exercise-Manager/css/login.scss */
+  body main {
+    min-width: 200px;
+    width: 200px; }
+    /* line 102, C:/xampp/htdocs/AspIT-Exercise-Manager/css/login.scss */
+    body main input {
+      min-width: 100%;
+      width: 100%; }
+    /* line 107, C:/xampp/htdocs/AspIT-Exercise-Manager/css/login.scss */
+    body main .inputContainer i {
+      left: 88%; } }
 
 /*# sourceMappingURL=login.css.map */
