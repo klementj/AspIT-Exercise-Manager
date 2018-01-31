@@ -9,6 +9,7 @@ $font: 'Oxygen', sans-serif;
 @import "nola";
 @import "browser-compatibility";
 @import "modals";
+@import "queries";
 // @import "login";
 
 @mixin hoverText($bottom, $margin-left, $width: 120px, $font-size: 1rem) {
