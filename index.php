@@ -22,10 +22,15 @@ if (!isset($_SESSION["userId"])) {
         var userId = '<?php echo $_SESSION['userId'] ?>';
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!--Prism is used for codeblock syntax highlighting-->
     <script src="js/prism.js"></script>
+<!--Nola.js contains our LML translator functionality-->
     <script src="js/nola.js"></script>
+<!--Script contains table sorting and search functionality-->
     <script src="js/script.js"></script>
+<!--Form.js contains all exercise related functionality (save, delete, open, new, publish)-->
     <script src="js/form.js"></script>
+<!--Nolabuttons has all the LML button functionality-->
     <script src="js/nolabuttons.js"></script>
 </head>
 <body>
