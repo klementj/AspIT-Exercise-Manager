@@ -207,7 +207,7 @@ if (!isset($_SESSION["userId"])) {
                         <td class="youSee"><b>bold</b></td>
                     </tr>
                     <tr>
-                        <td class="youType">||italic||</td>
+                        <td class="youType">*italic*</td>
                         <td class="youSee"><em>italic</em></td>
                     </tr>
                     <tr>
