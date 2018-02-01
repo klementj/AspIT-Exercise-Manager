@@ -66,7 +66,7 @@ $(document).ready(function() {
     });
     
     $img.click(function(){
-        InsertSyntax('!! https://source.unsplash.com/random/400x400 left\n\n', '', '', true);
+        InsertSyntax('!! https://source.unsplash.com/random/400x400 left\n', '', '', true);
     });
     
     $imgUpload.click(function() {
@@ -116,6 +116,8 @@ $(document).ready(function() {
         
         $selStart = $element.selectionStart;
         $selEnd = $element.selectionEnd;
+        $scrollTop = $element.scrollTop;
+        console.log($scrollTop);
         
         // Variable used for setting cursor selection
         $newSelection = $selEnd + prefix.length + wrapStart.length + wrapEnd.length;
@@ -135,6 +137,10 @@ $(document).ready(function() {
             $element.focus();
             $element.selectionStart = $selStart + selectionLength;
             $element.selectionEnd = $selEnd + selectionLength;
+            
+            // Setting textarea scroll position to where it was previous to syntax insertion
+            // scrollTop doesn't seem to work with $element for some reason
+            $('#LMLeditor').scrollTop($scrollTop);
             
         }
         else if (($selStart || $selStart == '0') && isLineStarter == true) {
@@ -170,6 +176,10 @@ $(document).ready(function() {
             $element.focus();
             $element.selectionStart = $selStart + prefix.length;
             $element.selectionEnd = $selEnd + prefix.length;
+            
+            // Setting textarea scroll position to where it was previous to syntax insertion
+            // scrollTop doesn't seem to work with $element for some reason
+            $('#LMLeditor').scrollTop($scrollTop);
             
         }
         // If no text selection is present
