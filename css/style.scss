@@ -52,6 +52,10 @@ html {
     line-height: 1.5rem;
 }
 
+.gray{
+    color: darkgray;
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -73,26 +77,31 @@ body {
     
     header {
         width: 100%;
-        margin: 0 auto;
         display: flex;
         flex-direction: row;
         border-bottom: 1px solid #ebebeb;
         box-shadow: 0 0px 1px rgba(0,0,0,0.2);
-        margin-bottom: 20px;
+        margin-bottom: 1rem;
         background-color: $lightGreen;
         
         nav {
-            width: 70%;
+            width: 100%;
             min-width: 200px;
-            height: 50px;
-            margin: 0 auto;
+            // height: 50px;
+            // margin: 0 auto;
             display: flex;
-            line-height: 50px;
+            // line-height: 50px;
+
+            justify-content: space-between;
             
             a {
                 color: $textColor;
                 text-decoration: none;
                 margin-left: 10px;
+            }
+
+            #user{
+
             }
         }
     }
@@ -159,16 +168,19 @@ body {
             }
             
             nav {
-                margin-bottom: 20px;
+                // margin-bottom: 20px;
+                position:fixed;
+                top: 143px;
+                left: 10px;
                 
                 i {
                     display: none;
                     cursor: pointer;
                     position: relative;
-                    font-size: 30px;
-                    color: $textColor;
-                    float: left;
-                    margin-right: 10px;
+                    font-size: 2rem;
+                    color: lightgray;
+                    // float: left;
+                    margin-right: 15px;
                     
                     .faTooltip {
                         @include hoverText(115%, -65px, 120px);
@@ -205,7 +217,7 @@ body {
                         position: absolute;
                         opacity: 0;
                         top: 17px;
-                        left: 28px;
+                        // left: 28px;
                     }
                     
                     #publishBtn, #deleteBtn {
@@ -221,16 +233,15 @@ body {
                 .toolbar {
                     border: 1px solid rgba(169, 169, 169, 0.2);
                     border-bottom: none;
-                    padding: 10px 5px;
-                    width: calc(100% - 10px);
+                    // padding: 10px 5px;
+                    width: 100%;
                     background-color: white;
                     box-shadow: 0 1px 1px rgba(0,0,0,0.1);
                     display: flex;
                     flex-wrap: wrap;
                     
                     .editor-button {
-                        height: 30px;
-                        width: 40px;
+                        padding: 10px 15px;
                         position: relative;
                         background: none;
                         border: none;
