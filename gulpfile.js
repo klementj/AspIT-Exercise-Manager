@@ -35,8 +35,8 @@ gulp.task('deploy', function () {
 
     return gulp.src( globs, { base: '.', buffer: false})
         // Name of folder to upload to
-        .pipe( conn.newer('/KLJO/AspIT-Exercise-Manager'))
-        .pipe( conn.dest('/KLJO/AspIT-Exercise-Manager'))
+        .pipe( conn.newer('/KLJO/aspit-opgaver'))
+        .pipe( conn.dest('/KLJO/aspit-opgaver'))
 });
 
 
@@ -52,7 +52,7 @@ var sass = require('gulp-sass');
 
 gulp.task('transpile', function () {
     // Define source folder for .scss files
-    return gulp.src('scss/style.scss')
+    return gulp.src('css/style.scss')
       .pipe(sass())
       
       // Define destination folder for .css file

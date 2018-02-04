@@ -99,7 +99,7 @@ function NewExercise() {
     $deleteBtn.hide();
     $('#titleInput').val('Untitled');
     $('#subjectSelect')[0].selectedIndex = 0;
-    $('#author').text(userName);
+    // $('#author').text(userName);
     $('#lastUpdated').hide();
     $('#lastUpdated').text('');
     $('.editor').val('');
@@ -183,9 +183,9 @@ function OpenExercise() {
                             // Setting the different labels to the correct values from the exercise we opened
                             $('#titleInput').val( responseArr[0]['Title'] );
                             $('#subjectSelect').val( responseArr[0]['SubjectId'] );
-                            $('#author').text( 'Created: ' + responseArr[0]['CreationDate'] + ' by ' + responseArr[1]['FirstName'] + ' ' + responseArr[1]['LastName'] + authorString);
-                            $('#author').show();
-                            $('#lastUpdated').show();
+                            // $('#author').text( 'Created: ' + responseArr[0]['CreationDate'] + ' by ' + responseArr[1]['FirstName'] + ' ' + responseArr[1]['LastName'] + authorString);
+                            // $('#author').show();
+                            $('#lastUpdated').css('display', 'inline-block');
                             $('#lastUpdated').text( 'Last updated: ' + responseArr[0]['LastUpdated'] );
                             $('#LMLeditor').val( responseArr[0]['Content'] );
                             
