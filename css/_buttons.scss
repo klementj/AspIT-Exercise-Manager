@@ -1,6 +1,7 @@
 %button {
-    width: 100px;
-    height: 30px;
+    // width: 100px;
+    // height: 30px;
+    padding: 1rem 1.5rem;
     border: none;
     background: none;
     color: $textColor;
@@ -19,7 +20,7 @@ button:focus {
 }
 
 .danger {
-    color: $red;
+    // color: $red;
 }
 
 .danger:hover {
@@ -28,7 +29,7 @@ button:focus {
 }
 
 .action {
-    color: $blue;
+    // color: $blue;
 }
 
 .action:hover {
@@ -37,7 +38,7 @@ button:focus {
 }
 
 .safe {
-    color: $green;
+    // color: $green;
 }
 
 .safe:hover {

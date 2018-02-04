@@ -52,7 +52,7 @@ if (!isset($_SESSION["userId"])) {
                         }
                     ?>
                 </div>
-            <div>
+            <div id="user">
                 <b><?php echo $_SESSION['firstName'] ?></b>
                 <a href="php/logout.php">Log out</a>
             </div>
@@ -141,9 +141,11 @@ if (!isset($_SESSION["userId"])) {
                 <select name="subject" id="subjectSelect">
                     <?php require 'php/readSubjects.php'; ?>
                 </select>
-                <h5 id="author"><?php echo $_SESSION['firstName'] . ' ' . $_SESSION['lastName'] ?></h5>
-                <h6 id="lastUpdated"></h6> - <h6 id="subject"></h6>
-                
+                <span class="gray">
+                    <p id="author"><?php echo $_SESSION['firstName'] . ' ' . $_SESSION['lastName'] ?></p>
+                    <p id="lastUpdated"></p> - <p id="subject"></p>
+                </span>
+                    
             </div>
             <article id="mainContent"></article>
         </article>
