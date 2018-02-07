@@ -4,9 +4,12 @@ let $content;
 let $subject;
 let $exerciseId;
 
-// Exercise related input fields
+// Exercise related elements
 let $titleInput;
 let $editor;
+let $subjectSelect;
+let $authorLabel;
+let $lastUpdated;
 
 // Modals
 let $openModal;
@@ -26,6 +29,8 @@ let $saveBtn;
 let $publishBtn;
 let $deleteBtn;
 let $syntaxBtn;
+let $previewBtn;
+let $editBtn;
 
 // Classes used on the buttons
 let $confirm;
@@ -78,7 +83,7 @@ function ModalFade(fadeIn, modal) {
 // Only used for save at the moment
 function MessageAnimation(element) {
     
-    $animTime = 250;
+    const $animTime = 250;
     
     $(element).css({
         'opacity': 1
@@ -98,19 +103,20 @@ function MessageAnimation(element) {
 // Prepares interface for the creation of a new exercise
 function NewExercise() {
     
-    if ($('#preview').css('display') == 'none') {
-        $('#edit').click();
+    if ($previewBtn.css('display') == 'none') {
+        $editBtn.click();
     }
     
     $publishBtn.hide();
     $deleteBtn.hide();
-    $('#titleInput').val('Untitled');
-    $('#subjectSelect')[0].selectedIndex = 0;
-    $('#author').text(userName);
-    $('#lastUpdated').hide();
-    $('#lastUpdated').text('');
-    $('.editor').val('');
+    $titleInput.val('Untitled');
+    $subjectSelect[0].selectedIndex = 0;
+    $authorLabel.text(userName);
+    $lastUpdated.hide();
+    $lastUpdated.text('');
+    $editor.val('');
     $exerciseId = null;
+    $isSaved = true;
     
 }
 
@@ -188,13 +194,13 @@ function OpenExercise() {
                             $('#mainContent').text('');
                             
                             // Setting the different labels to the correct values from the exercise we opened
-                            $('#titleInput').val( responseArr[0]['Title'] );
-                            $('#subjectSelect').val( responseArr[0]['SubjectId'] );
-                            $('#author').text( 'Created: ' + responseArr[0]['CreationDate'] + ' by ' + responseArr[1]['FirstName'] + ' ' + responseArr[1]['LastName'] + authorString);
-                            $('#author').show();
-                            $('#lastUpdated').show();
-                            $('#lastUpdated').text( 'Last updated: ' + responseArr[0]['LastUpdated'] );
-                            $('#LMLeditor').val( responseArr[0]['Content'] );
+                            $titleInput.val( responseArr[0]['Title'] );
+                            $subjectSelect.val( responseArr[0]['SubjectId'] );
+                            $authorLabel.text( 'Created: ' + responseArr[0]['CreationDate'] + ' by ' + responseArr[1]['FirstName'] + ' ' + responseArr[1]['LastName'] + authorString);
+                            $authorLabel.show();
+                            $lastUpdated.show();
+                            $lastUpdated.text( 'Last updated: ' + responseArr[0]['LastUpdated'] );
+                            $editor.val( responseArr[0]['Content'] );
                             $isSaved = true;
                             
                             // Ajax call to check whether user is latest author on the opened exercise
@@ -206,18 +212,18 @@ function OpenExercise() {
                                 data: {'jsPath' : 'true', 'exerciseId' : $exerciseId},
                                 success: function(response) {
                                     if (userId == response) {
-                                        $('#publishBtn').show();
-                                        $('#deleteBtn').show();
+                                        $publishBtn.show();
+                                        $deleteBtn.show();
                                     } else {
-                                        $('#publishBtn').hide();
-                                        $('#deleteBtn').hide();
+                                        $publishBtn.hide();
+                                        $deleteBtn.hide();
                                     }
                                 }
                                 
                             });
                             
                             ModalFade(false, $openModal);
-                            $('#preview').click();
+                            $previewBtn.click();
                             
                         }
                     }
@@ -238,15 +244,15 @@ function OpenExercise() {
 function SaveExercise(newExercisePath) {
     
     // Set title based on text in the title input field, or as 'Untitled' if the title input field is empty
-    if ( $.trim($('#titleInput').val()) == '' ) {
+    if ( $.trim($titleInput.val()) == '' ) {
         $title = 'Untitled';
     } else {
-        $title = $('#titleInput').val();
+        $title = $titleInput.val();
     }
     
     // Get values from HTML
-    $content = $('#LMLeditor').val();
-    $subject = $('#subjectSelect').val();
+    $content = $editor.val();
+    $subject = $subjectSelect.val();
     
     // Ajax call to send the exercise information to a PHP file that then saves it in the database
     $.ajax({
@@ -277,10 +283,10 @@ function SaveExercise(newExercisePath) {
                 // Unhiding the relevant buttons and labels
                 $publishBtn.show();
                 $deleteBtn.show();
-                $('#lastUpdated').show();
+                $lastUpdated.show();
                 
                 // Updating the lastUpdated label with the current time
-                $('#lastUpdated').text( 'Last updated: ' + now.getFullYear() + '-' + now.getMonth() + 1 + '-' + now.getDate() + ' ' + hour + ':' + minutes );
+                $lastUpdated.text( 'Last updated: ' + now.getFullYear() + '-' + now.getMonth() + 1 + '-' + now.getDate() + ' ' + hour + ':' + minutes );
                 
                 // NewExercisePath is used to see whether the new exercise interface should show after saving
                 if (newExercisePath) {
@@ -375,12 +381,12 @@ function UpdateExerciseAccesslevel() {
 function DeleteExercise() {
     
     // Updating the message in the modal to dynamically show title for the exercise that is open
-    $deleteModal.find('p').text('Are you sure you want to delete "' + $('#titleInput').val() + '"?');
+    $deleteModal.find('p').text('Are you sure you want to delete "' + $titleInput.val() + '"?');
     
     ModalFade(true, $deleteModal);
     
     // Click event for the actual deletion of the exercise
-    $deleteModal.find('.danger').click(function() {
+    $deleteModal.find($danger).click(function() {
         
         if ($exerciseId != null) {
             
@@ -406,7 +412,7 @@ function DeleteExercise() {
     });
     
     // Click event for the cancel button
-    $deleteModal.find('.safe').click(function() {
+    $deleteModal.find($safe).click(function() {
         ModalFade(false, $deleteModal);
     });
     
@@ -423,6 +429,9 @@ $(document).ready(function() {
     // Exercise related input fields
     $titleInput = $('#titleInput')
     $editor = $('#LMLeditor');
+    $subjectSelect = $('#subjectSelect');
+    $authorLabel = $('#author');
+    $lastUpdated = $('#lastUpdated');
     
     // Modals
     $openModal = $('#openModal');
@@ -442,6 +451,8 @@ $(document).ready(function() {
     $publishBtn = $('#publishBtn');
     $deleteBtn = $('#deleteBtn');
     $syntaxBtn = $('#syntaxHelp');
+    $previewBtn = $('#preview');
+    $editBtn = $('#edit');
     
     // Confirm is not a button per se, but it is the default button class used by most modals confirm changes
     $confirm = '.confirm';
@@ -529,6 +540,7 @@ $(document).ready(function() {
         $isSaved = false;
     });
     
+    // Alerting user to save their exercise if they try to close window without saving
     window.onbeforeunload = function() {
         if (parseInt(accessLevel) < 2 && $isSaved == false) {
             return "Are you sure you want to close?";
@@ -538,12 +550,11 @@ $(document).ready(function() {
     // Making sure the right elements are displayed based on user accesslevel
     if (parseInt(accessLevel) < 2) {
         
-        const $preview = $('#preview');
         const $container = $('#exerciseCreationContainer');
         
-        $preview.show();
+        $previewBtn.show();
         $container.show();
-        $preview.animate({
+        $previewBtn.animate({
             opacity: 1
         }, 1000);
         $container.animate({
