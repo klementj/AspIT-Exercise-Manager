@@ -4,6 +4,10 @@ let $content;
 let $subject;
 let $exerciseId;
 
+// Exercise related input fields
+let $titleInput;
+let $editor;
+
 // Modals
 let $openModal;
 let $imgUploadModal;
@@ -27,6 +31,9 @@ let $syntaxBtn;
 let $confirm;
 let $danger;
 let $safe;
+
+// Bool to check whether exercise is saved or not
+let $isSaved;
 
 // Overlay
 let $overlay;
@@ -188,6 +195,7 @@ function OpenExercise() {
                             $('#lastUpdated').show();
                             $('#lastUpdated').text( 'Last updated: ' + responseArr[0]['LastUpdated'] );
                             $('#LMLeditor').val( responseArr[0]['Content'] );
+                            $isSaved = true;
                             
                             // Ajax call to check whether user is latest author on the opened exercise
                             // Show visibility button if they are, and hide it if they are not
@@ -256,6 +264,9 @@ function SaveExercise(newExercisePath) {
             // Regex to check if response is a number
             if (/^\d+$/.test(response)) {
                 $exerciseId = response;
+                
+                // Setting the exercises saved state to true
+                $isSaved = true;
                 
                 const now = new Date();
                 
@@ -409,6 +420,10 @@ $(document).ready(function() {
     $subject = '';
     $exerciseId = null;
     
+    // Exercise related input fields
+    $titleInput = $('#titleInput')
+    $editor = $('#LMLeditor');
+    
     // Modals
     $openModal = $('#openModal');
     $publishModal = $('#publishModal');
@@ -433,14 +448,15 @@ $(document).ready(function() {
     $danger = '.danger';
     $safe = '.safe';
     
+    // Bool to check whether exercise is saved or not
+    $isSaved = true;
+    
     // Overlay
     $overlay = $('#overlay');
     
     $newBtn.click(function() {
         
-        const $editor = $('#LMLeditor');
-        
-        if ($editor.val()) {
+        if ($isSaved == false) {
             // Fade in the confirmation modal if there is text in the textarea
             ModalFade(true, $newExerciseConfirmationModal);
         } else {
@@ -504,6 +520,20 @@ $(document).ready(function() {
             event.preventDefault();
         }
     });
+    
+    $titleInput.on('input', function() {
+        $isSaved = false;
+    });
+    
+    $editor.on('input', function() {
+        $isSaved = false;
+    });
+    
+    window.onbeforeunload = function() {
+        if (parseInt(accessLevel) < 2 && $isSaved == false) {
+            return "Are you sure you want to close?";
+        }
+    };
     
     // Making sure the right elements are displayed based on user accesslevel
     if (parseInt(accessLevel) < 2) {

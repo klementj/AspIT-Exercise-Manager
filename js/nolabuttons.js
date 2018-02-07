@@ -114,13 +114,13 @@ $(document).ready(function() {
     // Inserts given LML syntax into textarea
     function InsertSyntax(prefix, wrapStart, wrapEnd, isLineStarter, selectionLength) {
         
-        $selStart = $element.selectionStart;
-        $selEnd = $element.selectionEnd;
-        $scrollTop = $element.scrollTop;
-        console.log($scrollTop);
+        const $selStart = $element.selectionStart;
+        const $selEnd = $element.selectionEnd;
+        const $editorScroll = $element.scrollTop;
+        const $windowScroll = $(window).scrollTop();
         
         // Variable used for setting cursor selection
-        $newSelection = $selEnd + prefix.length + wrapStart.length + wrapEnd.length;
+        const $newSelection = $selEnd + prefix.length + wrapStart.length + wrapEnd.length;
         
         // Check if a text selection is present, and if syntax needs to be inserted at the start of a line
         if (($selStart || $selStart == '0') && isLineStarter == false) {
@@ -138,9 +138,10 @@ $(document).ready(function() {
             $element.selectionStart = $selStart + selectionLength;
             $element.selectionEnd = $selEnd + selectionLength;
             
-            // Setting textarea scroll position to where it was previous to syntax insertion
+            // Setting textarea and body scroll position to where it was previous to syntax insertion
             // scrollTop doesn't seem to work with $element for some reason
-            $('#LMLeditor').scrollTop($scrollTop);
+            $('#LMLeditor').scrollTop($editorScroll);
+            $(window).scrollTop($windowScroll);
             
         }
         else if (($selStart || $selStart == '0') && isLineStarter == true) {
@@ -177,9 +178,10 @@ $(document).ready(function() {
             $element.selectionStart = $selStart + prefix.length;
             $element.selectionEnd = $selEnd + prefix.length;
             
-            // Setting textarea scroll position to where it was previous to syntax insertion
+            // Setting textarea and body scroll position to where it was previous to syntax insertion
             // scrollTop doesn't seem to work with $element for some reason
-            $('#LMLeditor').scrollTop($scrollTop);
+            $('#LMLeditor').scrollTop($editorScroll);
+            $(window).scrollTop($windowScroll);
             
         }
         // If no text selection is present
