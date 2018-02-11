@@ -109,12 +109,12 @@ function NewExercise() {
     
     $publishBtn.hide();
     $deleteBtn.hide();
-    $titleInput.val('Untitled');
-    $subjectSelect[0].selectedIndex = 0;
-    $authorLabel.text(userName);
-    $lastUpdated.hide();
-    $lastUpdated.text('');
-    $editor.val('');
+    $('#titleInput').val('Untitled');
+    $('#subjectSelect')[0].selectedIndex = 0;
+    // $('#author').text(userName);
+    $('#lastUpdated').hide();
+    $('#lastUpdated').text('');
+    $('.editor').val('');
     $exerciseId = null;
     $isSaved = true;
     
@@ -194,14 +194,13 @@ function OpenExercise() {
                             $('#mainContent').text('');
                             
                             // Setting the different labels to the correct values from the exercise we opened
-                            $titleInput.val( responseArr[0]['Title'] );
-                            $subjectSelect.val( responseArr[0]['SubjectId'] );
-                            $authorLabel.text( 'Created: ' + responseArr[0]['CreationDate'] + ' by ' + responseArr[1]['FirstName'] + ' ' + responseArr[1]['LastName'] + authorString);
-                            $authorLabel.show();
-                            $lastUpdated.show();
-                            $lastUpdated.text( 'Last updated: ' + responseArr[0]['LastUpdated'] );
-                            $editor.val( responseArr[0]['Content'] );
-                            $isSaved = true;
+                            $('#titleInput').val( responseArr[0]['Title'] );
+                            $('#subjectSelect').val( responseArr[0]['SubjectId'] );
+                            // $('#author').text( 'Created: ' + responseArr[0]['CreationDate'] + ' by ' + responseArr[1]['FirstName'] + ' ' + responseArr[1]['LastName'] + authorString);
+                            // $('#author').show();
+                            $('#lastUpdated').css('display', 'inline-block');
+                            $('#lastUpdated').text( 'Last updated: ' + responseArr[0]['LastUpdated'] );
+                            $('#LMLeditor').val( responseArr[0]['Content'] );
                             
                             // Ajax call to check whether user is latest author on the opened exercise
                             // Show visibility button if they are, and hide it if they are not

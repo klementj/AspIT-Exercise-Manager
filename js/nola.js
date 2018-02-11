@@ -593,7 +593,7 @@ $(document).ready(function() {
         // Hides subject selection box and shows subject as text instead
         $('#subjectSelect').css('display', 'none');
         $('#subject').text( $('#subjectSelect option:selected').text() );
-        $('#subject').css('display', 'block');
+        $('#subject').css('display', 'inline-block');
         
         
         if (accessLevel < 2) {

@@ -36,22 +36,7 @@ if (!isset($_SESSION["userId"])) {
 <body>
     <header>
         <nav>
-            <div>
-                <b><?php echo $_SESSION['firstName'] ?></b>
-                <a href="php/logout.php">Log out</a>
-            </div>
-        </nav>
-    </header>
-    <main>
-        <article id="left">
-            <nav>
-                <i class="fa fa-pencil-square-o fa-2x" id="edit" aria-hidden="true">
-                    <span class="faTooltip disable-select">Back to editor</span>
-                </i>
-                <i class="fa fa-eye fa-2x" id="preview" aria-hidden="true">
-                    <span class="faTooltip disable-select">Preview mode</span>
-                </i>
-                <div class="buttonContainer">
+        <div class="buttonContainer">
                     <?php 
                         if ($_SESSION['accessLevel'] < 2) {
                             echo 
@@ -67,11 +52,27 @@ if (!isset($_SESSION["userId"])) {
                         }
                     ?>
                 </div>
+            <div>
+                <b><?php echo $_SESSION['firstName'] ?></b>
+                <a href="php/logout.php">Log out</a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <article id="left">
+            <nav>
+                <i class="fa fa-pencil-square-o fa-2x" id="edit" aria-hidden="true">
+                    <span class="faTooltip disable-select">Back to editor</span>
+                </i>
+                <i class="fa fa-eye fa-2x" id="preview" aria-hidden="true">
+                    <span class="faTooltip disable-select">Preview mode</span>
+                </i>
+                
             </nav>
             <div id="exerciseCreationContainer">
                 <h1 id="title"></h1>
                 <input type="text" id="titleInput" spellcheck="false" placeholder="Title" tabindex="1" value="Untitled">
-                <p id="subject"></p>
+                <!-- <p id="subject"></p> -->
                 <section class="editor-wrapper">
                     <div class="toolbar">
                         <button id="headerBig" class="editor-button" tabindex="-1">
@@ -141,7 +142,8 @@ if (!isset($_SESSION["userId"])) {
                     <?php require 'php/readSubjects.php'; ?>
                 </select>
                 <h5 id="author"><?php echo $_SESSION['firstName'] . ' ' . $_SESSION['lastName'] ?></h5>
-                <h6 id="lastUpdated"></h6>
+                <h6 id="lastUpdated"></h6> - <h6 id="subject"></h6>
+                
             </div>
             <article id="mainContent"></article>
         </article>
